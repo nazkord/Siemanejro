@@ -88,4 +88,6 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="colon">:</string>
+    <string name="save">Save</string>
+    <string name="choose_date">CHOOSE DATE</string>
 </resources>
