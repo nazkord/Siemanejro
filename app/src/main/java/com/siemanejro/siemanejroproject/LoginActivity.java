@@ -32,6 +32,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Person;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -57,6 +59,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
+    private AutoCompleteTextView mName;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -67,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.name);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -149,10 +153,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
+        mName.setError(null);
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
+        String name = mName.getText().toString();
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
@@ -333,6 +339,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                Person person = new Person(mName.getText().toString(), mEmailView.getText().toString());
+                Person.Osoby.add(person);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
