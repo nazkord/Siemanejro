@@ -11,12 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.gson.JsonSyntaxException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import json.JsonImport;
+import model.AllMatches;
 import model.Match;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,22 +28,30 @@ public class MainActivity extends AppCompatActivity {
     Button addMatchButton;
     Button Register;
     Button typer;
+<<<<<<< HEAD
     Button setting;
     ArrayList <Match> listOfMatches = new ArrayList <>();
+=======
+>>>>>>> 77de368db7394ccf36962bcde0925aea3e5753a8
 
-    public static final String MESSAGE_LIST_OF_MATCHES="list of matches";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        addMatchButton = (Button) findViewById(R.id.openAddMatchActivity);
-        Register = (Button) findViewById(R.id.openLoginActivity);
-        typer = (Button) findViewById(R.id.openTyper);
+        try {
+            //AllMatches allMatches = JsonImport.importMatchesFPM("2021");
+            //allMatches.update();
 
-        addMatchButtonClicked();
-        addRegisterButtonClicked();
-        addTyperButtonClicked();
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            addMatchButton = (Button) findViewById(R.id.openAddMatchActivity);
+            Register = (Button) findViewById(R.id.openLoginActivity);
+            typer = (Button) findViewById(R.id.openTyper);
+
+            addMatchButtonClicked();
+            addRegisterButtonClicked();
+            addTyperButtonClicked();
+        }
+        catch (JsonSyntaxException e){}
     }
 
 
@@ -48,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent  = new Intent(MainActivity.this, AddMatchActivity.class);
-                Log.d("AAAAAAAAAA",listOfMatches.toString());
-                intent.putExtra(MESSAGE_LIST_OF_MATCHES,listOfMatches);
                 startActivity(intent);
             }
         });
@@ -72,4 +82,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
