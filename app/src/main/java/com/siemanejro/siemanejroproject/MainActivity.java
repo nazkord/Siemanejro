@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button addMatchButton;
     Button Register;
+    Button typer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
         addMatchButton = (Button) findViewById(R.id.openAddMatchActivity);
         Register = (Button) findViewById(R.id.openLoginActivity);
+        typer = (Button) findViewById(R.id.openTyper);
 
         addMatchButtonClicked();
         addRegisterButtonClicked();
+        addTyperButtonClicked();
     }
 
 
@@ -43,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
+    }
+
+    private void addTyperButtonClicked(){
+        typer.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Tipp.class));
             }
         });
     }

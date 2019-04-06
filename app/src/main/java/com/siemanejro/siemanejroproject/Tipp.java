@@ -40,7 +40,7 @@ public class Tipp extends AppCompatActivity {
         ArrayList<Match> arrayList = new ArrayList<>();
         arrayList.add(match_test);
         arrayList.add(match_test_2);
-        
+
         matchesAdapter = new MatchesAdapter(this,arrayList);
         listView.setAdapter(matchesAdapter);
 

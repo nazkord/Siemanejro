@@ -8,6 +8,22 @@
 
 
     <Button
+        android:id="@+id/openTyper"
+        android:layout_width="94dp"
+        android:layout_height="51dp"
+        android:layout_alignStart="@+id/openAddMatchActivity"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="361dp"
+
+        android:gravity="center"
+        android:text="Typer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/openAddMatchActivity"
         android:layout_width="94dp"
         android:layout_height="60dp"
@@ -19,15 +35,15 @@
 
     <Button
         android:id="@+id/openLoginActivity"
-        android:layout_alignStart="@+id/openAddMatchActivity"
-        android:layout_alignParentTop="true"
         android:layout_width="94dp"
         android:layout_height="51dp"
-        android:text="Register"
-        android:gravity="center"
-
+        android:layout_alignStart="@+id/openAddMatchActivity"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="185dp"
+
+        android:gravity="center"
+        android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
