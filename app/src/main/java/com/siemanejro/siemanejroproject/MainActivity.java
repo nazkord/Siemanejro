@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.time.LocalDateTime;
@@ -23,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
     Button addMatchButton;
     Button Register;
     Button typer;
-    ArrayList<Match> listOfMatches=new ArrayList<>();
+    Button setting;
+    ArrayList <Match> listOfMatches = new ArrayList <>();
 
     public static final String MESSAGE_LIST_OF_MATCHES="list of matches";
 
@@ -39,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         addRegisterButtonClicked();
         addTyperButtonClicked();
     }
-
 
 
     private void addMatchButtonClicked() {
