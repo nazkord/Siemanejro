@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,14 +7,34 @@
     tools:context=".MainActivity">
 
 
+    <Button
+        android:id="@+id/openAddMatchActivity"
+        android:layout_width="94dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="271dp"
+        android:gravity="center"
+        android:text="Add Match" />
 
-    <TextView
+    <Button
+        android:id="@+id/openLoginActivity"
         android:layout_width="wrap_content"
+<<<<<<< HEAD
         android:layout_height="21dp"
         android:text="Walaszek"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+=======
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/openAddMatchActivity"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="185dp"
+        android:gravity="center"
+        android:text="Register" />
+>>>>>>> bcc0a4edab8da0e5afe71b9dea99e04d945a677c
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

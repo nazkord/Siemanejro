@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddMatchActivity">
+
+    <include layout="@layout/content_add_match" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarAddMatch"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <EditText
+        android:id="@+id/input_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="datetime"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="88dp"
+        android:hint="Type the date" />
+
+    <EditText
+        android:id="@+id/input_first_team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:hint="Type the first team"
+        android:inputType="text"
+        android:layout_below="@+id/input_date"
+        android:layout_alignLeft="@+id/input_date"
+        android:layout_alignStart="@+id/input_date"/>
+
+    <EditText
+        android:id="@+id/input_second_team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:hint="Type the second team"
+        android:inputType="text"
+        android:layout_below="@+id/input_first_team"
+        android:layout_alignLeft="@+id/input_first_team"
+        android:layout_alignStart="@+id/input_first_team"/>
+
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/input_second_team"
+        android:layout_alignLeft="@+id/input_second_team"
+        android:layout_alignStart="@+id/input_second_team" />
+
+
+
+</RelativeLayout>
