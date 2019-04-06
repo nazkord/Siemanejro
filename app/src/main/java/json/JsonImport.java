@@ -1,6 +1,9 @@
 package json;
 
 import com.google.gson.Gson;
+
+import java.util.concurrent.ExecutionException;
+
 import model.AllMatches;
 
 public class JsonImport {
@@ -9,7 +12,14 @@ public class JsonImport {
         String url = "https://api.football-data.org/v2/competitions/" + competitionID + "/matches";
 
         Gson gson = new Gson();
-        AllMatches matchesAllSeason = gson.fromJson(JsonService.JsonString(url), AllMatches.class);
+        AllMatches matchesAllSeason = null;
+        try {
+            matchesAllSeason = gson.fromJson(JsonService.getJsonStringByUrl(url), AllMatches.class);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return  matchesAllSeason;
     }
 

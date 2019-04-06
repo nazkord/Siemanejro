@@ -31,12 +31,11 @@ public class MainActivity extends AppCompatActivity {
     Button setting;
     ArrayList <Match> listOfMatches = new ArrayList <>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
-            //AllMatches allMatches = JsonImport.importMatchesFPM("2021");
-            //allMatches.update();
+            AllMatches allMatches = JsonImport.importMatchesFPM("2021");
+            allMatches.update();
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
@@ -48,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
             addRegisterButtonClicked();
             addTyperButtonClicked();
         }
-        catch (JsonSyntaxException e){}
+        catch (JsonSyntaxException e){
+
+        }
     }
 
 
