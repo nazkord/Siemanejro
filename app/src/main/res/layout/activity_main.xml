@@ -24,7 +24,7 @@
     <Button
         android:id="@+id/openLoginActivity"
         android:layout_width="wrap_content"
-        android:layout_height="1000dp"
+        android:layout_height="wrap_content"
         android:background="@layout/my_button_bg"
         android:layout_weight="1"
         android:layout_marginTop="100dp"
