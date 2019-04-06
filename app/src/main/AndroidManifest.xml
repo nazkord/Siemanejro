@@ -14,13 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
         <activity android:name=".Tipp"></activity>
-=======
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"></activity>
->>>>>>> bcc0a4edab8da0e5afe71b9dea99e04d945a677c
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
