@@ -28,11 +28,8 @@ public class MainActivity extends AppCompatActivity {
     Button addMatchButton;
     Button Register;
     Button typer;
-<<<<<<< HEAD
     Button setting;
     ArrayList <Match> listOfMatches = new ArrayList <>();
-=======
->>>>>>> 77de368db7394ccf36962bcde0925aea3e5753a8
 
 
     @Override

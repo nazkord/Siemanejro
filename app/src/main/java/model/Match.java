@@ -13,7 +13,7 @@ public class Match implements Serializable {
     private int id;
     private String utcDate;
 
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     //constructor
     public Match(LocalDateTime matchDate, String team1, String team2) {
@@ -38,7 +38,7 @@ public class Match implements Serializable {
         this.result2 = result2;
     }
 
-    public LocalDateTime getMatchDate() {
+    private LocalDateTime getMatchDate() {
         return matchDate;
     }
 

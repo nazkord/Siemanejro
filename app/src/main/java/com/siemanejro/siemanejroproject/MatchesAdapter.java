@@ -27,9 +27,6 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        /*if (listItem == null) {
-            listItem = LayoutInflater.from(context).inflate(R.layout.match_item, parent, false);
-        } */
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
