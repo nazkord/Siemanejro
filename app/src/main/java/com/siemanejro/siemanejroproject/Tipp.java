@@ -16,24 +16,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import json.JsonImport;
 import model.AllMatches;
 import model.Match;
-import model.Score;
 
 public class Tipp extends AppCompatActivity {
 
     Button saveButton;
     Button chooseDateButton;
     String date;
-    ArrayList<Match> arrayList;
     MatchesAdapter matchesAdapter;
     ListView listView;
     ArrayList<Match> listOfMatches;
     String leagueID;
+    String leagueName;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -51,6 +48,9 @@ public class Tipp extends AppCompatActivity {
 
         Intent intent = getIntent();
         leagueID = intent.getStringExtra("leagueID");
+        leagueName = intent.getStringExtra("leagueName");
+
+        getSupportActionBar().setTitle(leagueName);
 
         AllMatches allMatches = JsonImport.importMatchesFPM(leagueID);
         listOfMatches = allMatches.getMatches();
@@ -64,9 +64,6 @@ public class Tipp extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.matches_list);
         saveButton = (Button) findViewById(R.id.saveButton);
 
-        listOfMatches = AllMatches.getStaticListOfMatches();
-
-        matchesAdapter = new MatchesAdapter(this, listOfMatches);
         chooseDateButton = findViewById(R.id.choose_date_button);
         chooseDateClicked();
 
@@ -74,12 +71,19 @@ public class Tipp extends AppCompatActivity {
         Date dateNew = new Date();
         Log.d("DATE", dateFormat.format(dateNew));
         date = dateFormat.format(dateNew).substring(0, 10);
+<<<<<<< HEAD
         arrayList = AllMatches.getMatchesFromGivenDate(date);
         matchesAdapter = new MatchesAdapter(this, arrayList);
         listView.setAdapter(matchesAdapter);
         chooseDateClicked();
+=======
+>>>>>>> ddb617f8930eb6eba505d6c92d5126e759d8cc52
 
+        listOfMatches = AllMatches.getMatchesFromGivenDate(date);
 
+        matchesAdapter = new MatchesAdapter(this, listOfMatches);
+        listView.setAdapter(matchesAdapter);
+        chooseDateClicked();
     }
 
     private void chooseDateClicked() {
@@ -107,9 +111,9 @@ public class Tipp extends AppCompatActivity {
                             dayString="0"+dayString;
                         }
                         date=yearString+"-"+monthString+"-"+dayString;
-                        arrayList=AllMatches.getMatchesFromGivenDate(date);
+                        listOfMatches =AllMatches.getMatchesFromGivenDate(date);
                         matchesAdapter.clear();
-                        matchesAdapter.addAll(arrayList);
+                        matchesAdapter.addAll(listOfMatches);
                         matchesAdapter.notifyDataSetChanged();
                         Log.d("DATE",date);
                     }

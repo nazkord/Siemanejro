@@ -40,6 +40,7 @@ public class ChooseLeague extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent  = new Intent(ChooseLeague.this, Tipp.class);
                 intent.putExtra("leagueID","2002");
+                intent.putExtra("leagueName","Germany League");
                 startActivity(intent);
             }
         });
@@ -51,6 +52,7 @@ public class ChooseLeague extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ChooseLeague.this, Tipp.class);
                 intent.putExtra("leagueID", "2014");
+                intent.putExtra("leagueName","Spain League");
                 startActivity(intent);
             }
         });
@@ -61,6 +63,7 @@ public class ChooseLeague extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent  = new Intent(ChooseLeague.this, Tipp.class);
                     intent.putExtra("leagueID","2015");
+                    intent.putExtra("leagueName","France League");
                     startActivity(intent);
                 }
             });
@@ -72,6 +75,7 @@ public class ChooseLeague extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent  = new Intent(ChooseLeague.this, Tipp.class);
                 intent.putExtra("leagueID","2019");
+                intent.putExtra("leagueName","Italy League");
                 startActivity(intent);
             }
         });
@@ -83,6 +87,7 @@ public class ChooseLeague extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent  = new Intent(ChooseLeague.this, Tipp.class);
                 intent.putExtra("leagueID","2021");
+                intent.putExtra("leagueName","England League");
                 startActivity(intent);
             }
         });
