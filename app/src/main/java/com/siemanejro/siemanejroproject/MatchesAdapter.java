@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import model.Match;
 
@@ -28,24 +27,32 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View listItem = convertView;
-        if (listItem == null) {
-            listItem = LayoutInflater.from(context).inflate(R.layout.one_item, parent, false);
+        /*if (listItem == null) {
+            listItem = LayoutInflater.from(context).inflate(R.layout.match_item, parent, false);
+        } */
 
-            Match currentMatch = matches.get(position);
-
-            TextView date = (TextView) listItem.findViewById(R.id.date);
-            date.setText(currentMatch.getMatchDate().toString());
-
-            TextView teamName1 = (TextView) listItem.findViewById(R.id.teamName1);
-            teamName1.setText(currentMatch.getTeam1());
-
-            TextView teamName2 = (TextView) listItem.findViewById(R.id.teamName2);
-            teamName2.setText(currentMatch.getTeam2());
-
-
+        if (convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.match_item, parent, false);
         }
-        return listItem;
+
+        Match currentMatch = matches.get(position);
+
+        TextView date = (TextView) convertView.findViewById(R.id.dateTime);
+        date.setText(currentMatch.getMatchDate().toString());
+
+        TextView colon = (TextView) convertView.findViewById(R.id.colon);
+        colon.setText(":");
+
+        TextView teamName1 = (TextView) convertView.findViewById(R.id.teamName1);
+        teamName1.setText(currentMatch.getTeam1());
+
+        TextView teamName2 = (TextView) convertView.findViewById(R.id.teamName2);
+        teamName2.setText(currentMatch.getTeam2());
+
+
+        return convertView;
     }
 }
+
 
