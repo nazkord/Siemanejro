@@ -1,6 +1,7 @@
 package com.siemanejro.siemanejroproject;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import json.JsonImport;
 import model.AllMatches;
 import model.Match;
 import model.Score;
@@ -31,6 +33,7 @@ public class Tipp extends AppCompatActivity {
     MatchesAdapter matchesAdapter;
     ListView listView;
     ArrayList<Match> listOfMatches;
+    String leagueID;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -45,6 +48,14 @@ public class Tipp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tipp);
+
+        Intent intent = getIntent();
+        leagueID = intent.getStringExtra("leagueID");
+
+        AllMatches allMatches = JsonImport.importMatchesFPM(leagueID);
+        listOfMatches = allMatches.getMatches();
+        AllMatches.setStaticListOfMatches(listOfMatches);
+        allMatches.update();
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,6 +76,7 @@ public class Tipp extends AppCompatActivity {
         arrayList = AllMatches.getMatchesFromGivenDate(date);
         matchesAdapter = new MatchesAdapter(this, arrayList);
         listView.setAdapter(matchesAdapter);
+        saveButtonClicked();
 
     }
 

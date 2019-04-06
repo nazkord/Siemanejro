@@ -25,11 +25,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
-            AllMatches allMatches = JsonImport.importMatchesFPM("2021");
+            /*AllMatches allMatches = JsonImport.importMatchesFPM("2021");
             listOfMatches = allMatches.getMatches();
             AllMatches.setStaticListOfMatches(listOfMatches);
             allMatches.update();
-
+*/
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
