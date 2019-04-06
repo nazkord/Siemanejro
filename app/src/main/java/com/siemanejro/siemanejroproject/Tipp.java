@@ -16,20 +16,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import json.JsonImport;
 import model.AllMatches;
 import model.Match;
-import model.Score;
 
 public class Tipp extends AppCompatActivity {
 
     Button saveButton;
     Button chooseDateButton;
     String date;
-    ArrayList<Match> arrayList;
     MatchesAdapter matchesAdapter;
     ListView listView;
     ArrayList<Match> listOfMatches;
@@ -64,9 +60,6 @@ public class Tipp extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.matches_list);
         saveButton = (Button) findViewById(R.id.saveButton);
 
-        listOfMatches = AllMatches.getStaticListOfMatches();
-
-        matchesAdapter = new MatchesAdapter(this, listOfMatches);
         chooseDateButton = findViewById(R.id.choose_date_button);
         chooseDateClicked();
 
@@ -74,12 +67,12 @@ public class Tipp extends AppCompatActivity {
         Date dateNew = new Date();
         Log.d("DATE", dateFormat.format(dateNew));
         date = dateFormat.format(dateNew).substring(0, 10);
-        arrayList = AllMatches.getMatchesFromGivenDate(date);
-        matchesAdapter = new MatchesAdapter(this, arrayList);
+
+        listOfMatches = AllMatches.getMatchesFromGivenDate(date);
+
+        matchesAdapter = new MatchesAdapter(this, listOfMatches);
         listView.setAdapter(matchesAdapter);
-        saveButtonClicked();
-
-
+        chooseDateClicked();
     }
 
     private void chooseDateClicked() {
@@ -107,9 +100,9 @@ public class Tipp extends AppCompatActivity {
                             dayString="0"+dayString;
                         }
                         date=yearString+"-"+monthString+"-"+dayString;
-                        arrayList=AllMatches.getMatchesFromGivenDate(date);
+                        listOfMatches =AllMatches.getMatchesFromGivenDate(date);
                         matchesAdapter.clear();
-                        matchesAdapter.addAll(arrayList);
+                        matchesAdapter.addAll(listOfMatches);
                         matchesAdapter.notifyDataSetChanged();
                         Log.d("DATE",date);
                     }
