@@ -25,11 +25,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
-            AllMatches allMatches = JsonImport.importMatchesFPM("2021");
-            listOfMatches=allMatches.getMatches();
+            /*AllMatches allMatches = JsonImport.importMatchesFPM("2021");
+            listOfMatches = allMatches.getMatches();
             AllMatches.setStaticListOfMatches(listOfMatches);
-            //allMatches.update();
-
+            allMatches.update();
+*/
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         typer.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Tipp.class);
+                Intent intent = new Intent(MainActivity.this, ChooseLeague.class);
                 startActivity(intent);
             }
         });
