@@ -39,7 +39,7 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
         TextView date = (TextView) convertView.findViewById(R.id.dateTime);
         String text = currentMatch.getUtcDate();
-        String finaltext=text.substring(0,10)+" "+text.substring(12,16);
+        String finaltext=text.substring(0,10)+" "+text.substring(11,16);
         date.setText(finaltext);
 
         TextView teamName1 = (TextView) convertView.findViewById(R.id.teamName1);
