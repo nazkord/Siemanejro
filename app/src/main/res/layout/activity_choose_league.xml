@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_centerVertical="true"
+    android:foregroundGravity="center">
 
     <Button
         android:id="@+id/germanButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:layout_marginStart="100dp"
+        android:textSize="20sp"
+        android:layout_marginEnd="100dp"
         android:text="Germany League"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +25,7 @@
         android:id="@+id/spainButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:layout_marginTop="32dp"
         android:text="Spain League"
         app:layout_constraintEnd_toEndOf="@+id/germanButton"
@@ -29,6 +36,8 @@
         android:id="@+id/franceButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
+
         android:layout_marginTop="32dp"
         android:text="France League"
         app:layout_constraintEnd_toEndOf="@+id/spainButton"
@@ -39,6 +48,8 @@
         android:id="@+id/italyButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
+
         android:layout_marginTop="32dp"
         android:text="Italy League"
         app:layout_constraintEnd_toEndOf="@+id/franceButton"
@@ -49,7 +60,8 @@
         android:id="@+id/englandButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:textSize="20sp"
+        android:layout_marginTop="170dp"
         android:text="England League"
         app:layout_constraintEnd_toEndOf="@+id/italyButton"
         app:layout_constraintStart_toStartOf="@+id/italyButton"

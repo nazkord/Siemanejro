@@ -49,5 +49,3 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
         return convertView;
     }
 }
-
-
