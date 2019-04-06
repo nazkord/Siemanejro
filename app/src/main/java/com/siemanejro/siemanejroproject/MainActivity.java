@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
             addRegisterButtonClicked();
             addTyperButtonClicked();
         }
-        catch (JsonSyntaxException e){}
+        catch (JsonSyntaxException e){
+
+        }
     }
 
 
