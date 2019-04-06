@@ -6,6 +6,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import model.Match;
@@ -21,9 +23,9 @@ public class Tipp extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.matches_list);
 
         MatchesAdapter matchesAdapter;
-
-        Match match_test = new Match("2137","Walaszek","Krzysiu");
-        Match match_test_2 = new Match("2138","Uaaa","XD");
+        DateTimeFormatter format =DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        Match match_test = new Match(LocalDateTime.parse("2137-02-20 12:23",format),"Walaszek","Krzysiu");
+        Match match_test_2 = new Match(LocalDateTime.parse("2131-02-20 10:23",format),"Uaaa","XD");
         /*
         TextView date = findViewById(R.id.date);
         date.setText(match_test.getMatchDate());

@@ -35,13 +35,13 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
             Match currentMatch = matches.get(position);
 
             TextView date = (TextView) listItem.findViewById(R.id.date);
-            date.setText(currentMatch.getMatchDate());
+            date.setText(currentMatch.getMatchDate().toString());
 
             TextView teamName1 = (TextView) listItem.findViewById(R.id.teamName1);
-            date.setText(currentMatch.getTeam1());
+            teamName1.setText(currentMatch.getTeam1());
 
             TextView teamName2 = (TextView) listItem.findViewById(R.id.teamName2);
-            date.setText(currentMatch.getTeam2());
+            teamName2.setText(currentMatch.getTeam2());
 
 
         }
