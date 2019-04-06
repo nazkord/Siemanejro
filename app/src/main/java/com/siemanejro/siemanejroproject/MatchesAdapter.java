@@ -39,7 +39,7 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
         Match currentMatch = matches.get(position);
 
         TextView date = (TextView) convertView.findViewById(R.id.dateTime);
-        date.setText(currentMatch.getMatchDate().toString());
+        date.setText(currentMatch.getMatchDateToString());
 
         TextView colon = (TextView) convertView.findViewById(R.id.colon);
         colon.setText(":");
