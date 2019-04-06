@@ -3,27 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".Tipp">
     <Button
         android:id="@+id/choose_date_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="2dp"
+        android:layout_weight="0.1"
         android:text="@string/choose_date"
-        android:layout_gravity="center"
-        android:layout_margin="5pt"/>
+        android:gravity="top" />
     <ListView
         android:id="@+id/matches_list"
+        android:layout_weight="0.8"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:gravity="center"/>
 
     <Button
         android:id="@+id/saveButton"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="2dp"
         android:layout_gravity="center"
-        android:padding="6dp"
-        android:text="@string/save" />
+        android:layout_weight="0.1"
+        android:text="@string/save"
+        android:gravity="bottom"/>
 
 </LinearLayout>
