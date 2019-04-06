@@ -30,6 +30,7 @@ public class Tipp extends AppCompatActivity {
     ListView listView;
     ArrayList<Match> listOfMatches;
     String leagueID;
+    String leagueName;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -47,6 +48,9 @@ public class Tipp extends AppCompatActivity {
 
         Intent intent = getIntent();
         leagueID = intent.getStringExtra("leagueID");
+        leagueName = intent.getStringExtra("leagueName");
+
+        getSupportActionBar().setTitle(leagueName);
 
         AllMatches allMatches = JsonImport.importMatchesFPM(leagueID);
         listOfMatches = allMatches.getMatches();
