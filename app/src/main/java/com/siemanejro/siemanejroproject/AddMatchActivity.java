@@ -90,7 +90,7 @@ public class AddMatchActivity extends AppCompatActivity {
         return null;
     }
 
-        private void inputDateClicked () {
+    private void inputDateClicked () {
         input_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

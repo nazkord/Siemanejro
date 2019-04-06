@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import json.UtcConverter;
 import model.Match;
@@ -12,7 +14,6 @@ public class AllMatches {
     public  ArrayList<Match> getMatches() {
         return matches;
     }
-
     public static void setStaticListOfMatches(ArrayList<Match> staticListOfMatches) {
         AllMatches.staticListOfMatches = staticListOfMatches;
     }
@@ -21,9 +22,4 @@ public class AllMatches {
         return staticListOfMatches;
     }
 
-    public void update (){
-        for (Match match : matches){
-            //match.setMatchDate(UtcConverter.utcConverter(match.getUtcDate()));
-        }
-    }
 }
