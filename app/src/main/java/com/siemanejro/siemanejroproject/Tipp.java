@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import model.Match;
 
 public class Tipp extends AppCompatActivity {
+
+    Button saveButton;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -34,6 +37,7 @@ public class Tipp extends AppCompatActivity {
 
         ListView listView;
         listView = (ListView)findViewById(R.id.matches_list);
+        saveButton = (Button) findViewById(R.id.saveButton);
 
         MatchesAdapter matchesAdapter;
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -59,4 +63,6 @@ public class Tipp extends AppCompatActivity {
 
 
     }
+
+
 }
