@@ -1,15 +1,12 @@
 package com.siemanejro.siemanejroproject;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import model.AllMatches;
@@ -41,9 +38,8 @@ public class Tipp extends AppCompatActivity {
         saveButton = (Button) findViewById(R.id.saveButton);
 
         MatchesAdapter matchesAdapter;
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        Match match_test = new Match(LocalDateTime.parse("2137-02-20 12:23",format),"Walaszek","Krzysiu");
-        Match match_test_2 = new Match(LocalDateTime.parse("2131-02-20 10:23",format),"Stoch","Ty Kurwo");
+        /*Match match_test = new Match(LocalDateTime.parse("2137-02-20 12:23",format),"Walaszek","Krzysiu");
+        Match match_test_2 = new Match(LocalDateTime.parse("2131-02-20 10:23",format),"Stoch","Ty Kurwo");*/
         /*
         TextView date = findViewById(R.id.date);
         date.setText(match_test.getMatchDate());
@@ -54,11 +50,8 @@ public class Tipp extends AppCompatActivity {
         TextView teamName2 = findViewById(R.id.teamName2);
         teamName2.setText(match_test.getTeam2());
         */
+        ArrayList<Match> arrayList = AllMatches.getStaticListOfMatches();
 
-        ArrayList<Match> arrayList = new ArrayList<>();
-        arrayList.add(match_test);
-        arrayList.add(match_test_2);
-       // ArrayList<Match> arrayList = AllMatches.getMatches();
 
         matchesAdapter = new MatchesAdapter(this,arrayList);
         listView.setAdapter(matchesAdapter);

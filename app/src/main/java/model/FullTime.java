@@ -1,6 +1,8 @@
 package model;
 
-public class FullTime {
+import java.io.Serializable;
+
+public class FullTime implements Serializable {
     private int HomeTeam;
     private int AwayTeam;
 
