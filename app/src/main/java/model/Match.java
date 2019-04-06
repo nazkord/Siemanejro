@@ -1,14 +1,16 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class Match {
-    private String matchDate;
+    private LocalDateTime matchDate;
     private String team1;
     private String team2;
     private Integer result1;
     private Integer result2;
 
     //constructor
-    public Match(String matchDate, String team1, String team2) {
+    public Match(LocalDateTime matchDate, String team1, String team2) {
         this.matchDate = matchDate;
         this.team1 = team1;
         this.team2 = team2;
@@ -30,11 +32,11 @@ public class Match {
         this.result2 = result2;
     }
 
-    public String getMatchDate() {
+    public LocalDateTime getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(String matchDate) {
+    public void setMatchDate(LocalDateTime matchDate) {
         this.matchDate = matchDate;
     }
 

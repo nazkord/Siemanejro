@@ -19,11 +19,24 @@
         android:id="@+id/input_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="datetime"
+        android:inputType="date"
+        android:clickable="true"
+        android:focusable="false"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="88dp"
-        android:hint="Type the date" />
+        android:hint="Type date" />
+
+    <EditText
+        android:id="@+id/input_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/input_date"
+        android:layout_alignLeft="@+id/input_date"
+        android:layout_alignStart="@+id/input_date"
+        android:hint="Type time" />
 
     <EditText
         android:id="@+id/input_first_team"
@@ -32,9 +45,9 @@
         android:layout_centerHorizontal="true"
         android:hint="Type the first team"
         android:inputType="text"
-        android:layout_below="@+id/input_date"
-        android:layout_alignLeft="@+id/input_date"
-        android:layout_alignStart="@+id/input_date"/>
+        android:layout_below="@+id/input_time"
+        android:layout_alignLeft="@+id/input_time"
+        android:layout_alignStart="@+id/input_time"/>
 
     <EditText
         android:id="@+id/input_second_team"
