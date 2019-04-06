@@ -1,11 +1,13 @@
 package com.siemanejro.siemanejroproject;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 //import android.support.design.widget.FloatingActionButton;
 //import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -36,7 +38,7 @@ public class AddMatchActivity extends AppCompatActivity {
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     //temporary (in future use of Database)
-    ArrayList<Match> matchesArray = new ArrayList<>();
+    ArrayList<Match> matchesArray;
 
 
     @Override
@@ -45,7 +47,9 @@ public class AddMatchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_match);
 
         addToolbar();
-
+        Intent intent = getIntent();
+        matchesArray = (ArrayList<Match>) intent.getSerializableExtra(MainActivity.MESSAGE_LIST_OF_MATCHES);
+        Log.d("AAAAAAAAAA",matchesArray.toString());
         input_date = (EditText) findViewById(R.id.input_date);
         input_time = (EditText) findViewById(R.id.input_time);
 

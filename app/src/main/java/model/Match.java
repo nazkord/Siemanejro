@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Match {
+public class Match implements Serializable {
     private LocalDateTime matchDate;
     private String team1;
     private String team2;
