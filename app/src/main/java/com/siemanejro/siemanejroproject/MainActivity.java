@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.gson.JsonSyntaxException;
@@ -27,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
     Button addMatchButton;
     Button Register;
     Button typer;
+<<<<<<< HEAD
+    Button setting;
+    ArrayList <Match> listOfMatches = new ArrayList <>();
+=======
+>>>>>>> 77de368db7394ccf36962bcde0925aea3e5753a8
 
 
     @Override
@@ -47,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (JsonSyntaxException e){}
     }
-
 
 
     private void addMatchButtonClicked() {
