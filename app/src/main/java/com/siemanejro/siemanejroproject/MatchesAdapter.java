@@ -10,8 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import model.Match;
+import model.Score;
 
 public class MatchesAdapter extends ArrayAdapter<Match> {
 
@@ -43,7 +45,6 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
         TextView teamName2 = (TextView) convertView.findViewById(R.id.teamName2);
         teamName2.setText(currentMatch.getAwayTeam().getName());
-
 
         return convertView;
     }

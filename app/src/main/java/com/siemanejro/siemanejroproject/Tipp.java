@@ -8,13 +8,18 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import model.AllMatches;
 import model.Match;
+import model.Score;
 
 public class Tipp extends AppCompatActivity {
 
     Button saveButton;
+    MatchesAdapter matchesAdapter;
+    ListView listView;
+    ArrayList<Match> listOfMatches;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -30,32 +35,21 @@ public class Tipp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tipp);
 
+        //to get able to come back to previous page
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ListView listView;
         listView = (ListView)findViewById(R.id.matches_list);
         saveButton = (Button) findViewById(R.id.saveButton);
 
-        MatchesAdapter matchesAdapter;
-        /*Match match_test = new Match(LocalDateTime.parse("2137-02-20 12:23",format),"Walaszek","Krzysiu");
-        Match match_test_2 = new Match(LocalDateTime.parse("2131-02-20 10:23",format),"Stoch","Ty Kurwo");*/
-        /*
-        TextView date = findViewById(R.id.date);
-        date.setText(match_test.getMatchDate());
+        listOfMatches = AllMatches.getStaticListOfMatches();
 
-        TextView teamName1 = findViewById(R.id.teamName1);
-        teamName1.setText(match_test.getTeam1());
-
-        TextView teamName2 = findViewById(R.id.teamName2);
-        teamName2.setText(match_test.getTeam2());
-        */
-        ArrayList<Match> arrayList = AllMatches.getStaticListOfMatches();
-
-
-        matchesAdapter = new MatchesAdapter(this,arrayList);
+        matchesAdapter = new MatchesAdapter(this, listOfMatches);
         listView.setAdapter(matchesAdapter);
 
+    }
+
+    private void saveButtonClicked() {
 
     }
 
