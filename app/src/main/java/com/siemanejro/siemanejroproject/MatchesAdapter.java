@@ -41,9 +41,6 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
         TextView date = (TextView) convertView.findViewById(R.id.dateTime);
         date.setText(currentMatch.getMatchDateToString());
 
-        TextView colon = (TextView) convertView.findViewById(R.id.colon);
-        colon.setText(":");
-
         TextView teamName1 = (TextView) convertView.findViewById(R.id.teamName1);
         teamName1.setText(currentMatch.getTeam1());
 

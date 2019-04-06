@@ -47,9 +47,7 @@ public class AddMatchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_match);
 
         addToolbar();
-        Intent intent = getIntent();
-        matchesArray = (ArrayList<Match>) intent.getSerializableExtra(MainActivity.MESSAGE_LIST_OF_MATCHES);
-        Log.d("AAAAAAAAAA",matchesArray.toString());
+        matchesArray = new ArrayList<>();
         input_date = (EditText) findViewById(R.id.input_date);
         input_time = (EditText) findViewById(R.id.input_time);
 

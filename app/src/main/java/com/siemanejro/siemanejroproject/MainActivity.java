@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     Button typer;
     ArrayList<Match> listOfMatches=new ArrayList<>();
 
-    public static final String MESSAGE_LIST_OF_MATCHES="list of matches";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent  = new Intent(MainActivity.this, AddMatchActivity.class);
-                Log.d("AAAAAAAAAA",listOfMatches.toString());
-                intent.putExtra(MESSAGE_LIST_OF_MATCHES,listOfMatches);
                 startActivity(intent);
             }
         });
