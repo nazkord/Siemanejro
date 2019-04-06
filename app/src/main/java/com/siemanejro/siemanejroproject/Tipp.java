@@ -77,7 +77,7 @@ public class Tipp extends AppCompatActivity {
         arrayList = AllMatches.getMatchesFromGivenDate(date);
         matchesAdapter = new MatchesAdapter(this, arrayList);
         listView.setAdapter(matchesAdapter);
-        saveButtonClicked();
+        chooseDateClicked();
 
 
     }
