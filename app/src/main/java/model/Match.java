@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Match implements Serializable {
     private LocalDateTime matchDate;
@@ -10,7 +9,8 @@ public class Match implements Serializable {
     private String team2;
     private Integer result1;
     private Integer result2;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private int id;
+    private String utcDate;
 
     //constructor
     public Match(LocalDateTime matchDate, String team1, String team2) {
@@ -39,10 +39,6 @@ public class Match implements Serializable {
         return matchDate;
     }
 
-    public String getMatchDateToString() {
-        return getMatchDate().format(formatter);
-    }
-
     public void setMatchDate(LocalDateTime matchDate) {
         this.matchDate = matchDate;
     }
@@ -61,5 +57,13 @@ public class Match implements Serializable {
 
     public void setTeam2(String team2) {
         this.team2 = team2;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getUtcDate() {
+        return utcDate;
     }
 }

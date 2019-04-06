@@ -23,31 +23,32 @@ import model.Match;
 
 public class AddMatchActivity extends AppCompatActivity {
 
-    EditText input_date;
-    EditText input_time;
 
-    // for chosing date in better way
-    Calendar calendarForDialog;
-    DatePickerDialog datePickerDialog;
+        EditText input_date;
+        EditText input_time;
 
-    EditText input_nameFirstTeam;
-    EditText input_nameSecondTeam;
-    Button addButton;
+        // for chosing date in better way
+        Calendar calendarForDialog;
+        DatePickerDialog datePickerDialog;
 
-    //our dates of match pattern
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        EditText input_nameFirstTeam;
+        EditText input_nameSecondTeam;
+        Button addButton;
 
-    //temporary (in future use of Database)
-    ArrayList<Match> matchesArray;
+        //our dates of match pattern
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        //temporary (in future use of Database)
+        ArrayList<Match> matchesArray;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        @Override
+        protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_match);
 
         addToolbar();
-        matchesArray = new ArrayList<>();
+        Intent intent = getIntent();
         input_date = (EditText) findViewById(R.id.input_date);
         input_time = (EditText) findViewById(R.id.input_time);
 
@@ -60,10 +61,9 @@ public class AddMatchActivity extends AppCompatActivity {
         addButtonClicked();
 
 
-
     }
 
-    private void addToolbar() {
+        private void addToolbar () {
         Toolbar Toolbar = (Toolbar) findViewById(R.id.toolbarAddMatch);
         setSupportActionBar(Toolbar);
         if (getSupportActionBar() != null) {
@@ -71,13 +71,13 @@ public class AddMatchActivity extends AppCompatActivity {
         }
     }
 
-    private void addButtonClicked() {
+        private void addButtonClicked () {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nameFirstTeam = input_nameFirstTeam.getText().toString();
                 String nameSecondTeam = input_nameSecondTeam.getText().toString();
-                Match matchTemp = new Match(convertStringDates(),nameFirstTeam,nameSecondTeam);
+                Match matchTemp = new Match(convertStringDates(), nameFirstTeam, nameSecondTeam);
                 matchesArray.add(matchTemp);
                 input_date.setText("");
                 input_time.setText("");
@@ -87,7 +87,7 @@ public class AddMatchActivity extends AppCompatActivity {
         });
     }
 
-    private LocalDateTime convertStringDates() {
+        private LocalDateTime convertStringDates () {
         String dateMatch = input_date.getText().toString();
         String timeMatch = input_time.getText().toString();
 
@@ -95,7 +95,7 @@ public class AddMatchActivity extends AppCompatActivity {
         return LocalDateTime.parse(dateTimeMatch, dateTimeFormatter);
     }
 
-    private void inputDateClicked() {
+        private void inputDateClicked () {
         input_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,11 +109,12 @@ public class AddMatchActivity extends AppCompatActivity {
                 datePickerDialog = new DatePickerDialog(AddMatchActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        input_date.setText(year + "-0" + (monthOfYear+1) + "-" + dayOfMonth);
+                        input_date.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
                     }
                 }, year, monthOfYear, dayOfMonth);
                 datePickerDialog.show();
             }
         });
     }
+
 }

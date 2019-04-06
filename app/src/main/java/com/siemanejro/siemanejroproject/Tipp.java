@@ -23,7 +23,7 @@ public class Tipp extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.matches_list);
 
         MatchesAdapter matchesAdapter;
-        DateTimeFormatter format =DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         Match match_test = new Match(LocalDateTime.parse("2137-02-20 12:23",format),"Walaszek","Krzysiu");
         Match match_test_2 = new Match(LocalDateTime.parse("2131-02-20 10:23",format),"Uaaa","XD");
         /*
