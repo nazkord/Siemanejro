@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 
 public class Match implements Serializable {
     private LocalDateTime matchDate;
-    private String team1;
-    private String team2;
+    private String homeTeam;
+    private String awayTeam;
     private Integer result1;
     private Integer result2;
     private int id;
@@ -16,10 +16,10 @@ public class Match implements Serializable {
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     //constructor
-    public Match(LocalDateTime matchDate, String team1, String team2) {
+    public Match(LocalDateTime matchDate, String homeTeam, String team2) {
         this.matchDate = matchDate;
-        this.team1 = team1;
-        this.team2 = team2;
+        this.homeTeam = homeTeam;
+        this.awayTeam = team2;
     }
 
     public Integer getResult1() {
@@ -51,19 +51,19 @@ public class Match implements Serializable {
     }
 
     public String getTeam1() {
-        return team1;
+        return homeTeam;
     }
 
     public void setTeam1(String team1) {
-        this.team1 = team1;
+        this.homeTeam = team1;
     }
 
     public String getTeam2() {
-        return team2;
+        return awayTeam;
     }
 
     public void setTeam2(String team2) {
-        this.team2 = team2;
+        this.awayTeam = team2;
     }
 
     public int getId() {

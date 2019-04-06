@@ -1,5 +1,7 @@
 package json;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class JsonService<T> { //Some net stuff.
         return result;
     }
 
-    static String getJsonStringByUrl(final String urlTarget) throws ExecutionException, InterruptedException {
+    static  String getJsonStringByUrl(final String urlTarget) throws ExecutionException, InterruptedException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Callable<String> callable = new Callable<String>() {
             @Override
