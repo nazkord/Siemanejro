@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -63,6 +64,7 @@ public class Tipp extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.matches_list);
         listView = (ListView) findViewById(R.id.matches_list);
         saveButton = (Button) findViewById(R.id.saveButton);
+        saveButtonClicked();
 
         chooseDateButton = findViewById(R.id.choose_date_button);
         chooseDateClicked();
@@ -71,19 +73,20 @@ public class Tipp extends AppCompatActivity {
         Date dateNew = new Date();
         Log.d("DATE", dateFormat.format(dateNew));
         date = dateFormat.format(dateNew).substring(0, 10);
-<<<<<<< HEAD
-        arrayList = AllMatches.getMatchesFromGivenDate(date);
-        matchesAdapter = new MatchesAdapter(this, arrayList);
-        listView.setAdapter(matchesAdapter);
-        chooseDateClicked();
-=======
->>>>>>> ddb617f8930eb6eba505d6c92d5126e759d8cc52
-
         listOfMatches = AllMatches.getMatchesFromGivenDate(date);
-
         matchesAdapter = new MatchesAdapter(this, listOfMatches);
         listView.setAdapter(matchesAdapter);
         chooseDateClicked();
+    }
+
+    private void saveButtonClicked() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast toast = Toast.makeText(Tipp.this,"Data Saved", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 
     private void chooseDateClicked() {
