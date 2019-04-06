@@ -39,10 +39,10 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
         date.setText(currentMatch.getMatchDateToString());
 
         TextView teamName1 = (TextView) convertView.findViewById(R.id.teamName1);
-        teamName1.setText(currentMatch.getTeam1());
+        teamName1.setText(currentMatch.getHomeTeam().getName());
 
         TextView teamName2 = (TextView) convertView.findViewById(R.id.teamName2);
-        teamName2.setText(currentMatch.getTeam2());
+        teamName2.setText(currentMatch.getAwayTeam().getName());
 
 
         return convertView;

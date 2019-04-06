@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         try {
             AllMatches allMatches = JsonImport.importMatchesFPM("2021");
+            Log.d("BROTHERHOOD:",allMatches.getMatches().toString());
             //allMatches.update();
            // Log.d("AAAAAAAAAA",allMatches.getMatches().toString());
 

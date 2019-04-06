@@ -6,9 +6,9 @@ import json.UtcConverter;
 import model.Match;
 
 public class AllMatches {
-    static ArrayList<Match> matches;
+    ArrayList<Match> matches;
 
-    public static ArrayList<Match> getMatches() {
+    public  ArrayList<Match> getMatches() {
         return matches;
     }
 
@@ -18,7 +18,6 @@ public class AllMatches {
         }
     }
 
-    public ArrayList<Match> getMatches() {
-        return matches;
-    }
+
+
 }

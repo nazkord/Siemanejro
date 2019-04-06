@@ -73,8 +73,8 @@ public class AddMatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String nameFirstTeam = input_nameFirstTeam.getText().toString();
                 String nameSecondTeam = input_nameSecondTeam.getText().toString();
-                Match matchTemp = new Match(convertStringDates(), nameFirstTeam, nameSecondTeam);
-                matchesArray.add(matchTemp);
+                //Match matchTemp = new Match(convertStringDates(), nameFirstTeam, nameSecondTeam);
+                //matchesArray.add(matchTemp);
                 input_date.setText("");
                 input_time.setText("");
                 input_nameFirstTeam.setText("");
