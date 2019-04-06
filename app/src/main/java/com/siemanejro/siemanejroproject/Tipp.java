@@ -57,8 +57,9 @@ public class Tipp extends AppCompatActivity {
 
         matchesAdapter = new MatchesAdapter(this, listOfMatches);
         chooseDateButton = findViewById(R.id.choose_date_button);
+        chooseDateClicked();
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date dateNew = new Date();
         Log.d("DATE", dateFormat.format(dateNew));
         date = dateFormat.format(dateNew).substring(0, 10);
@@ -66,11 +67,7 @@ public class Tipp extends AppCompatActivity {
         matchesAdapter = new MatchesAdapter(this, arrayList);
         listView.setAdapter(matchesAdapter);
 
-    }
 
-    private void saveButtonClicked() {
-
-        chooseDateClicked();
     }
 
     private void chooseDateClicked() {
