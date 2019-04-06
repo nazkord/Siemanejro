@@ -17,4 +17,8 @@ public class AllMatches {
             match.setMatchDate(UtcConverter.utcConverter(match.getUtcDate()));
         }
     }
+
+    public ArrayList<Match> getMatches() {
+        return matches;
+    }
 }
