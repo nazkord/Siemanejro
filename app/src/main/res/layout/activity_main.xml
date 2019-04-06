@@ -19,14 +19,15 @@
         android:padding="10dp"
         android:layout_margin="10dp"
         android:text="Typer"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="100dp"/>
 
     <Button
         android:id="@+id/openLoginActivity"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="1000dp"
         android:background="@layout/my_button_bg"
         android:layout_weight="1"
+        android:layout_marginTop="100dp"
         android:gravity="center"
         android:padding="10dp"
         android:layout_margin="10dp"
@@ -37,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@layout/my_button_bg"
+        android:layout_marginTop="100dp"
         android:layout_weight="1"
         android:gravity="center"
         android:padding="10dp"
