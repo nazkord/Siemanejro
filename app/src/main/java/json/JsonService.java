@@ -32,7 +32,7 @@ public class JsonService<T> { //Some net stuff.
 
     static  String getJsonStringByUrl(final String urlTarget) throws ExecutionException, InterruptedException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        Callable<String> callable = new Callable<String>() {
+        Callable <String> callable = new Callable<String>() {
             @Override
             public String call() throws Exception {
                 URL url = new URL(urlTarget);
