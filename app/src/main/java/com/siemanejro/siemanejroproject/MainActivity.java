@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         try {
             AllMatches allMatches = JsonImport.importMatchesFPM("2021");
-            allMatches.update();
+            //allMatches.update();
+           // Log.d("AAAAAAAAAA",allMatches.getMatches().toString());
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import model.AllMatches;
 import model.Match;
 
 public class Tipp extends AppCompatActivity {
@@ -57,6 +58,7 @@ public class Tipp extends AppCompatActivity {
         ArrayList<Match> arrayList = new ArrayList<>();
         arrayList.add(match_test);
         arrayList.add(match_test_2);
+       // ArrayList<Match> arrayList = AllMatches.getMatches();
 
         matchesAdapter = new MatchesAdapter(this,arrayList);
         listView.setAdapter(matchesAdapter);

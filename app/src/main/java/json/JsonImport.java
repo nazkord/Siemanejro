@@ -1,10 +1,13 @@
 package json;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import java.util.concurrent.ExecutionException;
 
 import model.AllMatches;
+import model.Match;
 
 public class JsonImport {
     public static AllMatches importMatchesFPM (String competitionID){
