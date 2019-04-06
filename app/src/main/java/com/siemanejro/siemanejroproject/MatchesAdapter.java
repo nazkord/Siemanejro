@@ -36,7 +36,7 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
         Match currentMatch = matches.get(position);
 
         TextView date = (TextView) convertView.findViewById(R.id.dateTime);
-        date.setText(currentMatch.getMatchDateToString());
+        date.setText(currentMatch.getUtcDate());
 
         TextView teamName1 = (TextView) convertView.findViewById(R.id.teamName1);
         teamName1.setText(currentMatch.getHomeTeam().getName());

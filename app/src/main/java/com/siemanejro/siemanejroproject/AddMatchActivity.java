@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -31,7 +31,6 @@ public class AddMatchActivity extends AppCompatActivity {
         Button addButton;
 
         //our dates of match pattern
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         //temporary (in future use of Database)
         ArrayList<Match> matchesArray;
@@ -88,7 +87,7 @@ public class AddMatchActivity extends AppCompatActivity {
         String timeMatch = input_time.getText().toString();
 
         String dateTimeMatch = dateMatch + " " + timeMatch;
-        return LocalDateTime.parse(dateTimeMatch, dateTimeFormatter);
+        return null;
     }
 
         private void inputDateClicked () {
