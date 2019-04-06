@@ -43,7 +43,7 @@ public class Tipp extends AppCompatActivity {
         MatchesAdapter matchesAdapter;
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         Match match_test = new Match(LocalDateTime.parse("2137-02-20 12:23",format),"Walaszek","Krzysiu");
-        Match match_test_2 = new Match(LocalDateTime.parse("2131-02-20 10:23",format),"Uaaa","XD");
+        Match match_test_2 = new Match(LocalDateTime.parse("2131-02-20 10:23",format),"Stoch","Ty Kurwo");
         /*
         TextView date = findViewById(R.id.date);
         date.setText(match_test.getMatchDate());
