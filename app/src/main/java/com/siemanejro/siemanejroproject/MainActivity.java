@@ -28,18 +28,14 @@ public class MainActivity extends AppCompatActivity {
     Button addMatchButton;
     Button Register;
     Button typer;
-<<<<<<< HEAD
     Button setting;
     ArrayList <Match> listOfMatches = new ArrayList <>();
-=======
->>>>>>> 77de368db7394ccf36962bcde0925aea3e5753a8
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
-            //AllMatches allMatches = JsonImport.importMatchesFPM("2021");
-            //allMatches.update();
+            AllMatches allMatches = JsonImport.importMatchesFPM("2021");
+            allMatches.update();
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
