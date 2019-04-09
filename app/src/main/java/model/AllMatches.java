@@ -1,45 +1,47 @@
 package model;
 
+
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-
-import json.UtcConverter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import model.Match;
+import java.util.ArrayList;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 
 public class AllMatches {
-    private ArrayList<Match> matches;
-    private static ArrayList<Match> staticListOfMatches = new ArrayList<>();
+    private ArrayList<Match> matches = new ArrayList<>();
 
-    public  ArrayList<Match> getMatches() {
+    public AllMatches() {
+    }
+
+    public void setMatches(ArrayList<Match> matches) {
+        this.matches = matches;
+    }
+
+    public ArrayList<Match> getMatches() {
         return matches;
     }
-    public static void setStaticListOfMatches(ArrayList<Match> staticListOfMatches) {
-        AllMatches.staticListOfMatches = staticListOfMatches;
-    }
 
-    public static ArrayList<Match> getStaticListOfMatches() {
-        return staticListOfMatches;
-    }
+    public ArrayList<Match> getMatchesFromGivenDate(final String dateInString) {
 
-    public void update (){
-        for (Match match : matches){
-            //match.setMatchDate(UtcConverter.utcConverter(match.getUtcDate()));
-        }
-    }
-    static public ArrayList<Match> getMatchesFromGivenDate(String date)
-    {
-        ArrayList<Match> matchList = new ArrayList<>();
-        for(Match match : staticListOfMatches)
-        {
-           if(match.getUtcDate().substring(0,10).equals(date))
-           {
-               matchList.add(match);
+        /// #TODO – make stream works
+
+       /* return matches.stream()
+                .map(Match.class::cast)
+                .filter(Match -> Match.getUtcDate().substring(0,10).equals(dateInString))
+                .collect(Collectors.toList()); */
+
+       ArrayList<Match> appropriateMatches = new ArrayList<>();
+       for(Match match : matches) {
+           if(match.getUtcDate().substring(0,10).equals(dateInString)) {
+               appropriateMatches.add(match);
            }
-        }
-        return matchList;
+       }
+
+       return appropriateMatches;
     }
 }

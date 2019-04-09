@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Map;
 
 import model.Match;
-import model.Score;
 
 public class MatchesAdapter extends ArrayAdapter<Match> {
 

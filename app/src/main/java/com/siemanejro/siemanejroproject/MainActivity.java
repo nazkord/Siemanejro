@@ -9,8 +9,6 @@ import android.widget.Button;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
-import json.JsonImport;
-import model.AllMatches;
 import model.Match;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,18 +17,11 @@ public class MainActivity extends AppCompatActivity {
     Button Register;
     Button typer;
     Button setting;
-    ArrayList <Match> listOfMatches = new ArrayList <>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
-            /*AllMatches allMatches = JsonImport.importMatchesFPM("2021");
-            listOfMatches = allMatches.getMatches();
-            AllMatches.setStaticListOfMatches(listOfMatches);
-            allMatches.update();
-*/
-
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             addMatchButton = (Button) findViewById(R.id.openAddMatchActivity);
@@ -57,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void addRegisterButtonClicked(){
+    private void addRegisterButtonClicked() {
         Register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -66,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void addTyperButtonClicked(){
+    private void addTyperButtonClicked() {
         typer.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

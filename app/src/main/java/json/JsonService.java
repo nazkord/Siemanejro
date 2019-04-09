@@ -1,12 +1,7 @@
 package json;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
-
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,20 +12,40 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import model.AllMatches;
+
 public class JsonService<T> { //Some net stuff.
-    static String TOKEN =  "21beafd163e54803a4e4ecbb25385336";
-    public T getObjectFromJson(String urlTarget, Class<T> myClass) throws ExecutionException, InterruptedException {
+    private String TOKEN =  "21beafd163e54803a4e4ecbb25385336";
+
+    /*public AllMatches getObjectFromJson(String urlTarget, Class<T> myClass) throws ExecutionException, InterruptedException {
         Gson gson = new Gson();
         String json;
-        T result;
+        AllMatches result;
 
         json = getJsonStringByUrl(urlTarget);
         result = gson.fromJson(json, myClass);
 
         return result;
+    }*/
+
+    public AllMatches importMatchesFPM (String competitionID) {
+
+        String url = "https://api.football-data.org/v2/competitions/" + competitionID + "/matches";
+
+        Gson gson = new Gson();
+        AllMatches matchesAllSeason = null;
+                //new AllMatches();
+        try {
+            matchesAllSeason = gson.fromJson(getJsonStringByUrl(url), AllMatches.class);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return  matchesAllSeason;
     }
 
-    static  String getJsonStringByUrl(final String urlTarget) throws ExecutionException, InterruptedException {
+    private String getJsonStringByUrl(final String urlTarget) throws ExecutionException, InterruptedException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Callable <String> callable = new Callable<String>() {
             @Override
@@ -57,7 +72,7 @@ public class JsonService<T> { //Some net stuff.
                     br.close();
                     return sb.toString();
 
-                }else {
+                } else {
                     throw new Exception("Status "+status);
                 }
             }
