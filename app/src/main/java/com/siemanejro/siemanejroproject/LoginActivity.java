@@ -356,6 +356,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 Person person = new Person(mName.getText().toString(), mEmailView.getText().toString());
                 Person.persons.add(person);
+                if(Person.persons.isEmpty())
+                    onCancelled();
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

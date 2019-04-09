@@ -20,6 +20,11 @@ public class Person {
 
     }
 
+    public Person(String name, String mail) {
+        this.name = name;
+        this.mail =  mail;
+    }
+
     public String getName() {
         return name;
     }
@@ -35,11 +40,4 @@ public class Person {
     public void setMail(String mail) {
         this.mail = mail;
     }
-
-    public Person(String name, String mail) {
-        this.name = name;
-        this.mail =  mail;
-    }
-
-
 }
