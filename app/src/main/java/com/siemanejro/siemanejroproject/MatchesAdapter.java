@@ -3,10 +3,12 @@ package com.siemanejro.siemanejroproject;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.time.format.DateTimeFormatter;
@@ -38,14 +40,25 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
         TextView date = (TextView) convertView.findViewById(R.id.dateTime);
         String text = currentMatch.getUtcDate();
-        String finaltext=text.substring(0,10)+" "+text.substring(11,16);
-        date.setText(finaltext);
+        String finalText = text.substring(0,10)+" "+text.substring(11,16);
+        date.setText(finalText);
+
 
         TextView teamName1 = (TextView) convertView.findViewById(R.id.teamName1);
         teamName1.setText(currentMatch.getHomeTeam().getName());
 
         TextView teamName2 = (TextView) convertView.findViewById(R.id.teamName2);
         teamName2.setText(currentMatch.getAwayTeam().getName());
+
+        //TODO: make status class ENUM (using information from website)
+
+        if(currentMatch.getStatus().equals("FINISHED")) {
+            EditText firstResult = (EditText) convertView.findViewById(R.id.result1);
+            firstResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
+
+            EditText secondResult = (EditText) convertView.findViewById(R.id.result2);
+            secondResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
+        }
 
         return convertView;
     }
