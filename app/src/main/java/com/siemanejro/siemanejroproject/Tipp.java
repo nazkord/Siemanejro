@@ -66,7 +66,7 @@ public class Tipp extends AppCompatActivity {
         chooseDateButton = findViewById(R.id.choose_date_button);
 
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String currentDateTime = LocalDateTime.now().format(dateFormat);
         selectedDate = currentDateTime;
         listOfMatches = allMatches.getMatchesFromGivenDate(currentDateTime);
