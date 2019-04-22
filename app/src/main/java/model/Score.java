@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 
+
 public class Score implements Serializable {
     private String winner;
     private FullTime fullTime;

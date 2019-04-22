@@ -1,15 +1,6 @@
 package model;
 
-
-import android.util.Log;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import model.Match;
 import java.util.ArrayList;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 
 public class AllMatches {
