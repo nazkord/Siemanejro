@@ -3,14 +3,14 @@ package model;
 import java.io.Serializable;
 
 public class FullTime implements Serializable {
-    private int HomeTeam;
-    private int AwayTeam;
+    private int homeTeam;
+    private int awayTeam;
 
     public int getHomeTeam() {
-        return HomeTeam;
+        return homeTeam;
     }
 
     public int getAwayTeam() {
-        return AwayTeam;
+        return awayTeam;
     }
 }

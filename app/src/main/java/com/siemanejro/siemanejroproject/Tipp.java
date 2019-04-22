@@ -26,6 +26,7 @@ public class Tipp extends AppCompatActivity {
 
     Button saveButton;
     Button chooseDateButton;
+    String selectedDate;
     MatchesAdapter matchesAdapter;
     ListView listView;
     ArrayList<Match> listOfMatches;
@@ -51,7 +52,7 @@ public class Tipp extends AppCompatActivity {
         leagueID = intent.getStringExtra("leagueID");
         leagueName = intent.getStringExtra("leagueName");
 
-        setToolbarTitleAndBackPressButton(leagueID);
+        setToolbarTitleAndBackPressButton(leagueName);
 
         JsonService jsonService = new JsonService();
 
@@ -65,11 +66,13 @@ public class Tipp extends AppCompatActivity {
         chooseDateButton = findViewById(R.id.choose_date_button);
 
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String currentDateTime = LocalDateTime.now().format(dateFormat);
+        selectedDate = currentDateTime;
         listOfMatches = allMatches.getMatchesFromGivenDate(currentDateTime);
         matchesAdapter = new MatchesAdapter(this, listOfMatches);
         listView.setAdapter(matchesAdapter);
+
         chooseDateClicked();
     }
 
@@ -100,13 +103,12 @@ public class Tipp extends AppCompatActivity {
     }
 
     private void openDatePickerDialog() {
-        Calendar calendarForDialog = Calendar.getInstance();
-        Integer year = calendarForDialog.get(Calendar.YEAR);
-        Integer monthOfYear = calendarForDialog.get(Calendar.MONTH);
-        Integer dayOfMonth = calendarForDialog.get(Calendar.DAY_OF_MONTH);
+        Integer year = Integer.valueOf(selectedDate.substring(0,4));
+        Integer monthOfYear = Integer.valueOf(selectedDate.substring(5,7)) - 1;
+        Integer dayOfMonth = Integer.valueOf(selectedDate.substring(8,10));
 
         // open dateDialogPicker
-        DatePickerDialog datePickerDialog = new DatePickerDialog(Tipp.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
@@ -114,17 +116,18 @@ public class Tipp extends AppCompatActivity {
                 String dayString = ((Integer)dayOfMonth).toString();
 
                 String dateInString = ((Integer)year).toString() + "-"
-                        + makeStringHaveToDigits(monthString) + "-"
-                        + makeStringHaveToDigits(dayString);
+                        + makeStringHaveTwoDigits(monthString) + "-"
+                        + makeStringHaveTwoDigits(dayString);
 
                 modifyListOfMatchesByDate(dateInString);
+                selectedDate = dateInString;
             }
         }, year, monthOfYear, dayOfMonth);
         datePickerDialog.show();
 
     }
 
-    private String makeStringHaveToDigits(String string) {
+    private String makeStringHaveTwoDigits(String string) {
         if(string.length() < 2) {
             return "0" + string;
         }
