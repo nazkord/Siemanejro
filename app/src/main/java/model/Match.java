@@ -9,6 +9,12 @@ public class Match implements Serializable {
     private Score score;
     private String id;
 
+    public String getStatus() {
+        return status;
+    }
+
+    private String status;
+
     public String getUtcDate() {
         return utcDate;
     }

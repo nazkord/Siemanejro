@@ -66,6 +66,7 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
             firstResult.setFocusable(false);
 
             secondResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
+            secondResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
             secondResult.setFocusable(false);
 
             switch (currentMatch.getScore().getWinner()) {

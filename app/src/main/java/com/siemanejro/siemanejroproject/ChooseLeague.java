@@ -19,6 +19,8 @@ public class ChooseLeague extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_league);
 
+        setToolbarBackPressButton();
+
         germanButton = (Button)findViewById(R.id.germanButton);
         spainButton = (Button)findViewById(R.id.spainButton);
         franceButton = (Button)findViewById(R.id.franceButton);
@@ -32,6 +34,11 @@ public class ChooseLeague extends AppCompatActivity {
         englandButtonClicked();
 
 
+    }
+
+    private void setToolbarBackPressButton() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true); //enable back press button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void germanButtonClicked (){
