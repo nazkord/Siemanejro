@@ -55,9 +55,11 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
         if(currentMatch.getStatus().equals("FINISHED")) {
             EditText firstResult = (EditText) convertView.findViewById(R.id.result1);
             firstResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
+            firstResult.setFocusable(false);
 
             EditText secondResult = (EditText) convertView.findViewById(R.id.result2);
             secondResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
+            secondResult.setFocusable(false);
         }
 
         return convertView;
