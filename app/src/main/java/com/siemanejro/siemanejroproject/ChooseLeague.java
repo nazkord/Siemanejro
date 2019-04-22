@@ -3,94 +3,48 @@ package com.siemanejro.siemanejroproject;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class ChooseLeague extends AppCompatActivity {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-    Button germanButton;
-    Button spainButton;
-    Button franceButton;
-    Button italyButton;
-    Button englandButton;
+
+public class ChooseLeague extends AppCompatActivity  {
+
+    ListView listOfLeagues;
+    ArrayAdapter<Leagues> leaguesArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_league);
 
-        germanButton = (Button)findViewById(R.id.germanButton);
-        spainButton = (Button)findViewById(R.id.spainButton);
-        franceButton = (Button)findViewById(R.id.franceButton);
-        italyButton = (Button)findViewById(R.id.italyButton);
-        englandButton = (Button)findViewById(R.id.englandButton);
+        listOfLeagues = (ListView) findViewById(R.id.leagues_list);
+        ArrayList<Leagues> arrayOfLeagues = new ArrayList<Leagues>(Arrays.asList(Leagues.values()));
+        leaguesArrayAdapter = new LeaguesAdapter(this, arrayOfLeagues);
+        listOfLeagues.setAdapter(leaguesArrayAdapter);
 
-        germanButtonClicked();
-        spainButtonClicked();
-        franceButtonClicked();
-        italyButtonClicked();
-        englandButtonClicked();
-
-
+        addListenerToListView(listOfLeagues);
     }
 
-    private void germanButtonClicked (){
-        germanButton.setOnClickListener(new View.OnClickListener() {
+    private void addListenerToListView(ListView listView) {
+        listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent  = new Intent(ChooseLeague.this, Tipp.class);
-                intent.putExtra("leagueID","2002");
-                intent.putExtra("leagueName","Germany League");
+                Leagues selectedLeague = (Leagues) adapterView.getAdapter().getItem(i);
+                intent.putExtra("leagueID",selectedLeague.getLeagueId());
+                intent.putExtra("leagueName",selectedLeague.getUiLeagueName());
                 startActivity(intent);
             }
         });
     }
-
-    private void spainButtonClicked () {
-        spainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ChooseLeague.this, Tipp.class);
-                intent.putExtra("leagueID", "2014");
-                intent.putExtra("leagueName","Spain League");
-                startActivity(intent);
-            }
-        });
-    }
-    private void franceButtonClicked (){
-            franceButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent  = new Intent(ChooseLeague.this, Tipp.class);
-                    intent.putExtra("leagueID","2015");
-                    intent.putExtra("leagueName","France League");
-                    startActivity(intent);
-                }
-            });
-        }
-
-    private void italyButtonClicked (){
-        italyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent  = new Intent(ChooseLeague.this, Tipp.class);
-                intent.putExtra("leagueID","2019");
-                intent.putExtra("leagueName","Italy League");
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void englandButtonClicked (){
-        englandButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent  = new Intent(ChooseLeague.this, Tipp.class);
-                intent.putExtra("leagueID","2021");
-                intent.putExtra("leagueName","England League");
-                startActivity(intent);
-            }
-        });
-    }
-    }
+}
 
