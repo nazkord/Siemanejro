@@ -22,9 +22,20 @@ public class ChooseLeague extends AppCompatActivity  {
     ArrayAdapter<Leagues> leaguesArrayAdapter;
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_league);
+
+        setToolbarBackPressButton();
 
         listOfLeagues = (ListView) findViewById(R.id.leagues_list);
         ArrayList<Leagues> arrayOfLeagues = new ArrayList<Leagues>(Arrays.asList(Leagues.values()));
@@ -32,6 +43,11 @@ public class ChooseLeague extends AppCompatActivity  {
         listOfLeagues.setAdapter(leaguesArrayAdapter);
 
         addListenerToListView(listOfLeagues);
+    }
+
+    private void setToolbarBackPressButton() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true); //enable back press button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void addListenerToListView(ListView listView) {
