@@ -28,21 +28,13 @@ public class JsonService<T> { //Some net stuff.
         return result;
     }*/
 
-    public AllMatches importMatchesFPM (String competitionID) {
+    public AllMatches importMatchesFPM (String competitionID) throws ExecutionException, InterruptedException {
 
         String url = "https://api.football-data.org/v2/competitions/" + competitionID + "/matches";
 
         Gson gson = new Gson();
-        AllMatches matchesAllSeason = null;
-                //new AllMatches();
-        try {
-            matchesAllSeason = gson.fromJson(getJsonStringByUrl(url), AllMatches.class);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return  matchesAllSeason;
+
+        return gson.fromJson(getJsonStringByUrl(url), AllMatches.class);
     }
 
     private String getJsonStringByUrl(final String urlTarget) throws ExecutionException, InterruptedException {

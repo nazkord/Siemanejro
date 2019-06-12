@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject;
+package com.siemanejro.siemanejroproject.typer;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.siemanejro.siemanejroproject.Leagues;
+import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
 
