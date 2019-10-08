@@ -9,7 +9,7 @@
     tools:context=".activities.MainActivity">
 
     <Button
-        android:id="@+id/openTyper"
+        android:id="@+id/openMatches"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"

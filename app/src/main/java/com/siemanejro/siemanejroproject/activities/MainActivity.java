@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
-            Matches = findViewById(R.id.openTyper);
+            Matches = findViewById(R.id.openMatches);
 
             addBettingButtonClicked();
         }
