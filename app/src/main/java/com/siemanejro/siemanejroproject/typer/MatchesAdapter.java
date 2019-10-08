@@ -1,11 +1,9 @@
-package com.siemanejro.siemanejroproject;
+package com.siemanejro.siemanejroproject.typer;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.time.format.DateTimeFormatter;
+import com.siemanejro.siemanejroproject.R;
+
 import java.util.ArrayList;
 
 import model.Match;

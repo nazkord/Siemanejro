@@ -1,23 +1,24 @@
-package com.siemanejro.siemanejroproject;
+package com.siemanejro.siemanejroproject.typer;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
+import com.siemanejro.siemanejroproject.R;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.concurrent.ExecutionException;
+
 import json.JsonService;
 import model.AllMatches;
 import model.Match;
@@ -56,24 +57,35 @@ public class Tipp extends AppCompatActivity {
 
         JsonService jsonService = new JsonService();
 
-        allMatches = jsonService.importMatchesFPM(leagueID);
+        try {
+            allMatches = jsonService.importMatchesFPM(leagueID);
 
-        listView = (ListView)findViewById(R.id.matches_list);
-        listView = (ListView) findViewById(R.id.matches_list);
-        saveButton = (Button) findViewById(R.id.saveButton);
+        } catch (ExecutionException | InterruptedException e) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Something gone wrong!")
+                    .setMessage(e.getMessage() + "\nCheck your internet connection")
+                    .setPositiveButton("Ok",null)
+                    .show();
+        }
+
+        listView = findViewById(R.id.matches_list);
+        listView = findViewById(R.id.matches_list);
+        saveButton = findViewById(R.id.saveButton);
+
         saveButtonClicked();
-
         chooseDateButton = findViewById(R.id.choose_date_button);
-
 
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String currentDateTime = LocalDateTime.now().format(dateFormat);
         selectedDate = currentDateTime;
-        listOfMatches = allMatches.getMatchesFromGivenDate(currentDateTime);
-        matchesAdapter = new MatchesAdapter(this, listOfMatches);
-        listView.setAdapter(matchesAdapter);
+        if(allMatches != null) {
+            listOfMatches = allMatches.getMatchesFromGivenDate(currentDateTime);
+            matchesAdapter = new MatchesAdapter(this, listOfMatches);
+            listView.setAdapter(matchesAdapter);
+        }
 
         chooseDateClicked();
+
     }
 
     private void setToolbarTitleAndBackPressButton(String title) {
@@ -135,9 +147,11 @@ public class Tipp extends AppCompatActivity {
     }
 
     private void modifyListOfMatchesByDate(String dateInString) {
-        listOfMatches = allMatches.getMatchesFromGivenDate(dateInString);
-        matchesAdapter.clear();
-        matchesAdapter.addAll(listOfMatches);
-        matchesAdapter.notifyDataSetChanged();
+        if(allMatches !=null) {
+            listOfMatches = allMatches.getMatchesFromGivenDate(dateInString);
+            matchesAdapter.clear();
+            matchesAdapter.addAll(listOfMatches);
+            matchesAdapter.notifyDataSetChanged();
+        }
     }
 }

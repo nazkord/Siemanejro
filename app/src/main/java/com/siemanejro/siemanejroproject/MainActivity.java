@@ -7,9 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.gson.JsonSyntaxException;
-
-import java.util.ArrayList;
-import model.Match;
+import com.siemanejro.siemanejroproject.typer.ChooseLeague;
 
 public class MainActivity extends AppCompatActivity {
 

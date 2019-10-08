@@ -1,9 +1,8 @@
-package com.siemanejro.siemanejroproject;
+package com.siemanejro.siemanejroproject.typer;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,7 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import java.io.Serializable;
+import com.siemanejro.siemanejroproject.Leagues;
+import com.siemanejro.siemanejroproject.R;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -38,8 +39,8 @@ public class ChooseLeague extends AppCompatActivity  {
 
         setToolbarBackPressButton();
 
-        listOfLeagues = (ListView) findViewById(R.id.leagues_list);
-        ArrayList<Leagues> arrayOfLeagues = new ArrayList<Leagues>(Arrays.asList(Leagues.values()));
+        listOfLeagues = findViewById(R.id.leagues_list);
+        ArrayList<Leagues> arrayOfLeagues = new ArrayList<>(Arrays.asList(Leagues.values()));
         leaguesArrayAdapter = new LeaguesAdapter(this, arrayOfLeagues);
         listOfLeagues.setAdapter(leaguesArrayAdapter);
 
