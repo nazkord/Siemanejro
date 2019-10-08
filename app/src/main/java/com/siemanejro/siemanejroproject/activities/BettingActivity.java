@@ -17,6 +17,7 @@ import com.siemanejro.siemanejroproject.R;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import json.JsonService;
 import model.AllMatches;
@@ -56,7 +57,11 @@ public class BettingActivity extends AppCompatActivity {
 
         JsonService jsonService = new JsonService();
 
-        allMatches = jsonService.importMatchesFPM(leagueID);
+        try {
+            allMatches = jsonService.importMatchesFPM(leagueID);
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
         listView = (ListView)findViewById(R.id.matches_list);
         listView = (ListView) findViewById(R.id.matches_list);
