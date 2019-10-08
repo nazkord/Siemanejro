@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <Button
         android:id="@+id/openTyper"
@@ -17,32 +17,7 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:layout_margin="10dp"
-        android:text="Typer"
+        android:text="Matches"
         android:layout_marginTop="100dp"/>
-
-    <Button
-        android:id="@+id/openLoginActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:text="Register" />
-
-    <Button
-        android:id="@+id/openAddMatchActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginTop="100dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:text="Add Match" />
-
 
 </LinearLayout>

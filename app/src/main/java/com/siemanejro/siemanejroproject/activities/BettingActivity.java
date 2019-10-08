@@ -1,28 +1,28 @@
-package com.siemanejro.siemanejroproject;
+package com.siemanejro.siemanejroproject.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
+import com.siemanejro.siemanejroproject.MatchesAdapter;
+import com.siemanejro.siemanejroproject.R;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+
 import json.JsonService;
 import model.AllMatches;
 import model.Match;
 
-public class Tipp extends AppCompatActivity {
+public class BettingActivity extends AppCompatActivity {
 
     Button saveButton;
     Button chooseDateButton;
@@ -86,7 +86,7 @@ public class Tipp extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(Tipp.this,"Data Saved", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(BettingActivity.this,"Data Saved", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });

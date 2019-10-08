@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject;
+package com.siemanejro.siemanejroproject.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -18,6 +18,8 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
+
+import com.siemanejro.siemanejroproject.R;
 
 import java.util.List;
 

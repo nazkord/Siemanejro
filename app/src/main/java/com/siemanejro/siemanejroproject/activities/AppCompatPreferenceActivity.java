@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject;
+package com.siemanejro.siemanejroproject.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
