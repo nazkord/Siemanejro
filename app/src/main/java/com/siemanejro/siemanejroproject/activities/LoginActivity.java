@@ -1,8 +1,10 @@
-package com.siemanejro.siemanejroproject;
+package com.siemanejro.siemanejroproject.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -20,7 +22,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -30,15 +31,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.siemanejro.siemanejroproject.R;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import model.Person;
+import communication.Client;
+import model.User;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
- * A login screen that offers login via email/password.
+ * A name screen that offers name via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -48,19 +53,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
+     * Keep track of the name task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mName;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -71,16 +68,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //to get able to come back to previous page
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.name);
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        // Set up the name form.
+        mEmailView = findViewById(R.id.email);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -134,15 +126,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return false;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == android.R.id.home) {
-            this.finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     /**
      * Callback received when a permissions request has been completed.
      */
@@ -158,9 +141,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to sign in or register the account specified by the name form.
      * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
+     * errors are presented and no actual name attempt is made.
      */
     private void attemptLogin() {
         if (mAuthTask != null) {
@@ -168,12 +151,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mName.setError(null);
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
-        String name = mName.getText().toString();
+        // Store values at the time of the name attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
@@ -199,12 +180,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
+            // There was an error; don't attempt name and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+            // perform the user name attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
@@ -213,7 +194,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return email.length() > 4;
     }
 
     private boolean isPasswordValid(String password) {
@@ -222,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     /**
-     * Shows the progress UI and hides the login form.
+     * Shows the progress UI and hides the name form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
@@ -312,13 +293,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
+     * Represents an asynchronous name/registration task used to authenticate
      * the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
         private final String mPassword;
+
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -327,24 +309,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
+            Optional<User> optionalUser = Client.SIEMAJERO.get().loginUser(mEmail, mPassword);
+
+            optionalUser.ifPresent(user -> {
+                //TODO: should a make this as separate method or even SharedPreference class
+                //TODO: consider add token or only one value: boolean logged;
+
+                SharedPreferences mPreferences;
+                mPreferences = getSharedPreferences("your_prefs", LoginActivity.MODE_PRIVATE);
+                SharedPreferences.Editor prefEditor;
+
+                prefEditor = mPreferences.edit();
+                prefEditor.putString(getString(R.string.shPref_login_key), mEmail);
+                prefEditor.putString(getString(R.string.shPref_password_key), mPassword);
+                prefEditor.apply();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            });
+
 
             // TODO: register the new account here.
+
+
             return true;
         }
 
@@ -354,10 +341,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                Person person = new Person(mName.getText().toString(), mEmailView.getText().toString());
-                Person.persons.add(person);
-                if(Person.persons.isEmpty())
-                    onCancelled();
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

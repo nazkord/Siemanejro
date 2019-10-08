@@ -1,37 +1,39 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Match implements Serializable {
+    private Long id;
     private String utcDate;
-    private Team homeTeam;
-    private Team awayTeam;
+    private FootballTeam homeFootballTeam;
+    private FootballTeam awayFootballTeam;
     private Score score;
-    private String id;
+    private String status;
 
     public String getStatus() {
         return status;
     }
 
-    private String status;
-
     public String getUtcDate() {
         return utcDate;
     }
 
-    public Team getHomeTeam() {
-        return homeTeam;
+    public FootballTeam getHomeFootballTeam() {
+        return homeFootballTeam;
     }
 
-    public Team getAwayTeam() {
-        return awayTeam;
+    public FootballTeam getAwayFootballTeam() {
+        return awayFootballTeam;
     }
 
     public Score getScore() {
         return score;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 }

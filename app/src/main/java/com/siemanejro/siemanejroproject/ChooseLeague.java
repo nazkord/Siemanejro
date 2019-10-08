@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject.typer;
+package com.siemanejro.siemanejroproject;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.siemanejro.siemanejroproject.Leagues;
-import com.siemanejro.siemanejroproject.R;
+import com.siemanejro.siemanejroproject.activities.BettingActivity;
+import com.siemanejro.siemanejroproject.typer.LeaguesAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,8 +39,8 @@ public class ChooseLeague extends AppCompatActivity  {
 
         setToolbarBackPressButton();
 
-        listOfLeagues = findViewById(R.id.leagues_list);
-        ArrayList<Leagues> arrayOfLeagues = new ArrayList<>(Arrays.asList(Leagues.values()));
+        listOfLeagues = (ListView) findViewById(R.id.leagues_list);
+        ArrayList<Leagues> arrayOfLeagues = new ArrayList<Leagues>(Arrays.asList(Leagues.values()));
         leaguesArrayAdapter = new LeaguesAdapter(this, arrayOfLeagues);
         listOfLeagues.setAdapter(leaguesArrayAdapter);
 
@@ -56,7 +56,7 @@ public class ChooseLeague extends AppCompatActivity  {
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent  = new Intent(ChooseLeague.this, Tipp.class);
+                Intent intent  = new Intent(ChooseLeague.this, BettingActivity.class);
                 Leagues selectedLeague = (Leagues) adapterView.getAdapter().getItem(i);
                 intent.putExtra("leagueID",selectedLeague.getLeagueId());
                 intent.putExtra("leagueName",selectedLeague.getUiLeagueName());

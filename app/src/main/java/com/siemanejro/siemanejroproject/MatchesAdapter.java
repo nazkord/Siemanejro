@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject.typer;
+package com.siemanejro.siemanejroproject;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
 
@@ -50,10 +48,10 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
 
         TextView teamName1 = (TextView) convertView.findViewById(R.id.teamName1);
-        teamName1.setText(currentMatch.getHomeTeam().getName());
+        teamName1.setText(currentMatch.getHomeFootballTeam().getName());
 
         TextView teamName2 = (TextView) convertView.findViewById(R.id.teamName2);
-        teamName2.setText(currentMatch.getAwayTeam().getName());
+        teamName2.setText(currentMatch.getAwayFootballTeam().getName());
 
         EditText firstResult = (EditText) convertView.findViewById(R.id.result1);
         EditText secondResult = (EditText) convertView.findViewById(R.id.result2);

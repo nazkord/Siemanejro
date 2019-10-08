@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".typer.Tipp">
+    tools:context=".activities.BettingActivity">
     <Button
         android:id="@+id/choose_date_button"
         android:layout_width="wrap_content"
