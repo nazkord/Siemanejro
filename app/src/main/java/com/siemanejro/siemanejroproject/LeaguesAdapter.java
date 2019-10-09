@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject.typer;
+package com.siemanejro.siemanejroproject;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

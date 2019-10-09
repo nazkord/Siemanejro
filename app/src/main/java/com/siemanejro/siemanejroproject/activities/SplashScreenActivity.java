@@ -17,7 +17,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         Intent activityIntent;
-        SharedPreferences myPrefs = this.getSharedPreferences(getString(R.string.login_preferences_file), SplashScreenActivity.MODE_PRIVATE);
+        SharedPreferences myPrefs = this.getSharedPreferences(getString(R.string.login_preferences_key), SplashScreenActivity.MODE_PRIVATE);
         String userName = myPrefs.getString(getString(R.string.shPref_login_key), null);
 
         if(userName != null) {

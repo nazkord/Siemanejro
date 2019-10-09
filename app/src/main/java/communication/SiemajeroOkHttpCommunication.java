@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import model.Bet;
 import model.User;
 import okhttp3.Credentials;
 import okhttp3.HttpUrl;
@@ -20,6 +21,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     private OkHttpClient client;
     private User loggedInUser;
     private ObjectMapper objectMapper;
+    private static String basicUrl = "http://192.168.0.102:8080";
 
     SiemajeroOkHttpCommunication() {
         init();
@@ -37,9 +39,21 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     }
 
     @Override
+    public List<Bet> getUsersBet(Long userId) {
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(basicUrl + "/bets"))
+                .newBuilder();
+
+//        Request userRequest = new Request.Builder()
+//                .url(urlBuilder.build().toString())
+//                .addHeader("Authorization", Credentials.basic(userName, password))
+//                .build();
+        return null;
+    }
+
+    @Override
     public Optional<User> loginUser(String userName, String password) {
 
-        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse("http://192.168.0.104:8080/users"))
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(basicUrl + "/users"))
                 .newBuilder()
                 .addQueryParameter("userName", userName);
 

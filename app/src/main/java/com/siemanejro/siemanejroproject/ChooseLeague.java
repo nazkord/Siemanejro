@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.siemanejro.siemanejroproject.activities.BettingActivity;
-import com.siemanejro.siemanejroproject.typer.LeaguesAdapter;
+import com.siemanejro.siemanejroproject.LeaguesAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -21,8 +21,7 @@
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".activities.BettingActivity" />
-        <activity
-            android:name=".activities.SplashScreenActivity">
+        <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,9 +30,11 @@
         </activity>
         <activity
             android:name=".activities.MainActivity"
-            android:label="Menu"></activity>
-        <activity android:name=".activities.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="Menu" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity android:name=".activities.UserBetsActivity"></activity>
     </application>
 
 </manifest>

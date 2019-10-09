@@ -317,8 +317,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 //TODO: should a make this as separate method or even SharedPreference class
                 //TODO: consider add token or only one value: boolean logged;
 
-                SharedPreferences mPreferences;
-                mPreferences = getSharedPreferences("your_prefs", LoginActivity.MODE_PRIVATE);
+                SharedPreferences mPreferences = getSharedPreferences(getString(R.string.login_preferences_key), LoginActivity.MODE_PRIVATE);
                 SharedPreferences.Editor prefEditor;
 
                 prefEditor = mPreferences.edit();

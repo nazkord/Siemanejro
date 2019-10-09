@@ -91,7 +91,8 @@
     <string name="save">Save</string>
     <string name="choose_date">CHOOSE DATE</string>
     <string name="title_activity_login2">Sign in</string>
-    <string name="login_preferences_file">login_preferences</string>
     <string name="shPref_login_key">USERNAME</string>
     <string name="shPref_password_key">PASSWORD</string>
+    <string name="userBetsActivityName">My Bets</string>
+    <string name="login_preferences_key">login1234</string>
 </resources>

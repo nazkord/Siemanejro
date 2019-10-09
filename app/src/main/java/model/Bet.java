@@ -1,0 +1,77 @@
+package model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.Objects;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Bet {
+    private Long id;
+    private Match match;
+    private User user;
+    private Score score;
+    private Integer result;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+    public Integer getResult() {
+        return result;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bet bet = (Bet) o;
+        return Objects.equals(id, bet.id) &&
+                Objects.equals(match, bet.match) &&
+                Objects.equals(user, bet.user) &&
+                Objects.equals(score, bet.score) &&
+                Objects.equals(result, bet.result);
+    }
+
+    @Override
+    public String toString() {
+        return "Bet{" +
+                "id=" + id +
+                ", match=" + match +
+                ", user=" + user +
+                ", score=" + score +
+                ", result=" + result +
+                '}';
+    }
+}
