@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -38,6 +37,7 @@ import java.util.List;
 import java.util.Optional;
 
 import communication.Client;
+import loginUtils.SharedPrefUtil;
 import model.User;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -314,16 +314,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Optional<User> optionalUser = Client.SIEMAJERO.get().loginUser(mEmail, mPassword);
 
             optionalUser.ifPresent(user -> {
-                //TODO: should a make this as separate method or even SharedPreference class
                 //TODO: consider add token or only one value: boolean logged;
 
-                SharedPreferences mPreferences = getSharedPreferences(getString(R.string.login_preferences_key), LoginActivity.MODE_PRIVATE);
-                SharedPreferences.Editor prefEditor;
+//                SharedPreferences mPreferences = getSharedPreferences(getString(R.string.login_preferences_key), LoginActivity.MODE_PRIVATE);
+//                SharedPreferences.Editor prefEditor;
+//
+//                prefEditor = mPreferences.edit();
+//                prefEditor.putString(getString(R.string.shPref_login_key), mEmail);
+//                prefEditor.putString(getString(R.string.shPref_password_key), mPassword);
+//                prefEditor.apply();
 
-                prefEditor = mPreferences.edit();
-                prefEditor.putString(getString(R.string.shPref_login_key), mEmail);
-                prefEditor.putString(getString(R.string.shPref_password_key), mPassword);
-                prefEditor.apply();
+                SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.setLoggerUser(LoginActivity.this, new User(mEmail,mPassword));
+
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             });
 

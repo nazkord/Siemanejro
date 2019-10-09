@@ -4,21 +4,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.R;
 
 import java.util.Optional;
 
+import loginUtils.SharedPrefUtil;
+
 public class SplashScreenActivity extends AppCompatActivity {
+
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        textView = findViewById(R.id.loadingTextView);
+
         Intent activityIntent;
-        SharedPreferences myPrefs = this.getSharedPreferences(getString(R.string.login_preferences_key), SplashScreenActivity.MODE_PRIVATE);
-        String userName = myPrefs.getString(getString(R.string.shPref_login_key), null);
+        String userName = SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.getLoggerUser(SplashScreenActivity.this).getName();
 
         if(userName != null) {
             activityIntent = new Intent(this, MainActivity.class);
