@@ -95,4 +95,5 @@
     <string name="shPref_password_key">PASSWORD</string>
     <string name="userBetsActivityName">My Bets</string>
     <string name="login_preferences_key">login1234</string>
+    <string name="shPref_id_key">ID</string>
 </resources>

@@ -11,7 +11,9 @@ import com.siemanejro.siemanejroproject.R;
 
 import java.util.Optional;
 
+import communication.Client;
 import loginUtils.SharedPrefUtil;
+import model.User;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -25,9 +27,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         textView = findViewById(R.id.loadingTextView);
 
         Intent activityIntent;
-        String userName = SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.getLoggerUser(SplashScreenActivity.this).getName();
+        User user = SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.getLoggerUser(SplashScreenActivity.this);
+        Client.SIEMAJERO.get().setLoggedInUser(user);
 
-        if(userName != null) {
+        if(user.getName() != null) {
             activityIntent = new Intent(this, MainActivity.class);
         } else {
             activityIntent = new Intent(this, LoginActivity.class);

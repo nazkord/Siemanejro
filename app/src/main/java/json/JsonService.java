@@ -15,7 +15,7 @@ import java.util.concurrent.Future;
 import model.AllMatches;
 
 public class JsonService<T> { //Some net stuff.
-    private String TOKEN =  "21beafd163e54803a4e4ecbb25385336";
+    private String TOKEN =  "7d273acc9c9548c9885398f85780fe2e";
 
     /*public AllMatches getObjectFromJson(String urlTarget, Class<T> myClass) throws ExecutionException, InterruptedException {
         Gson gson = new Gson();

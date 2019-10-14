@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject;
+package com.siemanejro.siemanejroproject.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

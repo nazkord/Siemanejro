@@ -315,17 +315,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             optionalUser.ifPresent(user -> {
                 //TODO: consider add token or only one value: boolean logged;
-
-//                SharedPreferences mPreferences = getSharedPreferences(getString(R.string.login_preferences_key), LoginActivity.MODE_PRIVATE);
-//                SharedPreferences.Editor prefEditor;
-//
-//                prefEditor = mPreferences.edit();
-//                prefEditor.putString(getString(R.string.shPref_login_key), mEmail);
-//                prefEditor.putString(getString(R.string.shPref_password_key), mPassword);
-//                prefEditor.apply();
-
-                SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.setLoggerUser(LoginActivity.this, new User(mEmail,mPassword));
-
+                user.setPassword(mPassword);
+                SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.setLoggerUser(LoginActivity.this, user);
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             });
 

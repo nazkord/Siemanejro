@@ -9,7 +9,7 @@ public class Bet {
     private Long id;
     private Match match;
     private User user;
-    private Score score;
+    private Score userScore;
     private Integer result;
 
     public Long getId() {
@@ -36,12 +36,12 @@ public class Bet {
         this.user = user;
     }
 
-    public Score getScore() {
-        return score;
+    public Score getUserScore() {
+        return userScore;
     }
 
-    public void setScore(Score score) {
-        this.score = score;
+    public void setUserScore(Score userScore) {
+        this.userScore = userScore;
     }
 
     public Integer getResult() {
@@ -60,7 +60,7 @@ public class Bet {
         return Objects.equals(id, bet.id) &&
                 Objects.equals(match, bet.match) &&
                 Objects.equals(user, bet.user) &&
-                Objects.equals(score, bet.score) &&
+                Objects.equals(userScore, bet.userScore) &&
                 Objects.equals(result, bet.result);
     }
 
@@ -70,7 +70,7 @@ public class Bet {
                 "id=" + id +
                 ", match=" + match +
                 ", user=" + user +
-                ", score=" + score +
+                ", userScore=" + userScore +
                 ", result=" + result +
                 '}';
     }

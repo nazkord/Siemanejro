@@ -11,4 +11,6 @@ public interface SiemajeroCommunication {
     Optional<User> loginUser(String userName, String password);
     User createUser(User newUser);
     List<Bet> getUsersBet(Long userId);
+    User getLoggedInUser();
+    void setLoggedInUser(User uSer);
 }

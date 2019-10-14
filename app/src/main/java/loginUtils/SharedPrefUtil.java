@@ -15,9 +15,10 @@ public enum SharedPrefUtil {
         Context context = activity.getApplicationContext();
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_preferences_key), Context.MODE_PRIVATE);
 
+        Long id = sharedPref.getLong(context.getString(R.string.shPref_id_key), 0);
         String userName = sharedPref.getString(context.getString(R.string.shPref_login_key), null);
         String userPassword = sharedPref.getString(context.getString(R.string.shPref_password_key), null);
-        return new User(userName,userPassword);
+        return new User(id,userName,userPassword);
     }
 
     public void setLoggerUser(Activity activity, User user) {
@@ -26,6 +27,7 @@ public enum SharedPrefUtil {
         SharedPreferences.Editor prefEditor = sharedPref.edit();
         prefEditor.putString(context.getString(R.string.shPref_login_key), user.getName());
         prefEditor.putString(context.getString(R.string.shPref_password_key), user.getPassword());
+        prefEditor.putLong(context.getString(R.string.shPref_id_key), user.getId());
         prefEditor.apply();
     }
 }

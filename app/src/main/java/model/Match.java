@@ -7,26 +7,36 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Match implements Serializable {
     private Long id;
+    private Competition competition;
     private String utcDate;
-    private FootballTeam homeFootballTeam;
-    private FootballTeam awayFootballTeam;
+    private Integer matchday;
+    private FootballTeam homeTeam;
+    private FootballTeam awayTeam;
     private Score score;
     private String status;
 
+    public Competition getCompetition() {
+        return competition;
+    }
+
     public String getStatus() {
         return status;
+    }
+
+    public Integer getMatchday() {
+        return matchday;
     }
 
     public String getUtcDate() {
         return utcDate;
     }
 
-    public FootballTeam getHomeFootballTeam() {
-        return homeFootballTeam;
+    public FootballTeam getHomeTeam() {
+        return homeTeam;
     }
 
-    public FootballTeam getAwayFootballTeam() {
-        return awayFootballTeam;
+    public FootballTeam getAwayTeam() {
+        return awayTeam;
     }
 
     public Score getScore() {

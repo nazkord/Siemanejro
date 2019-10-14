@@ -13,20 +13,27 @@ import com.siemanejro.siemanejroproject.R;
 public class MainActivity extends AppCompatActivity {
 
     Button Matches;
+    Button GetUserBets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
             Matches = findViewById(R.id.openMatches);
+            GetUserBets = findViewById(R.id.getUserBetsbutton);
 
             addBettingButtonClicked();
-        }
-        catch (JsonSyntaxException e){
+            getUserBetsButtonClicked();
+    }
 
-        }
+    private void getUserBetsButtonClicked() {
+        GetUserBets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, UserBetsActivity.class));
+            }
+        });
     }
 
     private void addBettingButtonClicked() {

@@ -11,7 +11,7 @@ import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.siemanejro.siemanejroproject.MatchesAdapter;
+import com.siemanejro.siemanejroproject.Adapters.MatchesAdapter;
 import com.siemanejro.siemanejroproject.R;
 
 import java.time.LocalDateTime;

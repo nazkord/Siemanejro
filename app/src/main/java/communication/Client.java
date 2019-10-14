@@ -4,7 +4,7 @@ public enum Client {
 
     SIEMAJERO(new SiemajeroOkHttpCommunication());
 
-    private Client(SiemajeroCommunication siemajeroComm) {
+    Client(SiemajeroCommunication siemajeroComm) {
         this.siemajeroComm = siemajeroComm;
     }
 

@@ -1,5 +1,7 @@
 package communication;
 
+import android.content.Context;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -8,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import loginUtils.SharedPrefUtil;
 import model.Bet;
 import model.User;
 import okhttp3.Credentials;
@@ -21,7 +24,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     private OkHttpClient client;
     private User loggedInUser;
     private ObjectMapper objectMapper;
-    private static String basicUrl = "http://192.168.0.102:8080";
+    private static String basicUrl = "http://192.168.0.105:8080";
 
     SiemajeroOkHttpCommunication() {
         init();
@@ -39,14 +42,41 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     }
 
     @Override
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    @Override
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
+    }
+
+    @Override
     public List<Bet> getUsersBet(Long userId) {
+
+        //TODO: save bets from server for better user experience (latest bets can show even without network)
+
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(basicUrl + "/bets"))
                 .newBuilder();
 
-//        Request userRequest = new Request.Builder()
-//                .url(urlBuilder.build().toString())
-//                .addHeader("Authorization", Credentials.basic(userName, password))
-//                .build();
+        Request userRequest = new Request.Builder()
+                .url(urlBuilder.build().toString())
+                .addHeader("Authorization", Credentials.basic(loggedInUser.getName(), loggedInUser.getPassword()))
+                .build();
+
+
+        try {
+            ResponseBody responseBody = client.newCall(userRequest).execute().body();
+            if (responseBody != null) {
+                return objectMapper.readValue(responseBody.string(), new TypeReference<List<Bet>>() {
+                });
+            } else {
+                //TODO: do sth with null responseBody
+            }
+        } catch (Exception e) {
+            //TODO: add to log
+            return null;
+        }
         return null;
     }
 
@@ -64,7 +94,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
 
         try {
             ResponseBody responseBody = client.newCall(userRequest).execute().body();
-            //TODO: do sth with null responseBody
+            //TODO: do sth with null responseBody (string???)
             List<User> users = objectMapper.readValue(responseBody.string(), new TypeReference<List<User>>() {});
 
             Optional.ofNullable(users).ifPresent(u -> {
