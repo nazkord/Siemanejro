@@ -2,29 +2,29 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/dataOfMatch"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:layout_weight="1"
         android:textSize="18sp"
         android:gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/teamName1"
@@ -44,72 +44,68 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="0.5"
             android:orientation="horizontal"
+            android:gravity="center"
             android:paddingLeft="7dp"
             android:paddingRight="7dp">
 
             <TextView
                 android:id="@+id/matchResult1"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/colon"
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.1"
-                android:gravity="center"
                 android:text="@string/colon"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textStyle="bold" />
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/matchResult2"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:gravity="center"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:layout_weight="0.5"
+            android:gravity="center"
             android:paddingLeft="7dp"
             android:paddingRight="7dp">
 
             <TextView
                 android:id="@+id/userBet1"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/colon2"
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.1"
-                android:gravity="center"
                 android:text="@string/colon"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textStyle="bold" />
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/userBet2"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:gravity="center" />
+                android:gravity="center"/>
 
         </LinearLayout>
 

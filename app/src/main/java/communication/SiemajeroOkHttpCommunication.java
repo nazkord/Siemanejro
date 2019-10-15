@@ -24,7 +24,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     private OkHttpClient client;
     private User loggedInUser;
     private ObjectMapper objectMapper;
-    private static String basicUrl = "http://192.168.0.105:8080";
+    private static String basicUrl = "http://192.168.0.102:8080";
 
     SiemajeroOkHttpCommunication() {
         init();

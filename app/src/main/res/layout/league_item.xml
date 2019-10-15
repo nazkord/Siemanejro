@@ -3,7 +3,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:layout_marginTop="20dp">
+    android:layout_marginTop="20dp"
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/imageOfLeague"
@@ -12,20 +13,14 @@
         android:contentDescription="imageOfLeague"
         android:layout_weight="0.3"/>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/nameOfLeague"
         android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:textAppearanceMedium"
         android:layout_weight="0.7"
-        android:layout_height="80dp"
-        android:gravity="start">
-
-        <TextView
-            android:id="@+id/nameOfLeague"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textStyle="bold"
-            android:layout_marginStart="5dp"
-            android:gravity="center" />
-    </LinearLayout>
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center"/>
 
 </LinearLayout>

@@ -26,9 +26,6 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
         this.matches = matches;
     }
 
-    private EditText firstResult;
-    private EditText secondResult;
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -56,6 +53,7 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
         EditText firstResult = (EditText) convertView.findViewById(R.id.result1);
         EditText secondResult = (EditText) convertView.findViewById(R.id.result2);
+
         //TODO: make status class ENUM (using different type of status [->website])
 
         if(currentMatch.getStatus().equals("FINISHED")) {

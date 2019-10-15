@@ -29,7 +29,7 @@ public class BetsAdapter extends ArrayAdapter<Bet> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        //TODO: work, but need to be done using recyclerView
+        //TODO: work, but need to be done using recyclerView (check)
 
         if (convertView == null) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
