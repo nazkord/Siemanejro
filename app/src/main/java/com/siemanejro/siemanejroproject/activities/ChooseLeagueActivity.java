@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject;
+package com.siemanejro.siemanejroproject.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,15 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.siemanejro.siemanejroproject.activities.BettingActivity;
+import com.siemanejro.siemanejroproject.R;
 import com.siemanejro.siemanejroproject.Adapters.LeaguesAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import model.Leagues;
 
 
-public class ChooseLeague extends AppCompatActivity  {
+public class ChooseLeagueActivity extends AppCompatActivity  {
 
     ListView listOfLeagues;
     ArrayAdapter<Leagues> leaguesArrayAdapter;
@@ -56,7 +57,7 @@ public class ChooseLeague extends AppCompatActivity  {
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent  = new Intent(ChooseLeague.this, BettingActivity.class);
+                Intent intent  = new Intent(ChooseLeagueActivity.this, BettingActivity.class);
                 Leagues selectedLeague = (Leagues) adapterView.getAdapter().getItem(i);
                 intent.putExtra("leagueID",selectedLeague.getLeagueId());
                 intent.putExtra("leagueName",selectedLeague.getUiLeagueName());

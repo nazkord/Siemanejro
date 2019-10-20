@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import loginUtils.SharedPrefUtil;
 import model.Bet;
+import model.Match;
 import model.User;
 import okhttp3.Credentials;
 import okhttp3.HttpUrl;
@@ -24,7 +25,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     private OkHttpClient client;
     private User loggedInUser;
     private ObjectMapper objectMapper;
-    private static String basicUrl = "http://192.168.0.102:8080";
+    private static String basicUrl = "http://192.168.0.103:8080";
 
     SiemajeroOkHttpCommunication() {
         init();
@@ -44,6 +45,35 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     @Override
     public User getLoggedInUser() {
         return loggedInUser;
+    }
+
+    @Override
+    public List<Match> getMatchesByCompetition(Long competitionId) {
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse
+                (basicUrl + "/matches"))
+                .newBuilder()
+                .addQueryParameter("competitionId", competitionId.toString());
+
+        Request userRequest = new Request.Builder()
+                .url(urlBuilder.build().toString())
+                .addHeader("Authorization", Credentials.basic(loggedInUser.getName(), loggedInUser.getPassword()))
+                .build();
+
+        //TODO: this code is repeating, maybe consider replace it with some methods
+
+        try {
+            ResponseBody responseBody = client.newCall(userRequest).execute().body();
+            if (responseBody != null) {
+                return objectMapper.readValue(responseBody.string(), new TypeReference<List<Match>>() {
+                });
+            } else {
+                //TODO: do sth with null responseBody
+            }
+        } catch (Exception e) {
+            //TODO: add to log
+            return null;
+        }
+        return null;
     }
 
     @Override

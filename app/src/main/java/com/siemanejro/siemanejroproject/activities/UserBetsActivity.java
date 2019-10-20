@@ -33,6 +33,7 @@ public class UserBetsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +48,12 @@ public class UserBetsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        setUserBets(listOfBets);
+        setUserBets();
 
     }
 
-    //TODO: add exception when there is no internet connection or server is down
-    private void setUserBets(ArrayList<Bet> bets) {
+    //TODO: add exception when there is no internet connection or server is down (show saved bets)
+    private void setUserBets() {
         betsAdapter = new BetsAdapter(this, listOfBets);
         betsListView.setAdapter(betsAdapter);
     }

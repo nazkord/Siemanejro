@@ -9,6 +9,7 @@ import model.User;
 
 public interface SiemajeroCommunication {
     Optional<User> loginUser(String userName, String password);
+    List<Match> getMatchesByCompetition(Long competitionId);
     User createUser(User newUser);
     List<Bet> getUsersBet(Long userId);
     User getLoggedInUser();

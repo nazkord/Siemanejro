@@ -2,6 +2,7 @@ package com.siemanejro.siemanejroproject.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -17,23 +18,25 @@ import com.siemanejro.siemanejroproject.R;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
-import json.JsonService;
-import model.AllMatches;
+import communication.Client;
 import model.Match;
 
 public class BettingActivity extends AppCompatActivity {
 
+    /// Local variables ///
+
     Button saveButton;
     Button chooseDateButton;
-    String selectedDate;
     MatchesAdapter matchesAdapter;
     ListView listView;
-    ArrayList<Match> listOfMatches;
-    String leagueID;
+    Long leagueID;
     String leagueName;
-    AllMatches allMatches;
+    String selectedDate;
+    List<Match> allMatches;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -49,35 +52,34 @@ public class BettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tipp);
 
+        init();
+
         Intent intent = getIntent();
-        leagueID = intent.getStringExtra("leagueID");
+        leagueID = intent.getLongExtra("leagueID", 0);
         leagueName = intent.getStringExtra("leagueName");
 
         setToolbarTitleAndBackPressButton(leagueName);
 
-        JsonService jsonService = new JsonService();
-
         try {
-            allMatches = jsonService.importMatchesFPM(leagueID);
+            allMatches = new LoadMatches().execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
+        //TODO: code to replace (request with my own API)
+
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        selectedDate = LocalDateTime.now().format(dateFormat);
+        matchesAdapter = new MatchesAdapter(this, (ArrayList<Match>) getMatchesFromSelectedDate(selectedDate));
+        listView.setAdapter(matchesAdapter);
+    }
+
+    private void init() {
         listView = (ListView)findViewById(R.id.matches_list);
         listView = (ListView) findViewById(R.id.matches_list);
         saveButton = (Button) findViewById(R.id.saveButton);
-        saveButtonClicked();
-
         chooseDateButton = findViewById(R.id.choose_date_button);
-
-
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String currentDateTime = LocalDateTime.now().format(dateFormat);
-        selectedDate = currentDateTime;
-        listOfMatches = allMatches.getMatchesFromGivenDate(currentDateTime);
-        matchesAdapter = new MatchesAdapter(this, listOfMatches);
-        listView.setAdapter(matchesAdapter);
-
+        saveButtonClicked();
         chooseDateClicked();
     }
 
@@ -140,9 +142,27 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private void modifyListOfMatchesByDate(String dateInString) {
-        listOfMatches = allMatches.getMatchesFromGivenDate(dateInString);
         matchesAdapter.clear();
-        matchesAdapter.addAll(listOfMatches);
+        matchesAdapter.addAll(getMatchesFromSelectedDate(dateInString));
         matchesAdapter.notifyDataSetChanged();
+    }
+
+    public List<Match> getMatchesFromSelectedDate(String date) {
+        return allMatches.stream()
+                .filter(Match -> Match.getUtcDate().substring(0,10).equals(date))
+                .collect(Collectors.toList());
+    }
+
+    private class LoadMatches extends AsyncTask<Void, Void, ArrayList<Match>> {
+
+        @Override
+        protected ArrayList<Match> doInBackground(Void... voids) {
+            return (ArrayList<Match>) Client.SIEMAJERO.get().getMatchesByCompetition(leagueID);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Match> matches) {
+            super.onPostExecute(matches);
+        }
     }
 }

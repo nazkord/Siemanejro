@@ -32,10 +32,10 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
         //TODO: work, but need to be done using recyclerView
 
-        //if (convertView == null) {
+//        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.match_item, parent, false);
-        //}
+//        }
 
         Match currentMatch = matches.get(position);
 

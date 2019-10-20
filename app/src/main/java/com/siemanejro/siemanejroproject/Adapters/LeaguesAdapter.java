@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.siemanejro.siemanejroproject.Leagues;
+import model.Leagues;
 import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
