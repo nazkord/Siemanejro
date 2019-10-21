@@ -1,9 +1,12 @@
 package com.siemanejro.siemanejroproject.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import com.siemanejro.siemanejroproject.R;
 import java.util.ArrayList;
 
 import model.Match;
+import model.Status;
 
 public class MatchesAdapter extends ArrayAdapter<Match> {
 
@@ -56,7 +60,17 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
         //TODO: make status class ENUM (using different type of status [->website])
 
-        if(currentMatch.getStatus().equals("FINISHED")) {
+        if(currentMatch.getStatus().equals(Status.IN_PLAY.toString())) {
+            firstResult.setKeyListener(null);
+            firstResult.setText(currentMatch.getScore().getFullTime().getHomeTeam().toString());
+
+            secondResult.setKeyListener(null);
+            secondResult.setText(currentMatch.getScore().getFullTime().getAwayTeam().toString());
+
+            convertView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPink));
+        }
+
+        if(currentMatch.getStatus().equals(Status.FINISHED.toString())) {
 
             firstResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
             firstResult.setFocusable(false);
