@@ -60,12 +60,15 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
         //TODO: make status class ENUM (using different type of status [->website])
 
-        if(currentMatch.getStatus().equals(Status.IN_PLAY.toString())) {
+        if(currentMatch.getStatus().equals(Status.IN_PLAY.toString()) ||
+                currentMatch.getStatus().equals(Status.PAUSED.toString())) {
             firstResult.setKeyListener(null);
             firstResult.setText(currentMatch.getScore().getFullTime().getHomeTeam().toString());
+            firstResult.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
 
             secondResult.setKeyListener(null);
             secondResult.setText(currentMatch.getScore().getFullTime().getAwayTeam().toString());
+            secondResult.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
 
             convertView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPink));
         }

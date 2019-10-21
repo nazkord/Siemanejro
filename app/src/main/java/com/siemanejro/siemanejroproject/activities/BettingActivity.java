@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,7 +24,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import communication.Client;
+import model.Bet;
+import model.FullTimeResult;
 import model.Match;
+import model.Score;
 
 public class BettingActivity extends AppCompatActivity {
 
@@ -32,11 +36,12 @@ public class BettingActivity extends AppCompatActivity {
     Button saveButton;
     Button chooseDateButton;
     MatchesAdapter matchesAdapter;
-    ListView listView;
+    ListView matchesListView;
     Long leagueID;
     String leagueName;
     String selectedDate;
     List<Match> allMatches;
+    List<Match> matchesInsideLV;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -70,13 +75,14 @@ public class BettingActivity extends AppCompatActivity {
 
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         selectedDate = LocalDateTime.now().format(dateFormat);
-        matchesAdapter = new MatchesAdapter(this, (ArrayList<Match>) getMatchesFromSelectedDate(selectedDate));
-        listView.setAdapter(matchesAdapter);
+        matchesInsideLV = getMatchesFromSelectedDate(selectedDate);
+        matchesAdapter = new MatchesAdapter(this, (ArrayList<Match>) matchesInsideLV);
+        matchesListView.setAdapter(matchesAdapter);
     }
 
     private void init() {
-        listView = (ListView)findViewById(R.id.matches_list);
-        listView = (ListView) findViewById(R.id.matches_list);
+        matchesListView = (ListView)findViewById(R.id.matches_list);
+        matchesListView = (ListView) findViewById(R.id.matches_list);
         saveButton = (Button) findViewById(R.id.saveButton);
         chooseDateButton = findViewById(R.id.choose_date_button);
         saveButtonClicked();
@@ -93,10 +99,53 @@ public class BettingActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                savedUserBets();
                 Toast toast = Toast.makeText(BettingActivity.this,"Data Saved", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
+    }
+
+    private void savedUserBets() {
+        List<Bet> userBetForPosting = getNewUserBets();
+        
+    }
+
+    private List<Bet> getNewUserBets() {
+        View matchView;
+        EditText userBet1;
+        EditText userBet2;
+
+        int numberOfMatches = matchesListView.getChildCount();
+        List<Bet> bets = new ArrayList<>();
+
+        for (int i = 0; i < numberOfMatches; i++)
+        {
+            matchView = matchesListView.getChildAt(i);
+
+
+            userBet1 = (EditText) matchView.findViewById(R.id.result1);
+            userBet2 = (EditText) matchView.findViewById(R.id.result2);
+            Integer userBetResult1 = Integer.parseInt(userBet1.getText().toString());
+            Integer userBetResult2 = Integer.parseInt(userBet2.getText().toString());
+
+            Score userScore = new Score(null, getWinnerForScore(userBetResult1,userBetResult2),
+                    new FullTimeResult(null, userBetResult1, userBetResult2));
+
+            //TODO: IMPORTANT: result should be automatically counted by computing class
+            bets.add(new Bet(null, matchesInsideLV.get(i), null, userScore, 0));
+        }
+        return bets;
+    }
+
+    private String getWinnerForScore(Integer a, Integer b) {
+        if(a > b) {
+            return "HOME_TEAM";
+        } else if (b > a) {
+            return "AWAY_TEAM";
+        } else {
+            return "DRAW";
+        }
     }
 
     private void chooseDateClicked() {
@@ -143,7 +192,8 @@ public class BettingActivity extends AppCompatActivity {
 
     private void modifyListOfMatchesByDate(String dateInString) {
         matchesAdapter.clear();
-        matchesAdapter.addAll(getMatchesFromSelectedDate(dateInString));
+        matchesInsideLV = getMatchesFromSelectedDate(dateInString);
+        matchesAdapter.addAll(matchesInsideLV);
         matchesAdapter.notifyDataSetChanged();
     }
 
@@ -165,4 +215,6 @@ public class BettingActivity extends AppCompatActivity {
             super.onPostExecute(matches);
         }
     }
+
+
 }

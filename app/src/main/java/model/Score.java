@@ -10,6 +10,15 @@ public class Score implements Serializable {
     private String winner;
     private FullTimeResult fullTime;
 
+    public Score(Long id, String winner, FullTimeResult fullTime) {
+        this.id = id;
+        this.winner = winner;
+        this.fullTime = fullTime;
+    }
+
+    public Score() {
+    }
+
     public String getWinner() {
         return winner;
     }

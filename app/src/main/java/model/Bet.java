@@ -12,6 +12,14 @@ public class Bet {
     private Score userScore;
     private Integer result;
 
+    public Bet(Long id, Match match, User user, Score userScore, Integer result) {
+        this.id = id;
+        this.match = match;
+        this.user = user;
+        this.userScore = userScore;
+        this.result = result;
+    }
+
     public Long getId() {
         return id;
     }
