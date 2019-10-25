@@ -48,7 +48,6 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
         String finalText = text.substring(0,10)+" "+text.substring(11,16);
         date.setText(finalText);
 
-
         TextView teamName1 = (TextView) convertView.findViewById(R.id.teamName1);
         teamName1.setText(currentMatch.getHomeTeam().getName());
 
@@ -57,8 +56,6 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
 
         EditText firstResult = (EditText) convertView.findViewById(R.id.result1);
         EditText secondResult = (EditText) convertView.findViewById(R.id.result2);
-
-        //TODO: make status class ENUM (using different type of status [->website])
 
         if(currentMatch.getStatus().equals(Status.IN_PLAY.toString()) ||
                 currentMatch.getStatus().equals(Status.PAUSED.toString())) {

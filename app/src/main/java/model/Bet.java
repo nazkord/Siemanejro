@@ -12,6 +12,9 @@ public class Bet {
     private Score userScore;
     private Integer result;
 
+    public Bet() {
+    }
+
     public Bet(Long id, Match match, User user, Score userScore, Integer result) {
         this.id = id;
         this.match = match;
@@ -72,14 +75,14 @@ public class Bet {
                 Objects.equals(result, bet.result);
     }
 
-    @Override
-    public String toString() {
-        return "Bet{" +
-                "id=" + id +
-                ", match=" + match +
-                ", user=" + user +
-                ", userScore=" + userScore +
-                ", result=" + result +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Bet{" +
+//                "id=" + id +
+//                ", match=" + match +
+//                ", user=" + user +
+//                ", userScore=" + userScore +
+//                ", result=" + result +
+//                '}';
+//    }
 }

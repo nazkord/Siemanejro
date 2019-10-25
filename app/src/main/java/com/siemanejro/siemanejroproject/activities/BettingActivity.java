@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 import communication.Client;
 import model.Bet;
+import model.BetList;
 import model.FullTimeResult;
 import model.Match;
 import model.Score;
@@ -42,6 +43,7 @@ public class BettingActivity extends AppCompatActivity {
     String selectedDate;
     List<Match> allMatches;
     List<Match> matchesInsideLV;
+    BetList betList;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -71,7 +73,7 @@ public class BettingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //TODO: code to replace (request with my own API)
+        //TODO: code to replace (request to my own API)
 
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         selectedDate = LocalDateTime.now().format(dateFormat);
@@ -107,8 +109,9 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private void savedUserBets() {
-        List<Bet> userBetForPosting = getNewUserBets();
-        
+        List<Bet> bets = getNewUserBets();
+        betList = (BetList) bets;
+        new PostBets().execute();
     }
 
     private List<Bet> getNewUserBets() {
@@ -216,5 +219,17 @@ public class BettingActivity extends AppCompatActivity {
         }
     }
 
+    private class PostBets extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Client.SIEMAJERO.get().postUsersBet(betList);
+            return null;
+        }
 
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            //TODO: show error message;
+        }
+    }
 }
