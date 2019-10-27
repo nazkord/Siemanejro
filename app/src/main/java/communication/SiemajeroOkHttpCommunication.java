@@ -62,6 +62,9 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
         String betListInJson = "";
         ResponseBody responseBody = null;
 
+        for(Bet bet: betList) {
+            bet.setUser(loggedInUser);
+        }
 
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse
                 (basicUrl + "/bets"))
@@ -89,6 +92,8 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
         //TODO: do sth with responseBody;
 
     }
+
+    //TODO: get all matches from db this competition, which is no-sense
 
     @Override
     public List<Match> getMatchesByCompetition(Long competitionId) {

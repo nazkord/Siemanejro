@@ -43,7 +43,7 @@ public class BettingActivity extends AppCompatActivity {
     String selectedDate;
     List<Match> allMatches;
     List<Match> matchesInsideLV;
-    BetList betList;
+    BetList betList = new BetList();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -84,7 +84,6 @@ public class BettingActivity extends AppCompatActivity {
 
     private void init() {
         matchesListView = (ListView)findViewById(R.id.matches_list);
-        matchesListView = (ListView) findViewById(R.id.matches_list);
         saveButton = (Button) findViewById(R.id.saveButton);
         chooseDateButton = findViewById(R.id.choose_date_button);
         saveButtonClicked();
@@ -110,7 +109,7 @@ public class BettingActivity extends AppCompatActivity {
 
     private void savedUserBets() {
         List<Bet> bets = getNewUserBets();
-        betList = (BetList) bets;
+        betList.addAll(bets);
         new PostBets().execute();
     }
 
