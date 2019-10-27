@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.siemanejro.siemanejroproject.Adapters.MatchesAdapter;
+import com.siemanejro.siemanejroproject.Adapters.MatchesAdapter2;
 import com.siemanejro.siemanejroproject.R;
 
 import java.time.LocalDateTime;
@@ -36,11 +39,15 @@ public class BettingActivity extends AppCompatActivity {
 
     Button saveButton;
     Button chooseDateButton;
-    MatchesAdapter matchesAdapter;
-    ListView matchesListView;
+//    MatchesAdapter matchesAdapter;
+    MatchesAdapter2 matchesAdapter2;
+//    ListView matchesListView;
     Long leagueID;
     String leagueName;
     String selectedDate;
+    ArrayList<Bet> betInAdapter;
+
+    RecyclerView rvBets;
     List<Match> allMatches;
     List<Match> matchesInsideLV;
     BetList betList = new BetList();
@@ -61,31 +68,31 @@ public class BettingActivity extends AppCompatActivity {
 
         init();
 
-        Intent intent = getIntent();
-        leagueID = intent.getLongExtra("leagueID", 0);
-        leagueName = intent.getStringExtra("leagueName");
-
-        setToolbarTitleAndBackPressButton(leagueName);
-
         try {
             allMatches = new LoadMatches().execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
-        //TODO: code to replace (request to my own API)
-
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         selectedDate = LocalDateTime.now().format(dateFormat);
         matchesInsideLV = getMatchesFromSelectedDate(selectedDate);
-        matchesAdapter = new MatchesAdapter(this, (ArrayList<Match>) matchesInsideLV);
-        matchesListView.setAdapter(matchesAdapter);
+
+        // Create adapter passing in bets with chosen matches
+        matchesAdapter2 = new MatchesAdapter2(expandMatches(matchesInsideLV));
+
+        rvBets.setAdapter(matchesAdapter2);
+        rvBets.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void init() {
-        matchesListView = (ListView)findViewById(R.id.matchesList);
+        rvBets = findViewById(R.id.matchesList);
         saveButton = (Button) findViewById(R.id.saveButton);
         chooseDateButton = findViewById(R.id.choose_date_button);
+        Intent intent = getIntent();
+        leagueID = intent.getLongExtra("leagueID", 0);
+        leagueName = intent.getStringExtra("leagueName");
+        setToolbarTitleAndBackPressButton(leagueName);
         saveButtonClicked();
         chooseDateClicked();
     }
@@ -100,45 +107,54 @@ public class BettingActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savedUserBets();
+//                savedUserBets();
                 Toast toast = Toast.makeText(BettingActivity.this,"Data Saved", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
     }
 
-    private void savedUserBets() {
-        List<Bet> bets = getNewUserBets();
-        betList.addAll(bets);
-        new PostBets().execute();
-    }
-
-    private List<Bet> getNewUserBets() {
-        View matchView;
-        EditText userBet1;
-        EditText userBet2;
-
-        int numberOfMatches = matchesListView.getChildCount();
-        List<Bet> bets = new ArrayList<>();
-
-        for (int i = 0; i < numberOfMatches; i++)
-        {
-            matchView = matchesListView.getChildAt(i);
-
-
-            userBet1 = (EditText) matchView.findViewById(R.id.result1);
-            userBet2 = (EditText) matchView.findViewById(R.id.result2);
-            Integer userBetResult1 = Integer.parseInt(userBet1.getText().toString());
-            Integer userBetResult2 = Integer.parseInt(userBet2.getText().toString());
-
-            Score userScore = new Score(null, getWinnerForScore(userBetResult1,userBetResult2),
-                    new FullTimeResult(null, userBetResult1, userBetResult2));
-
-            //TODO: IMPORTANT: result should be automatically counted by computing class
-            bets.add(new Bet(null, matchesInsideLV.get(i), null, userScore, 0));
+    //TODO: make this using streams
+    private ArrayList<Bet> expandMatches(List<Match> matches) {
+        ArrayList<Bet> bets = new ArrayList<>();
+        for(Match match: matches) {
+            bets.add(new Bet(null, match, null, null, null));
         }
         return bets;
     }
+
+//    private void savedUserBets() {
+//        List<Bet> bets = getNewUserBets();
+//        betList.addAll(bets);
+//        new PostBets().execute();
+//    }
+
+//    private List<Bet> getNewUserBets() {
+//        View matchView;
+//        EditText userBet1;
+//        EditText userBet2;
+//
+//        int numberOfMatches = matchesListView.getChildCount();
+//        List<Bet> bets = new ArrayList<>();
+//
+//        for (int i = 0; i < numberOfMatches; i++)
+//        {
+//            matchView = matchesListView.getChildAt(i);
+//
+//
+//            userBet1 = (EditText) matchView.findViewById(R.id.result1);
+//            userBet2 = (EditText) matchView.findViewById(R.id.result2);
+//            Integer userBetResult1 = Integer.parseInt(userBet1.getText().toString());
+//            Integer userBetResult2 = Integer.parseInt(userBet2.getText().toString());
+//
+//            Score userScore = new Score(null, getWinnerForScore(userBetResult1,userBetResult2),
+//                    new FullTimeResult(null, userBetResult1, userBetResult2));
+//
+//            //TODO: IMPORTANT: result should be automatically counted by computing class
+//            bets.add(new Bet(null, matchesInsideLV.get(i), null, userScore, 0));
+//        }
+//        return bets;
+//    }
 
     private String getWinnerForScore(Integer a, Integer b) {
         if(a > b) {
@@ -193,10 +209,10 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private void modifyListOfMatchesByDate(String dateInString) {
-        matchesAdapter.clear();
+//        matchesAdapter.clear();
         matchesInsideLV = getMatchesFromSelectedDate(dateInString);
-        matchesAdapter.addAll(matchesInsideLV);
-        matchesAdapter.notifyDataSetChanged();
+        betInAdapter.addAll(expandMatches(matchesInsideLV));
+        matchesAdapter2.notifyDataSetChanged();
     }
 
     public List<Match> getMatchesFromSelectedDate(String date) {

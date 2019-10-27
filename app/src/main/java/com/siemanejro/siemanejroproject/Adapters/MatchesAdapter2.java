@@ -1,7 +1,8 @@
 package com.siemanejro.siemanejroproject.Adapters;
 
-import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +12,19 @@ import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.R;
 
-import java.util.List;
+import java.util.ArrayList;
+
+import javax.microedition.khronos.egl.EGLDisplay;
 
 import model.Bet;
 import model.Match;
+import model.Status;
 
 public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHolder> {
 
-    private List<Bet> bets;
+    private ArrayList<Bet> bets;
 
-    public MatchesAdapter2(List<Bet> bets) {
+    public MatchesAdapter2(ArrayList<Bet> bets) {
         this.bets = bets;
     }
 
@@ -37,6 +41,11 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Bet currentBet = bets.get(position);
+        Match currentMatch = currentBet.getMatch();
+        EditText result1 = viewHolder.result1;
+        EditText result2 = viewHolder.result2;
+        TextView team1 = viewHolder.team1;
+        TextView team2 = viewHolder.team2;
 
         //set date of match
         String text = currentBet.getMatch().getUtcDate();
@@ -44,11 +53,53 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
         viewHolder.date.setText(finalText);
 
         //set name of teams
-        viewHolder.team1.setText(currentBet.getMatch().getHomeTeam().getName());
-        viewHolder.team2.setText(currentBet.getMatch().getAwayTeam().getName());
+        team1.setText(currentBet.getMatch().getHomeTeam().getName());
+        team2.setText(currentBet.getMatch().getAwayTeam().getName());
 
-        viewHolder.result1.setText(null);
-        viewHolder.result2.setText(null);
+        result1.setText(null);
+        result2.setText(null);
+
+        switch (Status.valueOf(currentMatch.getStatus())) {
+            case IN_PLAY : {
+                //TODO: in_live: minutes matches should display
+                result1.setFocusable(false);
+                result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
+//                result1.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+
+                result2.setFocusable(false);
+                result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
+//                secondResult.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+
+//                viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPink));
+                break;
+            }
+            case PAUSED: {
+                //TODO: display that 1 half time is end
+                break;
+            }
+            case FINISHED: {
+                result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
+                result1.setFocusable(false);
+
+                result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
+                result2.setFocusable(false);
+
+                switch (currentMatch.getScore().getWinner()) {
+                    case "HOME_TEAM": {
+                        team1.setTypeface(null, Typeface.BOLD);
+                        break;
+                    }
+                    case "AWAY_TEAM": {
+                        team2.setTypeface(null, Typeface.BOLD);
+                        break;
+                    }
+                    case "DRAW": {
+                        //TODO: change sth appearance
+                        break;
+                    }
+                }
+            }
+        }
 
     }
 
