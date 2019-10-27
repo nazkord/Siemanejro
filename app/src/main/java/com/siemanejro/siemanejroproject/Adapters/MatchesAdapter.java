@@ -34,12 +34,12 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        //TODO: work, but need to be done using recyclerView
+        //TODO: work, but need to be done using recyclerView (using viewHolder)
 
-//        if (convertView == null) {
+        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.match_item, parent, false);
-//        }
+        }
 
         Match currentMatch = matches.get(position);
 
@@ -55,46 +55,78 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
         teamName2.setText(currentMatch.getAwayTeam().getName());
 
         EditText firstResult = (EditText) convertView.findViewById(R.id.result1);
+        firstResult.setText(null);
+
         EditText secondResult = (EditText) convertView.findViewById(R.id.result2);
+        secondResult.setText(null);
 
-        if(currentMatch.getStatus().equals(Status.IN_PLAY.toString()) ||
-                currentMatch.getStatus().equals(Status.PAUSED.toString())) {
-            firstResult.setKeyListener(null);
-            firstResult.setText(currentMatch.getScore().getFullTime().getHomeTeam().toString());
-            firstResult.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-
-            secondResult.setKeyListener(null);
-            secondResult.setText(currentMatch.getScore().getFullTime().getAwayTeam().toString());
-            secondResult.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-
-            convertView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPink));
-        }
-
-        if(currentMatch.getStatus().equals(Status.FINISHED.toString())) {
-
-            firstResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
-            firstResult.setFocusable(false);
-
-            secondResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
-            secondResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
-            secondResult.setFocusable(false);
-
-            switch (currentMatch.getScore().getWinner()) {
-                case "HOME_TEAM": {
-                    teamName1.setTypeface(null, Typeface.BOLD);
-                    break;
+        firstResult.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    if(!firstResult.getText().toString().isEmpty()) {
+                        int i = Integer.parseInt(firstResult.getText().toString());
+                    }
                 }
-                case "AWAY_TEAM": {
-                    teamName2.setTypeface(null, Typeface.BOLD);
-                    break;
+            }
+        });
+
+        secondResult.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    int i = Integer.parseInt(secondResult.getText().toString());
                 }
-                case "DRAW": {
-                    //TODO: change sth appearance
-                    break;
+            }
+        });
+
+
+        //TODO: make this with case statement
+
+
+        switch (Status.valueOf(currentMatch.getStatus())) {
+            case IN_PLAY : {
+                //TODO: in_live: minutes matches should display
+                firstResult.setFocusable(false);
+                firstResult.setText(currentMatch.getScore().getFullTime().getHomeTeam().toString());
+                firstResult.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+
+                secondResult.setFocusable(false);
+                secondResult.setText(currentMatch.getScore().getFullTime().getAwayTeam().toString());
+                secondResult.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+
+                convertView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPink));
+                break;
+            }
+            case PAUSED: {
+                //TODO: display that 1 half time is end
+                break;
+            }
+            case FINISHED: {
+                firstResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
+                firstResult.setFocusable(false);
+
+                secondResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
+                secondResult.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
+                secondResult.setFocusable(false);
+
+                switch (currentMatch.getScore().getWinner()) {
+                    case "HOME_TEAM": {
+                        teamName1.setTypeface(null, Typeface.BOLD);
+                        break;
+                    }
+                    case "AWAY_TEAM": {
+                        teamName2.setTypeface(null, Typeface.BOLD);
+                        break;
+                    }
+                    case "DRAW": {
+                        //TODO: change sth appearance
+                        break;
+                    }
                 }
             }
         }
-
+        
         return convertView;
     }
 }
