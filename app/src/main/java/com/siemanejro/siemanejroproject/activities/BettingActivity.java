@@ -57,7 +57,7 @@ public class BettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tipp);
+        setContentView(R.layout.activity_betting);
 
         init();
 
@@ -83,7 +83,7 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private void init() {
-        matchesListView = (ListView)findViewById(R.id.matches_list);
+        matchesListView = (ListView)findViewById(R.id.matchesList);
         saveButton = (Button) findViewById(R.id.saveButton);
         chooseDateButton = findViewById(R.id.choose_date_button);
         saveButtonClicked();

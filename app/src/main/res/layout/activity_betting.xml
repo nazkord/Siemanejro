@@ -13,12 +13,20 @@
         android:layout_weight="0.1"
         android:text="@string/choose_date"
         android:gravity="center" />
-    <ListView
-        android:id="@+id/matches_list"
-        android:layout_weight="0.8"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/matchesList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center"/>
+        android:layout_weight="0.8"
+        android:scrollbars="vertical"/>
+
+<!--    <ListView-->
+<!--        android:id="@+id/matches_list"-->
+<!--        android:layout_weight="0.8"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:gravity="center"/>-->
 
     <Button
         android:id="@+id/saveButton"
