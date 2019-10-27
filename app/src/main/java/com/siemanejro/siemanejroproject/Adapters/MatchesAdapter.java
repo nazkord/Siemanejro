@@ -80,10 +80,6 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
             }
         });
 
-
-        //TODO: make this with case statement
-
-
         switch (Status.valueOf(currentMatch.getStatus())) {
             case IN_PLAY : {
                 //TODO: in_live: minutes matches should display
@@ -126,7 +122,6 @@ public class MatchesAdapter extends ArrayAdapter<Match> {
                 }
             }
         }
-        
         return convertView;
     }
 }
