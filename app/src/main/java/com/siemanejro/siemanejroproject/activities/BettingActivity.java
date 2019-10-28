@@ -242,7 +242,7 @@ public class BettingActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            //TODO: show error message;
+            //TODO: show error message (???) or success ?;
         }
     }
 }

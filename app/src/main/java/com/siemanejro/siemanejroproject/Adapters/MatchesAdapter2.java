@@ -14,7 +14,10 @@ import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.R;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import model.Bet;
 import model.Match;
@@ -50,10 +53,14 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Bet currentBet = bets.get(position);
         Match currentMatch = currentBet.getMatch();
+        TextView matchStatus = viewHolder.matchStatus;
         EditText result1 = viewHolder.result1;
         EditText result2 = viewHolder.result2;
         TextView team1 = viewHolder.team1;
         TextView team2 = viewHolder.team2;
+
+        //set status of match
+        matchStatus.setText(null);
 
         //set date of match
         String text = currentBet.getMatch().getUtcDate();
@@ -64,19 +71,19 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
         team1.setText(currentBet.getMatch().getHomeTeam().getName());
         team2.setText(currentBet.getMatch().getAwayTeam().getName());
 
+        // set default results view
         result1.setText(null);
         result1.setTextColor(Color.BLACK);
-        result1.setFocusable(true);
+        result1.setFocusableInTouchMode(true);
         result2.setText(null);
         result2.setTextColor(Color.BLACK);
-        result2.setFocusable(true);
+        result2.setFocusableInTouchMode(true);
 
-        //setBackgroundColorToDefault
+        ///setBackgroundColorToDefault
         viewHolder.itemView.setBackgroundColor(Color.WHITE);
 
         switch (Status.valueOf(currentMatch.getStatus())) {
             case IN_PLAY : {
-                //TODO: in_live: minutes matches should display
                 result1.setFocusable(false);
                 result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
                 result1.setTextColor(Color.RED);
@@ -89,7 +96,8 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
                 break;
             }
             case PAUSED: {
-                //TODO: display that 1 half time is end in the same field as minutes
+                matchStatus.setText("HF");
+                matchStatus.setTextColor(Color.MAGENTA);
                 break;
             }
             case FINISHED: {
@@ -99,6 +107,9 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
                 result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
                 result2.setFocusable(false);
 
+                matchStatus.setText("FT");
+                matchStatus.setTextColor(Color.MAGENTA);
+
                 switch (currentMatch.getScore().getWinner()) {
                     case "HOME_TEAM": {
                         team1.setTypeface(null, Typeface.BOLD);
@@ -106,10 +117,6 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
                     }
                     case "AWAY_TEAM": {
                         team2.setTypeface(null, Typeface.BOLD);
-                        break;
-                    }
-                    case "DRAW": {
-                        //TODO: change sth appearance
                         break;
                     }
                 }
@@ -126,6 +133,7 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView date;
+        TextView matchStatus;
         TextView team1;
         TextView team2;
         EditText result1;
@@ -134,6 +142,7 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.dateTime);
+            matchStatus = itemView.findViewById(R.id.matchStatus);
             team1 = itemView.findViewById(R.id.teamName1);
             team2 = itemView.findViewById(R.id.teamName2);
             result1 = itemView.findViewById(R.id.result1);
@@ -141,5 +150,9 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
         }
     }
 
+
+    private void minuteOfMatch(Match match) {
+        //TODO: method that return current minute of the match
+    }
 
 }
