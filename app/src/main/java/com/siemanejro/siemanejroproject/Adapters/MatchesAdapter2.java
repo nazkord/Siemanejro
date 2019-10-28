@@ -1,10 +1,8 @@
 package com.siemanejro.siemanejroproject.Adapters;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +12,7 @@ import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.R;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import model.Bet;
 import model.Match;
@@ -26,14 +21,6 @@ import model.Status;
 public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHolder> {
 
     private ArrayList<Bet> bets;
-
-    public ArrayList<Bet> getBets() {
-        return bets;
-    }
-
-    public void setBets(ArrayList<Bet> bets) {
-        this.bets = bets;
-    }
 
     public MatchesAdapter2(ArrayList<Bet> bets) {
         this.bets = bets;
@@ -92,12 +79,18 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
                 result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
                 result2.setTextColor(Color.RED);
 
+                if(isWinner(currentMatch)) {
+                    team1.setTypeface(null, Typeface.BOLD);
+                } else {
+                    team2.setTypeface(null, Typeface.BOLD);
+                }
+
                 viewHolder.itemView.setBackgroundColor(Color.rgb(255,230,238));
                 break;
             }
             case PAUSED: {
                 matchStatus.setText("HF");
-                matchStatus.setTextColor(Color.MAGENTA);
+                matchStatus.setTextColor(Color.RED);
                 break;
             }
             case FINISHED: {
@@ -108,21 +101,19 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
                 result2.setFocusable(false);
 
                 matchStatus.setText("FT");
-                matchStatus.setTextColor(Color.MAGENTA);
 
-                switch (currentMatch.getScore().getWinner()) {
-                    case "HOME_TEAM": {
-                        team1.setTypeface(null, Typeface.BOLD);
-                        break;
-                    }
-                    case "AWAY_TEAM": {
-                        team2.setTypeface(null, Typeface.BOLD);
-                        break;
-                    }
+                if(isWinner(currentMatch)) {
+                    team1.setTypeface(null, Typeface.BOLD);
+                } else {
+                    team2.setTypeface(null, Typeface.BOLD);
                 }
             }
         }
 
+    }
+
+    private Boolean isWinner(Match match) {
+        return (match.getScore().getWinner().equals("HOME_TEAM"));
     }
 
     // Returns the total count of items in the list

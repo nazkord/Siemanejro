@@ -44,7 +44,7 @@ public class BettingActivity extends AppCompatActivity {
 
     RecyclerView rvBets;
     List<Match> allMatches;
-    List<Bet> betInAdapter = new ArrayList<>();
+    List<Bet> betsInRV = new ArrayList<>();
     BetList betList = new BetList();
 
     @Override
@@ -63,6 +63,7 @@ public class BettingActivity extends AppCompatActivity {
 
         init();
 
+        //get matches from API
         try {
             allMatches = new LoadMatches().execute().get();
         } catch (ExecutionException | InterruptedException e) {
@@ -71,11 +72,15 @@ public class BettingActivity extends AppCompatActivity {
 
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         selectedDate = LocalDateTime.now().format(dateFormat);
-        betInAdapter = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
+        betsInRV = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
 
         // Create adapter passing in bets with chosen matches
-        matchesAdapter2 = new MatchesAdapter2((ArrayList<Bet>) betInAdapter);
+        matchesAdapter2 = new MatchesAdapter2((ArrayList<Bet>) betsInRV);
 
+        initializeRecyclerView();
+    }
+
+    private void initializeRecyclerView() {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
         rvBets.addItemDecoration(itemDecor);
         rvBets.setAdapter(matchesAdapter2);
@@ -111,13 +116,10 @@ public class BettingActivity extends AppCompatActivity {
         });
     }
 
-    //TODO: make this using streams
     private ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
-        ArrayList<Bet> bets = new ArrayList<>();
-        for(Match match: matches) {
-            bets.add(new Bet(null, match, null, null, null));
-        }
-        return bets;
+        return (ArrayList<Bet>) matches.stream()
+                .map(m -> new Bet(null, m, null, null, null))
+                .collect(Collectors.toList());
     }
 
 //    private void savedUserBets() {
@@ -174,9 +176,9 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private void openDatePickerDialog() {
-        Integer year = Integer.valueOf(selectedDate.substring(0,4));
-        Integer monthOfYear = Integer.valueOf(selectedDate.substring(5,7)) - 1;
-        Integer dayOfMonth = Integer.valueOf(selectedDate.substring(8,10));
+        int year = Integer.parseInt(selectedDate.substring(0, 4));
+        int monthOfYear = Integer.valueOf(selectedDate.substring(5,7)) - 1;
+        int dayOfMonth = Integer.parseInt(selectedDate.substring(8, 10));
 
         // open dateDialogPicker
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -206,11 +208,12 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private void modifyListOfMatchesByDate(String dateInString) {
-        betInAdapter.clear();
-        List<Match> matches = getMatchesFromSelectedDate(dateInString);
-        betInAdapter.addAll(expandMatchesToBets(matches));
-        //TODO: consider use notifyItemRangeInserted !!!
-        matchesAdapter2.notifyDataSetChanged();
+        //clear bets in adapter
+        matchesAdapter2.notifyItemRangeRemoved(0, matchesAdapter2.getItemCount());
+        betsInRV.clear();
+        betsInRV.addAll(expandMatchesToBets(getMatchesFromSelectedDate(dateInString)));
+        //notify of new bets inserted
+        matchesAdapter2.notifyItemRangeInserted(0, betsInRV.size());
     }
 
     public List<Match> getMatchesFromSelectedDate(String date) {
