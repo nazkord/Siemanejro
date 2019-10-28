@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -27,6 +28,8 @@ import communication.Client;
 import model.Bet;
 import model.BetList;
 import model.Match;
+
+import static android.graphics.drawable.ClipDrawable.HORIZONTAL;
 
 public class BettingActivity extends AppCompatActivity {
 
@@ -71,8 +74,10 @@ public class BettingActivity extends AppCompatActivity {
         betInAdapter = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
 
         // Create adapter passing in bets with chosen matches
-        matchesAdapter2 = new MatchesAdapter2((ArrayList<Bet>) betInAdapter, getApplicationContext());
+        matchesAdapter2 = new MatchesAdapter2((ArrayList<Bet>) betInAdapter);
 
+        DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
+        rvBets.addItemDecoration(itemDecor);
         rvBets.setAdapter(matchesAdapter2);
         rvBets.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -201,7 +206,7 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private void modifyListOfMatchesByDate(String dateInString) {
-//        matchesAdapter.clear();
+        betInAdapter.clear();
         List<Match> matches = getMatchesFromSelectedDate(dateInString);
         betInAdapter.addAll(expandMatchesToBets(matches));
         //TODO: consider use notifyItemRangeInserted !!!

@@ -1,6 +1,7 @@
 package com.siemanejro.siemanejroproject.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -23,19 +24,12 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
 
     private ArrayList<Bet> bets;
 
-    private Context context;
-
     public ArrayList<Bet> getBets() {
         return bets;
     }
 
     public void setBets(ArrayList<Bet> bets) {
         this.bets = bets;
-    }
-
-    public MatchesAdapter2(ArrayList<Bet> bets, Context context) {
-        this.bets = bets;
-        this.context = context;
     }
 
     public MatchesAdapter2(ArrayList<Bet> bets) {
@@ -71,20 +65,27 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
         team2.setText(currentBet.getMatch().getAwayTeam().getName());
 
         result1.setText(null);
+        result1.setTextColor(Color.BLACK);
+        result1.setFocusable(true);
         result2.setText(null);
+        result2.setTextColor(Color.BLACK);
+        result2.setFocusable(true);
+
+        //setBackgroundColorToDefault
+        viewHolder.itemView.setBackgroundColor(Color.WHITE);
 
         switch (Status.valueOf(currentMatch.getStatus())) {
             case IN_PLAY : {
                 //TODO: in_live: minutes matches should display
                 result1.setFocusable(false);
                 result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
-                result1.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+                result1.setTextColor(Color.RED);
 
                 result2.setFocusable(false);
                 result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
-                result2.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+                result2.setTextColor(Color.RED);
 
-                viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPink));
+                viewHolder.itemView.setBackgroundColor(Color.rgb(255,230,238));
                 break;
             }
             case PAUSED: {
