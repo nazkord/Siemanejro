@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
-import com.siemanejro.siemanejroproject.Adapters.MatchesAdapter2;
+import com.siemanejro.siemanejroproject.Adapters.RVMatchesAdapter;
 import com.siemanejro.siemanejroproject.R;
 
 import java.time.LocalDateTime;
@@ -37,7 +37,7 @@ public class BettingActivity extends AppCompatActivity {
 
     Button saveButton;
     Button chooseDateButton;
-    MatchesAdapter2 matchesAdapter2;
+    RVMatchesAdapter rvMatchesAdapter;
     Long leagueID;
     String leagueName;
     String selectedDate;
@@ -75,7 +75,7 @@ public class BettingActivity extends AppCompatActivity {
         betsInRV = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
 
         // Create adapter passing in bets with chosen matches
-        matchesAdapter2 = new MatchesAdapter2((ArrayList<Bet>) betsInRV);
+        rvMatchesAdapter = new RVMatchesAdapter((ArrayList<Bet>) betsInRV);
 
         initializeRecyclerView();
     }
@@ -83,7 +83,7 @@ public class BettingActivity extends AppCompatActivity {
     private void initializeRecyclerView() {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
         rvBets.addItemDecoration(itemDecor);
-        rvBets.setAdapter(matchesAdapter2);
+        rvBets.setAdapter(rvMatchesAdapter);
         rvBets.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -209,11 +209,11 @@ public class BettingActivity extends AppCompatActivity {
 
     private void modifyListOfMatchesByDate(String dateInString) {
         //clear bets in adapter
-        matchesAdapter2.notifyItemRangeRemoved(0, matchesAdapter2.getItemCount());
+        rvMatchesAdapter.notifyItemRangeRemoved(0, rvMatchesAdapter.getItemCount());
         betsInRV.clear();
         betsInRV.addAll(expandMatchesToBets(getMatchesFromSelectedDate(dateInString)));
         //notify of new bets inserted
-        matchesAdapter2.notifyItemRangeInserted(0, betsInRV.size());
+        rvMatchesAdapter.notifyItemRangeInserted(0, betsInRV.size());
     }
 
     public List<Match> getMatchesFromSelectedDate(String date) {

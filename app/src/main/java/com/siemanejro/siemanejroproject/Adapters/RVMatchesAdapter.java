@@ -18,11 +18,11 @@ import model.Bet;
 import model.Match;
 import model.Status;
 
-public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHolder> {
+public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.ViewHolder> {
 
     private ArrayList<Bet> bets;
 
-    public MatchesAdapter2(ArrayList<Bet> bets) {
+    public RVMatchesAdapter(ArrayList<Bet> bets) {
         this.bets = bets;
     }
 
