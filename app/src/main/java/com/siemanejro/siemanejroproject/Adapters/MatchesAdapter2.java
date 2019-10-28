@@ -1,5 +1,6 @@
 package com.siemanejro.siemanejroproject.Adapters;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -14,8 +15,6 @@ import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
 
-import javax.microedition.khronos.egl.EGLDisplay;
-
 import model.Bet;
 import model.Match;
 import model.Status;
@@ -23,6 +22,21 @@ import model.Status;
 public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHolder> {
 
     private ArrayList<Bet> bets;
+
+    private Context context;
+
+    public ArrayList<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(ArrayList<Bet> bets) {
+        this.bets = bets;
+    }
+
+    public MatchesAdapter2(ArrayList<Bet> bets, Context context) {
+        this.bets = bets;
+        this.context = context;
+    }
 
     public MatchesAdapter2(ArrayList<Bet> bets) {
         this.bets = bets;
@@ -64,17 +78,17 @@ public class MatchesAdapter2 extends RecyclerView.Adapter<MatchesAdapter2.ViewHo
                 //TODO: in_live: minutes matches should display
                 result1.setFocusable(false);
                 result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
-//                result1.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+                result1.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
 
                 result2.setFocusable(false);
                 result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
-//                secondResult.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+                result2.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
 
-//                viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPink));
+                viewHolder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPink));
                 break;
             }
             case PAUSED: {
-                //TODO: display that 1 half time is end
+                //TODO: display that 1 half time is end in the same field as minutes
                 break;
             }
             case FINISHED: {

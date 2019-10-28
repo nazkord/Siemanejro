@@ -11,11 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.siemanejro.siemanejroproject.Adapters.MatchesAdapter;
 import com.siemanejro.siemanejroproject.Adapters.MatchesAdapter2;
 import com.siemanejro.siemanejroproject.R;
 
@@ -29,9 +26,7 @@ import java.util.stream.Collectors;
 import communication.Client;
 import model.Bet;
 import model.BetList;
-import model.FullTimeResult;
 import model.Match;
-import model.Score;
 
 public class BettingActivity extends AppCompatActivity {
 
@@ -39,17 +34,14 @@ public class BettingActivity extends AppCompatActivity {
 
     Button saveButton;
     Button chooseDateButton;
-//    MatchesAdapter matchesAdapter;
     MatchesAdapter2 matchesAdapter2;
-//    ListView matchesListView;
     Long leagueID;
     String leagueName;
     String selectedDate;
-    ArrayList<Bet> betInAdapter;
 
     RecyclerView rvBets;
     List<Match> allMatches;
-    List<Match> matchesInsideLV;
+    List<Bet> betInAdapter = new ArrayList<>();
     BetList betList = new BetList();
 
     @Override
@@ -76,10 +68,10 @@ public class BettingActivity extends AppCompatActivity {
 
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         selectedDate = LocalDateTime.now().format(dateFormat);
-        matchesInsideLV = getMatchesFromSelectedDate(selectedDate);
+        betInAdapter = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
 
         // Create adapter passing in bets with chosen matches
-        matchesAdapter2 = new MatchesAdapter2(expandMatches(matchesInsideLV));
+        matchesAdapter2 = new MatchesAdapter2((ArrayList<Bet>) betInAdapter, getApplicationContext());
 
         rvBets.setAdapter(matchesAdapter2);
         rvBets.setLayoutManager(new LinearLayoutManager(this));
@@ -115,7 +107,7 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     //TODO: make this using streams
-    private ArrayList<Bet> expandMatches(List<Match> matches) {
+    private ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
         ArrayList<Bet> bets = new ArrayList<>();
         for(Match match: matches) {
             bets.add(new Bet(null, match, null, null, null));
@@ -210,8 +202,9 @@ public class BettingActivity extends AppCompatActivity {
 
     private void modifyListOfMatchesByDate(String dateInString) {
 //        matchesAdapter.clear();
-        matchesInsideLV = getMatchesFromSelectedDate(dateInString);
-        betInAdapter.addAll(expandMatches(matchesInsideLV));
+        List<Match> matches = getMatchesFromSelectedDate(dateInString);
+        betInAdapter.addAll(expandMatchesToBets(matches));
+        //TODO: consider use notifyItemRangeInserted !!!
         matchesAdapter2.notifyDataSetChanged();
     }
 
