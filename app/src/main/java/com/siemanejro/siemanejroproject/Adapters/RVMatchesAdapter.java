@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Bet;
 import model.Match;
@@ -120,6 +121,17 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
     @Override
     public int getItemCount() {
         return bets.size();
+    }
+
+//    public List<Bet> getNotEmptyBets() {
+//        List<Bet> bets = new ArrayList<>();
+//        for(int i = 0; i < getItemCount(); i++) {
+//            if(getItem(i).)
+//        }
+//    }
+
+    public Bet getItem(int position) {
+        return bets.get(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.siemanejro.siemanejroproject.Adapters.RVMatchesAdapter;
@@ -27,7 +28,9 @@ import java.util.stream.Collectors;
 import communication.Client;
 import model.Bet;
 import model.BetList;
+import model.FullTimeResult;
 import model.Match;
+import model.Score;
 
 import static android.graphics.drawable.ClipDrawable.HORIZONTAL;
 
@@ -46,6 +49,7 @@ public class BettingActivity extends AppCompatActivity {
     List<Match> allMatches;
     List<Bet> betsInRV = new ArrayList<>();
     BetList betList = new BetList();
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -80,13 +84,6 @@ public class BettingActivity extends AppCompatActivity {
         initializeRecyclerView();
     }
 
-    private void initializeRecyclerView() {
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
-        rvBets.addItemDecoration(itemDecor);
-        rvBets.setAdapter(rvMatchesAdapter);
-        rvBets.setLayoutManager(new LinearLayoutManager(this));
-    }
-
     private void init() {
         rvBets = findViewById(R.id.matchesList);
         saveButton = (Button) findViewById(R.id.saveButton);
@@ -105,15 +102,14 @@ public class BettingActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void saveButtonClicked() {
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                savedUserBets();
-                Toast toast = Toast.makeText(BettingActivity.this,"Data Saved", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
+
+    /// -------- RecyclerView and Adapter methods -----------
+
+    private void initializeRecyclerView() {
+        DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
+        rvBets.addItemDecoration(itemDecor);
+        rvBets.setAdapter(rvMatchesAdapter);
+        rvBets.setLayoutManager(linearLayoutManager);
     }
 
     private ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
@@ -122,38 +118,63 @@ public class BettingActivity extends AppCompatActivity {
                 .collect(Collectors.toList());
     }
 
-//    private void savedUserBets() {
-//        List<Bet> bets = getNewUserBets();
-//        betList.addAll(bets);
-//        new PostBets().execute();
-//    }
+    public List<Match> getMatchesFromSelectedDate(String date) {
+        return allMatches.stream()
+                .filter(Match -> Match.getUtcDate().substring(0,10).equals(date))
+                .collect(Collectors.toList());
+    }
 
-//    private List<Bet> getNewUserBets() {
-//        View matchView;
-//        EditText userBet1;
-//        EditText userBet2;
-//
-//        int numberOfMatches = matchesListView.getChildCount();
-//        List<Bet> bets = new ArrayList<>();
-//
-//        for (int i = 0; i < numberOfMatches; i++)
-//        {
-//            matchView = matchesListView.getChildAt(i);
-//
-//
-//            userBet1 = (EditText) matchView.findViewById(R.id.result1);
-//            userBet2 = (EditText) matchView.findViewById(R.id.result2);
-//            Integer userBetResult1 = Integer.parseInt(userBet1.getText().toString());
-//            Integer userBetResult2 = Integer.parseInt(userBet2.getText().toString());
-//
-//            Score userScore = new Score(null, getWinnerForScore(userBetResult1,userBetResult2),
-//                    new FullTimeResult(null, userBetResult1, userBetResult2));
-//
-//            //TODO: IMPORTANT: result should be automatically counted by computing class
-//            bets.add(new Bet(null, matchesInsideLV.get(i), null, userScore, 0));
-//        }
-//        return bets;
-//    }
+    private void modifyListOfMatchesByDate(String dateInString) {
+        //clear bets in adapter
+        rvMatchesAdapter.notifyItemRangeRemoved(0, rvMatchesAdapter.getItemCount());
+        betsInRV.clear();
+        betsInRV.addAll(expandMatchesToBets(getMatchesFromSelectedDate(dateInString)));
+        //notify of new bets inserted
+        rvMatchesAdapter.notifyItemRangeInserted(0, betsInRV.size());
+    }
+
+    /// -------- Methods for saving bets -----------
+
+    private void savedUserBets() {
+        List<Bet> bets = getNewUserBets();
+        betList.clear();
+        betList.addAll(bets);
+        new PostBets().execute();
+    }
+
+    private List<Bet> getNewUserBets() {
+        View betView;
+        Bet betItem;
+        EditText userBet1;
+        EditText userBet2;
+
+        int numberOfMatches = rvMatchesAdapter.getItemCount();
+        List<Bet> bets = new ArrayList<>();
+
+        for (int i = 0; i < numberOfMatches; i++)
+        {
+            betItem = rvMatchesAdapter.getItem(i);
+            betView = linearLayoutManager.findViewByPosition(i);
+
+
+            userBet1 = (EditText) betView.findViewById(R.id.result1);
+            userBet2 = (EditText) betView.findViewById(R.id.result2);
+            if(userBet1.getText().toString().isEmpty() || userBet2.getText().toString().isEmpty())
+                continue;
+            Integer userBetResult1 = Integer.parseInt(userBet1.getText().toString());
+            Integer userBetResult2 = Integer.parseInt(userBet2.getText().toString());
+
+            Score userScore = new Score(null, getWinnerForScore(userBetResult1,userBetResult2),
+                    new FullTimeResult(null, userBetResult1, userBetResult2));
+            betItem.setUserScore(userScore);
+
+            //TODO: IMPORTANT: result should be automatically counted by computing class
+            betItem.setResult(1);
+
+            bets.add(betItem);
+        }
+        return bets;
+    }
 
     private String getWinnerForScore(Integer a, Integer b) {
         if(a > b) {
@@ -163,6 +184,19 @@ public class BettingActivity extends AppCompatActivity {
         } else {
             return "DRAW";
         }
+    }
+
+    /// -------- onClicker's and DatePickerDialog -----------
+
+    private void saveButtonClicked() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                savedUserBets();
+                Toast toast = Toast.makeText(BettingActivity.this,"Data Saved", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 
     private void chooseDateClicked() {
@@ -207,20 +241,8 @@ public class BettingActivity extends AppCompatActivity {
         return string;
     }
 
-    private void modifyListOfMatchesByDate(String dateInString) {
-        //clear bets in adapter
-        rvMatchesAdapter.notifyItemRangeRemoved(0, rvMatchesAdapter.getItemCount());
-        betsInRV.clear();
-        betsInRV.addAll(expandMatchesToBets(getMatchesFromSelectedDate(dateInString)));
-        //notify of new bets inserted
-        rvMatchesAdapter.notifyItemRangeInserted(0, betsInRV.size());
-    }
 
-    public List<Match> getMatchesFromSelectedDate(String date) {
-        return allMatches.stream()
-                .filter(Match -> Match.getUtcDate().substring(0,10).equals(date))
-                .collect(Collectors.toList());
-    }
+    /// -------- Background Threads -----------
 
     private class LoadMatches extends AsyncTask<Void, Void, ArrayList<Match>> {
 

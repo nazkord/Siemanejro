@@ -43,17 +43,17 @@ public class UserBetsActivity extends AppCompatActivity {
         betsListView = findViewById(R.id.listOfUserBets);
 
         try {
-            listOfBets = new LoadBet().execute().get();
+            listOfBets = new getBets().execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
-        setUserBets();
+        putUserBetsToAdapter();
 
     }
 
     //TODO: add exception when there is no internet connection or server is down (show saved bets)
-    private void setUserBets() {
+    private void putUserBetsToAdapter() {
         betsAdapter = new BetsAdapter(this, listOfBets);
         betsListView.setAdapter(betsAdapter);
     }
@@ -64,10 +64,11 @@ public class UserBetsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private class LoadBet extends AsyncTask<Void, Void, ArrayList<Bet>> {
+    private class getBets extends AsyncTask<Void, Void, ArrayList<Bet>> {
 
         @Override
         protected ArrayList<Bet> doInBackground(Void... voids) {
+            //TODO: change it!!!
             Long loggedUserId = Client.SIEMAJERO.get().getLoggedInUser().getId();
             return (ArrayList<Bet>) Client.SIEMAJERO.get().getUsersBet(loggedUserId);
         }
