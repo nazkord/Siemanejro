@@ -23,7 +23,7 @@ public class BetsAdapter extends ArrayAdapter<Bet> {
         super(context, 0, bets);
         this.bets = bets;
     }
-    
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

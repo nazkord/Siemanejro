@@ -80,10 +80,15 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
                 result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
                 result2.setTextColor(Color.RED);
 
-                if(isWinner(currentMatch)) {
-                    team1.setTypeface(null, Typeface.BOLD);
-                } else {
-                    team2.setTypeface(null, Typeface.BOLD);
+                switch (currentMatch.getScore().getWinner()) {
+                    case "HOME_TEAM" : {
+                        team1.setTypeface(null, Typeface.BOLD);
+                        break;
+                    }
+                    case "AWAY_TEAM" : {
+                        team2.setTypeface(null, Typeface.BOLD);
+                        break;
+                    }
                 }
 
                 viewHolder.itemView.setBackgroundColor(Color.rgb(255,230,238));
@@ -103,18 +108,18 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
 
                 matchStatus.setText("FT");
 
-                if(isWinner(currentMatch)) {
-                    team1.setTypeface(null, Typeface.BOLD);
-                } else {
-                    team2.setTypeface(null, Typeface.BOLD);
+                switch (currentMatch.getScore().getWinner()) {
+                    case "HOME_TEAM" : {
+                        team1.setTypeface(null, Typeface.BOLD);
+                        break;
+                    }
+                    case "AWAY_TEAM" : {
+                        team2.setTypeface(null, Typeface.BOLD);
+                        break;
+                    }
                 }
             }
         }
-
-    }
-
-    private Boolean isWinner(Match match) {
-        return (match.getScore().getWinner().equals("HOME_TEAM"));
     }
 
     // Returns the total count of items in the list
@@ -122,13 +127,6 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
     public int getItemCount() {
         return bets.size();
     }
-
-//    public List<Bet> getNotEmptyBets() {
-//        List<Bet> bets = new ArrayList<>();
-//        for(int i = 0; i < getItemCount(); i++) {
-//            if(getItem(i).)
-//        }
-//    }
 
     public Bet getItem(int position) {
         return bets.get(position);
@@ -152,7 +150,6 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
             result2 = itemView.findViewById(R.id.result2);
         }
     }
-
 
     private void minuteOfMatch(Match match) {
         //TODO: method that return current minute of the match
