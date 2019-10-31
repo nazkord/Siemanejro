@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import model.Leagues;
@@ -17,14 +18,21 @@ import java.util.ArrayList;
 public class LeaguesAdapter extends ArrayAdapter<Leagues> {
     private Context context;
     private ArrayList<Leagues> leagues;
+    private static final ArrayList<Integer> logos = new ArrayList<Integer>() {
+        {
+            add(R.drawable.ic_bundesliga);
+            add(R.drawable.ic_pl1);
+            add(R.drawable.ic_laliga1);
+            add(R.drawable.ic_serie_a);
+            add(R.drawable.ic_ligue_1);
+        }
+    };
 
     public LeaguesAdapter(Context context, ArrayList<Leagues> leagues) {
         super(context, 0, leagues);
         this.leagues = leagues;
         this.context = context;
     }
-
-
 
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -39,6 +47,9 @@ public class LeaguesAdapter extends ArrayAdapter<Leagues> {
 
         TextView nameOfLeague = convertView.findViewById(R.id.nameOfLeague);
         nameOfLeague.setText(league.getUiLeagueName());
+
+        ImageView leagueLogo = convertView.findViewById(R.id.imageOfLeague);
+        leagueLogo.setImageResource(logos.get(position));
 
         return convertView;
     }

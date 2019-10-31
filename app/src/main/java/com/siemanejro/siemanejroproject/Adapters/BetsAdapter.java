@@ -31,8 +31,8 @@ public class BetsAdapter extends ArrayAdapter<Bet> {
         //TODO: work, but need to be done using recyclerView (check)
 
         if (convertView == null) {
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        convertView = inflater.inflate(R.layout.bet_item, parent, false);
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.bet_item, parent, false);
         }
 
         Bet currentBet = bets.get(position);
