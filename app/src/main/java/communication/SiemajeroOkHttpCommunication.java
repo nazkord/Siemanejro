@@ -45,11 +45,6 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     }
 
     @Override
-    public User getLoggedInUser() {
-        return loggedInUser;
-    }
-
-    @Override
     public Request makeUserGetRequest(HttpUrl.Builder urlBuilder) {
         return new Request.Builder()
                 .url(urlBuilder.build().toString())
@@ -127,7 +122,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     }
 
     @Override
-    public List<Bet> getUsersBet(Long userId) {
+    public List<Bet> getLoggedInUserBets() {
 
         //TODO: save bets from server for better user experience (latest bets can show even without network)
 

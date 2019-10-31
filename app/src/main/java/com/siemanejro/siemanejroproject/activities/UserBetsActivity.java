@@ -69,8 +69,7 @@ public class UserBetsActivity extends AppCompatActivity {
         @Override
         protected ArrayList<Bet> doInBackground(Void... voids) {
             //TODO: change it!!!
-            Long loggedUserId = Client.SIEMAJERO.get().getLoggedInUser().getId();
-            return (ArrayList<Bet>) Client.SIEMAJERO.get().getUsersBet(loggedUserId);
+            return (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets();
         }
 
         @Override
