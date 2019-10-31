@@ -27,7 +27,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     private OkHttpClient client;
     private User loggedInUser;
     private ObjectMapper objectMapper;
-    private static String basicUrl = "http://192.168.0.101:8080";
+    private static String basicUrl = "http://192.168.1.119:8080";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     SiemajeroOkHttpCommunication() {
