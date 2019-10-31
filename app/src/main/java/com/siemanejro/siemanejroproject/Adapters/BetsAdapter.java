@@ -42,7 +42,6 @@ public class BetsAdapter extends ArrayAdapter<Bet> {
         String finalText = text.substring(0,10)+" "+text.substring(11,16);
         date.setText(finalText);
 
-
         TextView teamName1 = convertView.findViewById(R.id.teamName1);
         teamName1.setText(currentBet.getMatch().getHomeTeam().getName());
 
@@ -50,17 +49,20 @@ public class BetsAdapter extends ArrayAdapter<Bet> {
         teamName2.setText(currentBet.getMatch().getAwayTeam().getName());
 
         TextView resultOfTeam1 = convertView.findViewById(R.id.matchResult1);
-        //TODO: check whether there is a fullTimeResult
-        resultOfTeam1.setText(currentBet.getMatch().getScore().getFullTime().getHomeTeam().toString());
+        Integer resultHomeTeam = currentBet.getMatch().getScore().getFullTime().getHomeTeam();
+        if(resultHomeTeam != null)
+            resultOfTeam1.setText(String.valueOf(resultHomeTeam));
 
         TextView resultOfTeam2 = convertView.findViewById(R.id.matchResult2);
-        resultOfTeam2.setText(currentBet.getMatch().getScore().getFullTime().getAwayTeam().toString());
+        Integer resultAwayTeam = currentBet.getMatch().getScore().getFullTime().getHomeTeam();
+        if(resultAwayTeam != null)
+        resultOfTeam2.setText(String.valueOf(resultAwayTeam));
 
         TextView userBet1 = convertView.findViewById(R.id.userBet1);
-        userBet1.setText(currentBet.getUserScore().getFullTime().getHomeTeam().toString());
+        userBet1.setText(String.valueOf(currentBet.getUserScore().getFullTime().getHomeTeam()));
 
         TextView userBet2 = convertView.findViewById(R.id.userBet2);
-        userBet2.setText(currentBet.getUserScore().getFullTime().getAwayTeam().toString());
+        userBet2.setText(String.valueOf(currentBet.getUserScore().getFullTime().getAwayTeam()));
 
         return convertView;
     }
