@@ -68,7 +68,6 @@ public class UserBetsActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<Bet> doInBackground(Void... voids) {
-            //TODO: change it!!!
             return (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets();
         }
 

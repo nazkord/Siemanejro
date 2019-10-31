@@ -193,8 +193,6 @@ public class BettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 savedUserBets();
-                Toast toast = Toast.makeText(BettingActivity.this,"Data Saved", Toast.LENGTH_SHORT);
-                toast.show();
             }
         });
     }
@@ -267,7 +265,8 @@ public class BettingActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            //TODO: show error message (???) or success ?;
+            Toast toast = Toast.makeText(BettingActivity.this,"Data Saved", Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 }

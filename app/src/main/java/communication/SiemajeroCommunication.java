@@ -14,7 +14,7 @@ public interface SiemajeroCommunication {
     Optional<User> loginUser(String userName, String password);
     List<Match> getMatchesByCompetition(Long competitionId);
     User createUser(User newUser);
-    //TODO: this method should retrieve response from API
+    //TODO: those method should retrieve response from API
     Request makeUserGetRequest(HttpUrl.Builder builder);
     void postUsersBet(BetList betList);
     List<Bet> getLoggedInUserBets();

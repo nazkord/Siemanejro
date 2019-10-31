@@ -12,7 +12,11 @@ import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.R;
 
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.Bet;
@@ -51,6 +55,7 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
         matchStatus.setText(null);
 
         //set date of match
+        //TODO: should be done this zonedDateTime
         String text = currentBet.getMatch().getUtcDate();
         String finalText = text.substring(0,10)+" "+text.substring(11,16);
         viewHolder.date.setText(finalText);
@@ -79,6 +84,10 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
                 result2.setFocusable(false);
                 result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
                 result2.setTextColor(Color.RED);
+
+                String matchMinute = getMinuteOfMatch(currentMatch.getUtcDate()) + "'";
+                matchStatus.setText(matchMinute);
+                matchStatus.setTextColor(Color.RED);
 
                 switch (currentMatch.getScore().getWinner()) {
                     case "HOME_TEAM" : {
@@ -151,8 +160,9 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
         }
     }
 
-    private void minuteOfMatch(Match match) {
-        //TODO: method that return current minute of the match
+    Long getMinuteOfMatch(String matchTimeString) {
+        LocalTime matchTime = LocalTime.parse(matchTimeString.substring(11,16));
+        return Duration.between(matchTime, LocalTime.now()).toMinutes();
     }
 
 }
