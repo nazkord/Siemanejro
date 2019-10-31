@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.gson.JsonSyntaxException;
-import com.siemanejro.siemanejroproject.ChooseLeague;
 import com.siemanejro.siemanejroproject.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Matches.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ChooseLeague.class);
+                Intent intent = new Intent(MainActivity.this, ChooseLeagueActivity.class);
                 startActivity(intent);
             }
         });

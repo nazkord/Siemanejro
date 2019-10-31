@@ -2,38 +2,54 @@ package com.siemanejro.siemanejroproject.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.siemanejro.siemanejroproject.Adapters.MatchesAdapter;
+import com.siemanejro.siemanejroproject.Adapters.RVMatchesAdapter;
 import com.siemanejro.siemanejroproject.R;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
-import json.JsonService;
-import model.AllMatches;
+import communication.Client;
+import model.Bet;
+import model.BetList;
+import model.FullTimeResult;
 import model.Match;
+import model.Score;
+
+import static android.graphics.drawable.ClipDrawable.HORIZONTAL;
 
 public class BettingActivity extends AppCompatActivity {
 
+    /// Local variables ///
+
     Button saveButton;
     Button chooseDateButton;
-    String selectedDate;
-    MatchesAdapter matchesAdapter;
-    ListView listView;
-    ArrayList<Match> listOfMatches;
-    String leagueID;
+    RVMatchesAdapter rvMatchesAdapter;
+    Long leagueID;
     String leagueName;
-    AllMatches allMatches;
+    String selectedDate;
+
+    RecyclerView rvBets;
+    List<Match> allMatches;
+    List<Bet> betsInRV = new ArrayList<>();
+    BetList betList = new BetList();
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -47,37 +63,36 @@ public class BettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tipp);
+        setContentView(R.layout.activity_betting);
 
-        Intent intent = getIntent();
-        leagueID = intent.getStringExtra("leagueID");
-        leagueName = intent.getStringExtra("leagueName");
+        init();
 
-        setToolbarTitleAndBackPressButton(leagueName);
-
-        JsonService jsonService = new JsonService();
-
+        //get matches from API
         try {
-            allMatches = jsonService.importMatchesFPM(leagueID);
+            allMatches = new LoadMatches().execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
-        listView = (ListView)findViewById(R.id.matches_list);
-        listView = (ListView) findViewById(R.id.matches_list);
-        saveButton = (Button) findViewById(R.id.saveButton);
-        saveButtonClicked();
-
-        chooseDateButton = findViewById(R.id.choose_date_button);
-
-
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String currentDateTime = LocalDateTime.now().format(dateFormat);
-        selectedDate = currentDateTime;
-        listOfMatches = allMatches.getMatchesFromGivenDate(currentDateTime);
-        matchesAdapter = new MatchesAdapter(this, listOfMatches);
-        listView.setAdapter(matchesAdapter);
+        selectedDate = LocalDateTime.now().format(dateFormat);
+        betsInRV = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
 
+        // Create adapter passing in bets with chosen matches
+        rvMatchesAdapter = new RVMatchesAdapter((ArrayList<Bet>) betsInRV);
+
+        initializeRecyclerView();
+    }
+
+    private void init() {
+        rvBets = findViewById(R.id.matchesList);
+        saveButton = (Button) findViewById(R.id.saveButton);
+        chooseDateButton = findViewById(R.id.choose_date_button);
+        Intent intent = getIntent();
+        leagueID = intent.getLongExtra("leagueID", 0);
+        leagueName = intent.getStringExtra("leagueName");
+        setToolbarTitleAndBackPressButton(leagueName);
+        saveButtonClicked();
         chooseDateClicked();
     }
 
@@ -87,10 +102,97 @@ public class BettingActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+
+    /// -------- RecyclerView and Adapter methods -----------
+
+    private void initializeRecyclerView() {
+        DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
+        rvBets.addItemDecoration(itemDecor);
+        rvBets.setAdapter(rvMatchesAdapter);
+        rvBets.setLayoutManager(linearLayoutManager);
+    }
+
+    private ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
+        return (ArrayList<Bet>) matches.stream()
+                .map(m -> new Bet(null, m, null, null, null))
+                .collect(Collectors.toList());
+    }
+
+    public List<Match> getMatchesFromSelectedDate(String date) {
+        return allMatches.stream()
+                .filter(Match -> Match.getUtcDate().substring(0,10).equals(date))
+                .collect(Collectors.toList());
+    }
+
+    private void modifyListOfMatchesByDate(String dateInString) {
+        //clear bets in adapter
+        rvMatchesAdapter.notifyItemRangeRemoved(0, rvMatchesAdapter.getItemCount());
+        betsInRV.clear();
+        betsInRV.addAll(expandMatchesToBets(getMatchesFromSelectedDate(dateInString)));
+        //notify of new bets inserted
+        rvMatchesAdapter.notifyItemRangeInserted(0, betsInRV.size());
+    }
+
+    /// -------- Methods for saving bets -----------
+
+    private void savedUserBets() {
+        List<Bet> bets = getNewUserBets();
+        betList.clear();
+        betList.addAll(bets);
+        new PostBets().execute();
+    }
+
+    private List<Bet> getNewUserBets() {
+        View betView;
+        Bet betItem;
+        EditText userBet1;
+        EditText userBet2;
+
+        int numberOfMatches = rvMatchesAdapter.getItemCount();
+        List<Bet> bets = new ArrayList<>();
+
+        for (int i = 0; i < numberOfMatches; i++)
+        {
+            betItem = rvMatchesAdapter.getItem(i);
+            betView = linearLayoutManager.findViewByPosition(i);
+
+
+            userBet1 = (EditText) betView.findViewById(R.id.result1);
+            userBet2 = (EditText) betView.findViewById(R.id.result2);
+            if(userBet1.getText().toString().isEmpty() || userBet2.getText().toString().isEmpty())
+                continue;
+            Integer userBetResult1 = Integer.parseInt(userBet1.getText().toString());
+            Integer userBetResult2 = Integer.parseInt(userBet2.getText().toString());
+
+            Score userScore = new Score(null, getWinnerForScore(userBetResult1,userBetResult2),
+                    new FullTimeResult(null, userBetResult1, userBetResult2));
+            betItem.setUserScore(userScore);
+
+            //TODO: IMPORTANT: result should be automatically counted by computing class
+            betItem.setResult(1);
+
+            bets.add(betItem);
+        }
+        return bets;
+    }
+
+    private String getWinnerForScore(Integer a, Integer b) {
+        if(a > b) {
+            return "HOME_TEAM";
+        } else if (b > a) {
+            return "AWAY_TEAM";
+        } else {
+            return "DRAW";
+        }
+    }
+
+    /// -------- onClicker's and DatePickerDialog -----------
+
     private void saveButtonClicked() {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                savedUserBets();
                 Toast toast = Toast.makeText(BettingActivity.this,"Data Saved", Toast.LENGTH_SHORT);
                 toast.show();
             }
@@ -108,9 +210,9 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private void openDatePickerDialog() {
-        Integer year = Integer.valueOf(selectedDate.substring(0,4));
-        Integer monthOfYear = Integer.valueOf(selectedDate.substring(5,7)) - 1;
-        Integer dayOfMonth = Integer.valueOf(selectedDate.substring(8,10));
+        int year = Integer.parseInt(selectedDate.substring(0, 4));
+        int monthOfYear = Integer.valueOf(selectedDate.substring(5,7)) - 1;
+        int dayOfMonth = Integer.parseInt(selectedDate.substring(8, 10));
 
         // open dateDialogPicker
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -139,10 +241,33 @@ public class BettingActivity extends AppCompatActivity {
         return string;
     }
 
-    private void modifyListOfMatchesByDate(String dateInString) {
-        listOfMatches = allMatches.getMatchesFromGivenDate(dateInString);
-        matchesAdapter.clear();
-        matchesAdapter.addAll(listOfMatches);
-        matchesAdapter.notifyDataSetChanged();
+
+    /// -------- Background Threads -----------
+
+    private class LoadMatches extends AsyncTask<Void, Void, ArrayList<Match>> {
+
+        @Override
+        protected ArrayList<Match> doInBackground(Void... voids) {
+            return (ArrayList<Match>) Client.SIEMAJERO.get().getMatchesByCompetition(leagueID);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Match> matches) {
+            super.onPostExecute(matches);
+        }
+    }
+
+    private class PostBets extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Client.SIEMAJERO.get().postUsersBet(betList);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            //TODO: show error message (???) or success ?;
+        }
     }
 }

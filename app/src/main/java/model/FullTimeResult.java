@@ -10,6 +10,15 @@ public class FullTimeResult implements Serializable {
     private Integer homeTeam;
     private Integer awayTeam;
 
+    public FullTimeResult(Long id, Integer homeTeam, Integer awayTeam) {
+        this.id = id;
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+    }
+
+    public FullTimeResult() {
+    }
+
     public Long getId() {
         return id;
     }

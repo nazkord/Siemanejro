@@ -23,8 +23,7 @@ public class BetsAdapter extends ArrayAdapter<Bet> {
         super(context, 0, bets);
         this.bets = bets;
     }
-
-
+    
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -51,6 +50,7 @@ public class BetsAdapter extends ArrayAdapter<Bet> {
         teamName2.setText(currentBet.getMatch().getAwayTeam().getName());
 
         TextView resultOfTeam1 = convertView.findViewById(R.id.matchResult1);
+        //TODO: check whether there is a fullTimeResult
         resultOfTeam1.setText(currentBet.getMatch().getScore().getFullTime().getHomeTeam().toString());
 
         TextView resultOfTeam2 = convertView.findViewById(R.id.matchResult2);

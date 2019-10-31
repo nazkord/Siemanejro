@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.siemanejro.siemanejroproject.Leagues;
+import model.Leagues;
 import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
@@ -31,8 +31,6 @@ public class LeaguesAdapter extends ArrayAdapter<Leagues> {
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-
-            //TODO: make name of league appears on the left
 
             convertView = inflater.inflate(R.layout.league_item, parent, false);
         }
