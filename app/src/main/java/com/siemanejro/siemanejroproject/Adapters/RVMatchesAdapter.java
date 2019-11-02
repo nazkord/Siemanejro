@@ -76,6 +76,9 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
         viewHolder.itemView.setBackgroundColor(Color.WHITE);
 
         switch (Status.valueOf(currentMatch.getStatus())) {
+            case POSTPONED: {
+                matchStatus.setText("POSTPONED");
+            }
             case IN_PLAY : {
                 result1.setFocusable(false);
                 result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
@@ -106,6 +109,15 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
             case PAUSED: {
                 matchStatus.setText("HF");
                 matchStatus.setTextColor(Color.RED);
+
+                result1.setFocusable(false);
+                result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
+                result1.setTextColor(Color.RED);
+
+                result2.setFocusable(false);
+                result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
+                result2.setTextColor(Color.RED);
+
                 break;
             }
             case FINISHED: {
