@@ -1,18 +1,14 @@
 package com.siemanejro.siemanejroproject.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.R;
 
-import java.util.Optional;
-
 import communication.Client;
-import loginUtils.SharedPrefUtil;
+import utils.SharedPrefUtil;
 import model.User;
 
 public class SplashScreenActivity extends AppCompatActivity {

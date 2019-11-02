@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Optional;
 
 import communication.Client;
-import loginUtils.SharedPrefUtil;
+import utils.SharedPrefUtil;
 import model.User;
 
 import static android.Manifest.permission.READ_CONTACTS;

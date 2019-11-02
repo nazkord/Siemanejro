@@ -1,5 +1,7 @@
 package communication;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,7 +55,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     }
 
     @Override
-    public void postUsersBet(BetList betList) {
+    public boolean postUsersBet(BetList betList) {
         String betListInJson = "";
         ResponseBody responseBody = null;
 
@@ -82,10 +84,11 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
             responseBody = client.newCall(request).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
-        //TODO: do sth with responseBody;
-
+        //TODO: check responseBody!!!;
+        return true;
     }
 
     //TODO: get all matches from db this competition, which is no-sense
@@ -107,11 +110,11 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
                 return objectMapper.readValue(responseBody.string(), new TypeReference<List<Match>>() {
                 });
             } else {
-                //TODO: do sth with null responseBody
                 return null;
             }
         } catch (Exception e) {
-            //TODO: add to log
+            Log.e("Error getting matches from server",e.getMessage());
+            //TODO: should return something that can be treated as error in activity
             return null;
         }
     }
@@ -137,13 +140,12 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
                 return objectMapper.readValue(responseBody.string(), new TypeReference<List<Bet>>() {
                 });
             } else {
-                //TODO: do sth with null responseBody
+                return null;
             }
         } catch (Exception e) {
-            //TODO: add to log
+            Log.e("Error while getting bets", e.getMessage());
             return null;
         }
-        return null;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.siemanejro.siemanejroproject.activities;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +33,7 @@ import model.BetList;
 import model.FullTimeResult;
 import model.Match;
 import model.Score;
+import utils.NetworkUtil;
 
 import static android.graphics.drawable.ClipDrawable.HORIZONTAL;
 
@@ -69,19 +72,10 @@ public class BettingActivity extends AppCompatActivity {
 
         //get matches from API
         try {
-            allMatches = new LoadMatches().execute().get();
+            new LoadMatches().execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        selectedDate = LocalDateTime.now().format(dateFormat);
-        betsInRV = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
-
-        // Create adapter passing in bets with chosen matches
-        rvMatchesAdapter = new RVMatchesAdapter((ArrayList<Bet>) betsInRV);
-
-        initializeRecyclerView();
     }
 
     private void init() {
@@ -106,6 +100,15 @@ public class BettingActivity extends AppCompatActivity {
     /// -------- RecyclerView and Adapter methods -----------
 
     private void initializeRecyclerView() {
+
+        //get data for RV
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        selectedDate = LocalDateTime.now().format(dateFormat);
+        betsInRV = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
+
+        // Create adapter passing in bets with chosen matches
+        rvMatchesAdapter = new RVMatchesAdapter((ArrayList<Bet>) betsInRV);
+
         DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
         rvBets.addItemDecoration(itemDecor);
         rvBets.setAdapter(rvMatchesAdapter);
@@ -242,31 +245,78 @@ public class BettingActivity extends AppCompatActivity {
 
     /// -------- Background Threads -----------
 
-    private class LoadMatches extends AsyncTask<Void, Void, ArrayList<Match>> {
+    private class LoadMatches extends AsyncTask<Void, Void, Integer> {
 
         @Override
-        protected ArrayList<Match> doInBackground(Void... voids) {
-            return (ArrayList<Match>) Client.SIEMAJERO.get().getMatchesByCompetition(leagueID);
+        protected Integer doInBackground(Void... voids) {
+            if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
+                return 0;
+            }
+            allMatches = Client.SIEMAJERO.get().getMatchesByCompetition(leagueID);
+            if(allMatches == null) {
+                //TODO: it could be an error by server side or there are just no matches at all
+                return 1;
+            } else {
+                return 2;
+            }
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Match> matches) {
-            super.onPostExecute(matches);
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            switch (integer) {
+                case 0 : {
+                    Toast toast = Toast.makeText(BettingActivity.this,"No internet connection", Toast.LENGTH_LONG);
+                    toast.show();
+                    break;
+                }
+                case 1 : {
+                    Toast toast = Toast.makeText(BettingActivity.this,"Something went wrong (server side)", Toast.LENGTH_LONG);
+                    toast.show();
+                    break;
+                }
+                case 2: {
+                    initializeRecyclerView();
+                    break;
+                }
+            }
         }
     }
 
-    private class PostBets extends AsyncTask<Void, Void, Void> {
+    private class PostBets extends AsyncTask<Void, Void, Integer> {
         @Override
-        protected Void doInBackground(Void... voids) {
-            Client.SIEMAJERO.get().postUsersBet(betList);
-            return null;
+        protected Integer doInBackground(Void... voids) {
+            if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
+                return 0;
+            }
+            if(Client.SIEMAJERO.get().postUsersBet(betList)) {
+                return 1;
+            } else {
+                return 2;
+            }
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Toast toast = Toast.makeText(BettingActivity.this,"Data Saved", Toast.LENGTH_LONG);
-            toast.show();
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            switch (integer) {
+                case 0: {
+                    Toast toast = Toast.makeText(BettingActivity.this,"No internet connection", Toast.LENGTH_LONG);
+                    toast.show();
+                    break;
+                }
+                case 1: {
+                    Toast toast = Toast.makeText(BettingActivity.this,"Data Saved", Toast.LENGTH_LONG);
+                    toast.show();
+                    break;
+                }
+                case 2: {
+                    Toast toast = Toast.makeText(BettingActivity.this,"Something went wrong", Toast.LENGTH_LONG);
+                    toast.show();
+                    break;
+                }
+            }
+
         }
     }
 }

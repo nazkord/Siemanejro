@@ -16,7 +16,7 @@ public interface SiemajeroCommunication {
     User createUser(User newUser);
     //TODO: those method should retrieve response from API
     Request makeUserGetRequest(HttpUrl.Builder builder);
-    void postUsersBet(BetList betList);
+    boolean postUsersBet(BetList betList);
     List<Bet> getLoggedInUserBets();
     void setLoggedInUser(User uSer);
 }
