@@ -34,6 +34,7 @@ import model.FullTimeResult;
 import model.Match;
 import model.Score;
 import utils.NetworkUtil;
+import utils.ResultUtil;
 
 import static android.graphics.drawable.ClipDrawable.HORIZONTAL;
 
@@ -170,9 +171,6 @@ public class BettingActivity extends AppCompatActivity {
             Score userScore = new Score(null, getWinnerForScore(userBetResult1,userBetResult2),
                     new FullTimeResult(null, userBetResult1, userBetResult2));
             betItem.setUserScore(userScore);
-
-            //TODO: IMPORTANT: result should be automatically counted by computing class
-            betItem.setResult(1);
 
             bets.add(betItem);
         }

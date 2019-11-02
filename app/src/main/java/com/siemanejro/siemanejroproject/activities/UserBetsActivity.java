@@ -1,10 +1,13 @@
 package com.siemanejro.siemanejroproject.activities;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.siemanejro.siemanejroproject.Adapters.BetsAdapter;
 import com.siemanejro.siemanejroproject.R;
@@ -14,6 +17,8 @@ import java.util.concurrent.ExecutionException;
 
 import communication.Client;
 import model.Bet;
+import model.User;
+import utils.NetworkUtil;
 
 public class UserBetsActivity extends AppCompatActivity {
 
@@ -43,13 +48,10 @@ public class UserBetsActivity extends AppCompatActivity {
         betsListView = findViewById(R.id.listOfUserBets);
 
         try {
-            listOfBets = new getBets().execute().get();
+            new getBets().execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
-        putUserBetsToAdapter();
-
     }
 
     //TODO: add exception when there is no internet connection or server is down (show saved bets)
@@ -64,16 +66,41 @@ public class UserBetsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private class getBets extends AsyncTask<Void, Void, ArrayList<Bet>> {
+    private class getBets extends AsyncTask<Void, Void, Integer> {
 
         @Override
-        protected ArrayList<Bet> doInBackground(Void... voids) {
-            return (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets();
+        protected Integer doInBackground(Void... voids) {
+            if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
+                return 0;
+            }
+            listOfBets = (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets();
+            if(listOfBets == null) {
+                return 1;
+            } else {
+                return 2;
+            }
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Bet> bets) {
-            super.onPostExecute(bets);
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            switch (integer) {
+                case 0 : {
+                    Toast toast = Toast.makeText(UserBetsActivity.this,"No internet connection", Toast.LENGTH_LONG);
+                    toast.show();
+                    break;
+                }
+                case 1 : {
+                    Toast toast = Toast.makeText(UserBetsActivity.this,"Something went wrong", Toast.LENGTH_LONG);
+                    toast.show();
+                    break;
+                }
+                case 2 : {
+                    putUserBetsToAdapter();
+                    break;
+                }
+                
+            }
         }
     }
 

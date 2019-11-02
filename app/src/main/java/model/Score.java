@@ -3,6 +3,7 @@ package model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Score implements Serializable {
@@ -50,5 +51,20 @@ public class Score implements Serializable {
                 ", winner='" + winner + '\'' +
                 ", fullTime=" + fullTime +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score = (Score) o;
+        return
+                Objects.equals(winner, score.winner) &&
+                Objects.equals(fullTime, score.fullTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, winner, fullTime);
     }
 }

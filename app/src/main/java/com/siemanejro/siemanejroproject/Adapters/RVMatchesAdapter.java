@@ -12,12 +12,9 @@ import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.R;
 
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import model.Bet;
 import model.Match;
