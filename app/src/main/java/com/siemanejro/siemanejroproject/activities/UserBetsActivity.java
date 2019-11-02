@@ -17,8 +17,9 @@ import java.util.concurrent.ExecutionException;
 
 import communication.Client;
 import model.Bet;
-import model.User;
+import model.Score;
 import utils.NetworkUtil;
+import utils.ResultUtil;
 
 public class UserBetsActivity extends AppCompatActivity {
 
@@ -54,10 +55,20 @@ public class UserBetsActivity extends AppCompatActivity {
         }
     }
 
-    //TODO: add exception when there is no internet connection or server is down (show saved bets)
+    // TODO: show lastly upload user's bets
     private void putUserBetsToAdapter() {
+        checkoutBets();
         betsAdapter = new BetsAdapter(this, listOfBets);
         betsListView.setAdapter(betsAdapter);
+    }
+
+    private void checkoutBets() {
+        for(Bet b: listOfBets) {
+            Score matchScore = b.getMatch().getScore();
+            if(!matchScore.getWinner().isEmpty()) {
+                b.setResult(ResultUtil.calculateResult(matchScore, b.getUserScore()));
+            }
+        }
     }
 
     private void setToolbarTitle(String title) {
@@ -99,7 +110,7 @@ public class UserBetsActivity extends AppCompatActivity {
                     putUserBetsToAdapter();
                     break;
                 }
-                
+
             }
         }
     }
