@@ -65,7 +65,7 @@ public class UserBetsActivity extends AppCompatActivity {
     private void checkoutBets() {
         for(Bet b: listOfBets) {
             Score matchScore = b.getMatch().getScore();
-            if(!matchScore.getWinner().isEmpty()) {
+            if(matchScore.getWinner() != null) {
                 b.setResult(ResultUtil.calculateResult(matchScore, b.getUserScore()));
             }
         }

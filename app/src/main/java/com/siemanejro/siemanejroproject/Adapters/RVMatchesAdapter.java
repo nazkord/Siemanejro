@@ -15,6 +15,7 @@ import com.siemanejro.siemanejroproject.R;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import model.Bet;
 import model.Match;
@@ -148,6 +149,10 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
 
     public Bet getItem(int position) {
         return bets.get(position);
+    }
+
+    public ArrayList<Bet> getBets() {
+        return bets;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

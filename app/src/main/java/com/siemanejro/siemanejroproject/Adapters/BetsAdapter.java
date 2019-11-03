@@ -50,19 +50,24 @@ public class BetsAdapter extends ArrayAdapter<Bet> {
 
         TextView resultOfTeam1 = convertView.findViewById(R.id.matchResult1);
         Integer resultHomeTeam = currentBet.getMatch().getScore().getFullTime().getHomeTeam();
-        if(resultHomeTeam != null)
+        if(resultHomeTeam != null) {
             resultOfTeam1.setText(String.valueOf(resultHomeTeam));
+        }
 
         TextView resultOfTeam2 = convertView.findViewById(R.id.matchResult2);
-        Integer resultAwayTeam = currentBet.getMatch().getScore().getFullTime().getHomeTeam();
-        if(resultAwayTeam != null)
-        resultOfTeam2.setText(String.valueOf(resultAwayTeam));
+        Integer resultAwayTeam = currentBet.getMatch().getScore().getFullTime().getAwayTeam();
+        if(resultAwayTeam != null) {
+            resultOfTeam2.setText(String.valueOf(resultAwayTeam));
+        }
 
         TextView userBet1 = convertView.findViewById(R.id.userBet1);
         userBet1.setText(String.valueOf(currentBet.getUserScore().getFullTime().getHomeTeam()));
 
         TextView userBet2 = convertView.findViewById(R.id.userBet2);
         userBet2.setText(String.valueOf(currentBet.getUserScore().getFullTime().getAwayTeam()));
+
+        TextView betResult = convertView.findViewById(R.id.betResult);
+        betResult.setText(String.valueOf(currentBet.getResult()));
 
         return convertView;
     }

@@ -58,8 +58,7 @@ public class Score implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score = (Score) o;
-        return
-                Objects.equals(winner, score.winner) &&
+        return Objects.equals(winner, score.winner) &&
                 Objects.equals(fullTime, score.fullTime);
     }
 

@@ -44,10 +44,6 @@ public class FullTimeResult implements Serializable {
         this.awayTeam = awayTeam;
     }
 
-    public Integer getDifference() {
-        return this.awayTeam-this.homeTeam;
-    }
-
     @Override
     public String toString() {
         return "FullTimeResult{" +

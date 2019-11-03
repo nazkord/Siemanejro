@@ -50,7 +50,7 @@ public class BettingActivity extends AppCompatActivity {
     String selectedDate;
 
     RecyclerView rvBets;
-    List<Match> allMatches;
+    List<Match> allMatches = null;
     List<Bet> betsInRV = new ArrayList<>();
     BetList betList = new BetList();
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -77,6 +77,23 @@ public class BettingActivity extends AppCompatActivity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+
+        // Create adapter passing in bets with chosen matches
+        rvMatchesAdapter = new RVMatchesAdapter((ArrayList<Bet>) betsInRV);
+
+        DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
+        rvBets.addItemDecoration(itemDecor);
+        rvBets.setAdapter(rvMatchesAdapter);
+        rvBets.setLayoutManager(linearLayoutManager);
+
+//        //get data for RV
+//        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        selectedDate = LocalDateTime.now().format(dateFormat);
+//        if(allMatches != null) {
+//            betsInRV = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
+//        } else {
+//            betsInRV = null;
+//        }
     }
 
     private void init() {
@@ -100,21 +117,6 @@ public class BettingActivity extends AppCompatActivity {
 
     /// -------- RecyclerView and Adapter methods -----------
 
-    private void initializeRecyclerView() {
-
-        //get data for RV
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        selectedDate = LocalDateTime.now().format(dateFormat);
-        betsInRV = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
-
-        // Create adapter passing in bets with chosen matches
-        rvMatchesAdapter = new RVMatchesAdapter((ArrayList<Bet>) betsInRV);
-
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
-        rvBets.addItemDecoration(itemDecor);
-        rvBets.setAdapter(rvMatchesAdapter);
-        rvBets.setLayoutManager(linearLayoutManager);
-    }
 
     private ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
         return (ArrayList<Bet>) matches.stream()
@@ -160,7 +162,7 @@ public class BettingActivity extends AppCompatActivity {
             betItem = rvMatchesAdapter.getItem(i);
             betView = linearLayoutManager.findViewByPosition(i);
 
-
+            //TODO: IMPORTANT: doesn't work every time
             userBet1 = (EditText) betView.findViewById(R.id.result1);
             userBet2 = (EditText) betView.findViewById(R.id.result2);
             if(userBet1.getText().toString().isEmpty() || userBet2.getText().toString().isEmpty())
@@ -274,7 +276,8 @@ public class BettingActivity extends AppCompatActivity {
                     break;
                 }
                 case 2: {
-                    initializeRecyclerView();
+                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    modifyListOfMatchesByDate(LocalDateTime.now().format(dateFormat));
                     break;
                 }
             }

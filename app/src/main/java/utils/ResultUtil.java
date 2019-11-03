@@ -1,5 +1,6 @@
 package utils;
 
+import model.FullTimeResult;
 import model.Score;
 
 public class ResultUtil {
@@ -8,12 +9,16 @@ public class ResultUtil {
         if(score1.getWinner().equals(score2.getWinner())) {
             if(score1.getFullTime().equals(score2.getFullTime()))
                 return 4;
-            if(score1.getFullTime().getDifference().equals(score2.getFullTime().getDifference())) {
+            if(getDifference(score1.getFullTime()).equals(getDifference(score2.getFullTime()))) {
                 return 3;
             }
             return 2;
         } else {
             return 0;
         }
+    }
+
+    private static Integer getDifference(FullTimeResult fullTimeResult) {
+        return fullTimeResult.getHomeTeam() - fullTimeResult.getAwayTeam();
     }
 }
