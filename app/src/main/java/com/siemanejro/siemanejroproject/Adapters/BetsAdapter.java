@@ -52,6 +52,9 @@ public class BetsAdapter extends ArrayAdapter<Bet> {
         Integer resultHomeTeam = currentBet.getMatch().getScore().getFullTime().getHomeTeam();
         if(resultHomeTeam != null) {
             resultOfTeam1.setText(String.valueOf(resultHomeTeam));
+        } else {
+            TextView colon = convertView.findViewById(R.id.colon1);
+            colon.setVisibility(View.INVISIBLE);
         }
 
         TextView resultOfTeam2 = convertView.findViewById(R.id.matchResult2);

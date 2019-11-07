@@ -60,7 +60,7 @@
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/colon"
+                android:id="@+id/colon1"
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
                 android:text="@string/colon"

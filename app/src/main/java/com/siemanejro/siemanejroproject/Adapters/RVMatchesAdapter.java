@@ -25,6 +25,7 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
 
     private ArrayList<Bet> bets;
 
+    //TODO: maybe better to use setter!!! (than modify make in PostExecute method)
     public RVMatchesAdapter(ArrayList<Bet> bets) {
         this.bets = bets;
     }
