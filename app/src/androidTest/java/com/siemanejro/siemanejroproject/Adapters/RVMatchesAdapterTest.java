@@ -12,7 +12,8 @@ import static junit.framework.TestCase.assertEquals;
 public class RVMatchesAdapterTest {
 
     private ArrayList<Bet> bets = new ArrayList<>();
-    private RVMatchesAdapter rv = new RVMatchesAdapter(bets);
+    private RVMatchesAdapter rv = new RVMatchesAdapter();
+//    rv.setBets(bets);
 
     @Test
     public void testTimeSubtracting() {

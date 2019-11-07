@@ -78,13 +78,7 @@ public class BettingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //get data for RV
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        selectedDate = LocalDateTime.now().format(dateFormat);
-        betsInRV = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
-
-        // Create adapter passing in bets with chosen matches
-        rvMatchesAdapter = new RVMatchesAdapter((ArrayList<Bet>) betsInRV);
+        rvMatchesAdapter = new RVMatchesAdapter();
 
         DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
         rvBets.addItemDecoration(itemDecor);
@@ -132,6 +126,9 @@ public class BettingActivity extends AppCompatActivity {
         rvMatchesAdapter.notifyItemRangeRemoved(0, rvMatchesAdapter.getItemCount());
         betsInRV.clear();
         betsInRV.addAll(expandMatchesToBets(getMatchesFromSelectedDate(dateInString)));
+
+        //TODO: is it a good approach?
+        rvMatchesAdapter.setBets((ArrayList<Bet>) betsInRV);
         //notify of new bets inserted
         rvMatchesAdapter.notifyItemRangeInserted(0, betsInRV.size());
     }
@@ -186,7 +183,11 @@ public class BettingActivity extends AppCompatActivity {
         }
     }
 
+
+
     /// -------- onClicker's and DatePickerDialog -----------
+
+
 
     private void saveButtonClicked() {
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -273,8 +274,9 @@ public class BettingActivity extends AppCompatActivity {
                     break;
                 }
                 case 2: {
-//                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//                    modifyListOfMatchesByDate(LocalDateTime.now().format(dateFormat));
+                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    selectedDate = LocalDateTime.now().format(dateFormat);
+                    modifyListOfMatchesByDate(selectedDate);
                     break;
                 }
             }

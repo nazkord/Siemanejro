@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.siemanejro.siemanejroproject.Adapters.BetsAdapter;
 import com.siemanejro.siemanejroproject.Adapters.RVBetsAdapter;
 import com.siemanejro.siemanejroproject.R;
 
@@ -65,8 +64,6 @@ public class UserBetsActivity extends AppCompatActivity {
     // TODO: show lastly upload user's bets
     private void putUserBetsToAdapter() {
         checkoutBets();
-//        betsAdapter = new BetsAdapter(this, listOfBets);
-//        betsListView.setAdapter(betsAdapter);
         rvBetsAdapter = new RVBetsAdapter(listOfBets);
 
         DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);

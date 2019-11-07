@@ -23,11 +23,19 @@ import model.Status;
 
 public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.ViewHolder> {
 
-    private ArrayList<Bet> bets;
+    public void setBets(ArrayList<Bet> bets) {
+        this.bets = bets;
+    }
+
+    private ArrayList<Bet> bets = new ArrayList<>();
 
     //TODO: maybe better to use setter!!! (than modify make in PostExecute method)
     public RVMatchesAdapter(ArrayList<Bet> bets) {
         this.bets = bets;
+    }
+
+    public RVMatchesAdapter() {
+
     }
 
     @NonNull
@@ -61,7 +69,9 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
 
         //set name of teams
         team1.setText(currentBet.getMatch().getHomeTeam().getName());
+        team1.setTypeface(null, Typeface.NORMAL);
         team2.setText(currentBet.getMatch().getAwayTeam().getName());
+        team2.setTypeface(null, Typeface.NORMAL);
 
         // set default results view
         result1.setText(null);
