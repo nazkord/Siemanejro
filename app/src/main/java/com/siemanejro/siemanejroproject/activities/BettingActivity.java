@@ -78,6 +78,11 @@ public class BettingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //get data for RV
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        selectedDate = LocalDateTime.now().format(dateFormat);
+        betsInRV = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
+
         // Create adapter passing in bets with chosen matches
         rvMatchesAdapter = new RVMatchesAdapter((ArrayList<Bet>) betsInRV);
 
@@ -86,14 +91,6 @@ public class BettingActivity extends AppCompatActivity {
         rvBets.setAdapter(rvMatchesAdapter);
         rvBets.setLayoutManager(linearLayoutManager);
 
-//        //get data for RV
-//        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        selectedDate = LocalDateTime.now().format(dateFormat);
-//        if(allMatches != null) {
-//            betsInRV = expandMatchesToBets(getMatchesFromSelectedDate(selectedDate));
-//        } else {
-//            betsInRV = null;
-//        }
     }
 
     private void init() {
@@ -276,8 +273,8 @@ public class BettingActivity extends AppCompatActivity {
                     break;
                 }
                 case 2: {
-                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    modifyListOfMatchesByDate(LocalDateTime.now().format(dateFormat));
+//                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//                    modifyListOfMatchesByDate(LocalDateTime.now().format(dateFormat));
                     break;
                 }
             }
