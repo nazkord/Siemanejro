@@ -6,12 +6,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.siemanejro.siemanejroproject.R;
-import com.siemanejro.siemanejroproject.Adapters.LeaguesAdapter;
+import com.siemanejro.siemanejroproject.adapters.LeaguesAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +21,7 @@ import model.Leagues;
 public class ChooseLeagueActivity extends AppCompatActivity  {
 
     ListView listOfLeagues;
-    ArrayAdapter<Leagues> leaguesArrayAdapter;
+    LeaguesAdapter leaguesArrayAdapter;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

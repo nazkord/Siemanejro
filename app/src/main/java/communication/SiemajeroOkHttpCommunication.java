@@ -29,7 +29,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     private OkHttpClient client;
     private User loggedInUser;
     private ObjectMapper objectMapper;
-    private static String basicUrl = "http://192.168.0.102:8080";
+    private static String basicUrl = "http://192.168.0.101:8080";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     SiemajeroOkHttpCommunication() {
@@ -38,7 +38,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
 
     private void init() {
         client = new OkHttpClient.Builder()
-                //TODO: check it out
+                //TODO: check it out (this was made only for tests)
         .readTimeout(60, TimeUnit.SECONDS)
         .connectTimeout(60, TimeUnit.SECONDS)
         .callTimeout(60, TimeUnit.SECONDS).build();

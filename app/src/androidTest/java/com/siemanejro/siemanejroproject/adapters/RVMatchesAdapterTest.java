@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject.Adapters;
+package com.siemanejro.siemanejroproject.adapters;
 
 import org.junit.Test;
 

@@ -8,10 +8,13 @@ import android.widget.Button;
 
 import com.siemanejro.siemanejroproject.R;
 
+import utils.SharedPrefUtil;
+
 public class MainActivity extends AppCompatActivity {
 
     Button Matches;
     Button GetUserBets;
+    Button LogoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +23,21 @@ public class MainActivity extends AppCompatActivity {
 
             Matches = findViewById(R.id.openMatches);
             GetUserBets = findViewById(R.id.getUserBetsbutton);
+            LogoutButton = findViewById(R.id.logoutButton);
 
             addBettingButtonClicked();
             getUserBetsButtonClicked();
+            logoutButtonClicked();
+    }
+
+    private void logoutButtonClicked() {
+        LogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.deleteLoggedUser(MainActivity.this);
+                startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
+            }
+        });
     }
 
     private void getUserBetsButtonClicked() {

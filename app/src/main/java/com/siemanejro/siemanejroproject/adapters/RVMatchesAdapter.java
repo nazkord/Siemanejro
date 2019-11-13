@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject.Adapters;
+package com.siemanejro.siemanejroproject.adapters;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -15,7 +15,6 @@ import com.siemanejro.siemanejroproject.R;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import model.Bet;
 import model.Match;
@@ -29,7 +28,6 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
 
     private ArrayList<Bet> bets = new ArrayList<>();
 
-    //TODO: maybe better to use setter!!! (than modify make in PostExecute method)
     public RVMatchesAdapter(ArrayList<Bet> bets) {
         this.bets = bets;
     }
@@ -74,12 +72,21 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
         team2.setTypeface(null, Typeface.NORMAL);
 
         // set default results view
-        result1.setText(null);
         result1.setTextColor(Color.BLACK);
-        result1.setFocusableInTouchMode(true);
-        result2.setText(null);
         result2.setTextColor(Color.BLACK);
+        if(currentBet.getUserScore() == null) {
+            result1.setText(null);
+            result2.setText(null);
+        } else {
+            result1.setText(currentBet.getUserScore().getFullTime().getHomeTeam());
+            result2.setText(currentBet.getUserScore().getFullTime().getAwayTeam());
+            result1.setTextColor(Color.GRAY);
+            result2.setTextColor(Color.GRAY);
+        }
+
+        result1.setFocusableInTouchMode(true);
         result2.setFocusableInTouchMode(true);
+
 
         ///setBackgroundColorToDefault
         viewHolder.itemView.setBackgroundColor(Color.WHITE);

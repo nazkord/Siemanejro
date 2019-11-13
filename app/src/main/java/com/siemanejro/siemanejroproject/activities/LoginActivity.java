@@ -162,7 +162,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if(TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        } else if(!isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -313,12 +317,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             Optional<User> optionalUser = Client.SIEMAJERO.get().loginUser(mEmail, mPassword);
 
-            optionalUser.ifPresent(user -> {
-                //TODO: consider add token or only one value: boolean logged;
-                user.setPassword(mPassword);
-                SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.setLoggerUser(LoginActivity.this, user);
+            //TODO: IMPORTANT BAD APPROACH
+            if(optionalUser.isPresent()) {
+                optionalUser.get().setPassword(mPassword);
+                SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.setLoggerUser(LoginActivity.this, optionalUser.get());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            });
+            } else {
+                return false;
+            }
 
 
             // TODO: register the new account here.

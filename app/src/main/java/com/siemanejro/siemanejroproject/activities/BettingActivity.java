@@ -17,7 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.siemanejro.siemanejroproject.Adapters.RVMatchesAdapter;
+import com.siemanejro.siemanejroproject.adapters.RVMatchesAdapter;
 import com.siemanejro.siemanejroproject.R;
 
 import java.time.LocalDateTime;
@@ -34,7 +34,6 @@ import model.FullTimeResult;
 import model.Match;
 import model.Score;
 import utils.NetworkUtil;
-import utils.ResultUtil;
 
 import static android.graphics.drawable.ClipDrawable.HORIZONTAL;
 
@@ -157,8 +156,8 @@ public class BettingActivity extends AppCompatActivity {
             betView = linearLayoutManager.findViewByPosition(i);
 
             //TODO: IMPORTANT: doesn't work every time
-            userBet1 = (EditText) betView.findViewById(R.id.result1);
-            userBet2 = (EditText) betView.findViewById(R.id.result2);
+            userBet1 = betView.findViewById(R.id.result1);
+            userBet2 = betView.findViewById(R.id.result2);
             if(userBet1.getText().toString().isEmpty() || userBet2.getText().toString().isEmpty())
                 continue;
             Integer userBetResult1 = Integer.parseInt(userBet1.getText().toString());
@@ -183,11 +182,7 @@ public class BettingActivity extends AppCompatActivity {
         }
     }
 
-
-
     /// -------- onClicker's and DatePickerDialog -----------
-
-
 
     private void saveButtonClicked() {
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -239,7 +234,6 @@ public class BettingActivity extends AppCompatActivity {
         }
         return string;
     }
-
 
     /// -------- Background Threads -----------
 

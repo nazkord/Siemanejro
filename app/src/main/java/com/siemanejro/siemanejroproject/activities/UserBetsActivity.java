@@ -9,10 +9,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.siemanejro.siemanejroproject.Adapters.RVBetsAdapter;
+import com.siemanejro.siemanejroproject.adapters.RVBetsAdapter;
 import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
@@ -96,6 +95,7 @@ public class UserBetsActivity extends AppCompatActivity {
             }
             listOfBets = (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets();
             if(listOfBets == null) {
+                //TODO: user can has none of bets
                 return 1;
             } else {
                 return 2;
