@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -66,4 +67,18 @@ public class Score implements Serializable {
     public int hashCode() {
         return Objects.hash(id, winner, fullTime);
     }
+
+    @JsonIgnore
+    public String getWinnerForScore() {
+        Integer a = fullTime.getHomeTeam();
+        Integer b = fullTime.getAwayTeam();
+        if(a > b) {
+            return "HOME_TEAM";
+        } else if (b > a) {
+            return "AWAY_TEAM";
+        } else {
+            return "DRAW";
+        }
+    }
+
 }

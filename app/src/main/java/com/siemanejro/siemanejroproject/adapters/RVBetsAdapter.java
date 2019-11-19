@@ -49,8 +49,6 @@ public class RVBetsAdapter extends RecyclerView.Adapter<RVBetsAdapter.ViewHolder
         betResult.setText(null);
         colon.setVisibility(View.VISIBLE);
 
-
-
         String text = currentBet.getMatch().getUtcDate();
         String finalText = text.substring(0,10)+" "+text.substring(11,16);
         date.setText(finalText);

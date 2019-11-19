@@ -43,16 +43,17 @@ public class BettingActivity extends AppCompatActivity {
 
     Button saveButton;
     Button chooseDateButton;
-    RVMatchesAdapter rvMatchesAdapter;
     Long leagueID;
     String leagueName;
     String selectedDate;
 
+    RVMatchesAdapter rvBetsAdapter;
     RecyclerView rvBets;
     List<Match> allMatches = null;
     List<Bet> betsInRV = new ArrayList<>();
     BetList betList = new BetList();
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -77,13 +78,12 @@ public class BettingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        rvMatchesAdapter = new RVMatchesAdapter();
+        rvBetsAdapter = new RVMatchesAdapter();
 
         DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
         rvBets.addItemDecoration(itemDecor);
-        rvBets.setAdapter(rvMatchesAdapter);
+        rvBets.setAdapter(rvBetsAdapter);
         rvBets.setLayoutManager(linearLayoutManager);
-
     }
 
     private void init() {
@@ -110,7 +110,7 @@ public class BettingActivity extends AppCompatActivity {
 
     private ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
         return (ArrayList<Bet>) matches.stream()
-                .map(m -> new Bet(null, m, null, null, null))
+                .map(m -> new Bet(null, m, null, new Score(null, null, new FullTimeResult(null, null, null)), null))
                 .collect(Collectors.toList());
     }
 
@@ -122,14 +122,14 @@ public class BettingActivity extends AppCompatActivity {
 
     private void modifyListOfMatchesByDate(String dateInString) {
         //clear bets in adapter
-        rvMatchesAdapter.notifyItemRangeRemoved(0, rvMatchesAdapter.getItemCount());
+        rvBetsAdapter.notifyItemRangeRemoved(0, rvBetsAdapter.getItemCount());
         betsInRV.clear();
         betsInRV.addAll(expandMatchesToBets(getMatchesFromSelectedDate(dateInString)));
 
         //TODO: is it a good approach?
-        rvMatchesAdapter.setBets((ArrayList<Bet>) betsInRV);
+        rvBetsAdapter.setBets((ArrayList<Bet>) betsInRV);
         //notify of new bets inserted
-        rvMatchesAdapter.notifyItemRangeInserted(0, betsInRV.size());
+        rvBetsAdapter.notifyItemRangeInserted(0, betsInRV.size());
     }
 
     /// -------- Methods for saving bets -----------
@@ -147,13 +147,16 @@ public class BettingActivity extends AppCompatActivity {
         EditText userBet1;
         EditText userBet2;
 
-        int numberOfMatches = rvMatchesAdapter.getItemCount();
+        int numberOfMatches = rvBetsAdapter.getItemCount();
         List<Bet> bets = new ArrayList<>();
 
         for (int i = 0; i < numberOfMatches; i++)
         {
-            betItem = rvMatchesAdapter.getItem(i);
+            betItem = rvBetsAdapter.getItem(i);
+            linearLayoutManager.scrollToPosition(i);
             betView = linearLayoutManager.findViewByPosition(i);
+
+//            betView = rvBets.getChildAt(i);
 
             //TODO: IMPORTANT: doesn't work every time
             userBet1 = betView.findViewById(R.id.result1);
@@ -163,23 +166,16 @@ public class BettingActivity extends AppCompatActivity {
             Integer userBetResult1 = Integer.parseInt(userBet1.getText().toString());
             Integer userBetResult2 = Integer.parseInt(userBet2.getText().toString());
 
-            Score userScore = new Score(null, getWinnerForScore(userBetResult1,userBetResult2),
-                    new FullTimeResult(null, userBetResult1, userBetResult2));
+            FullTimeResult fullTimeResult = new FullTimeResult(null, userBetResult1, userBetResult2);
+
+            Score userScore = new Score(null, null, fullTimeResult);
+            userScore.setWinner(userScore.getWinnerForScore());
+
             betItem.setUserScore(userScore);
 
             bets.add(betItem);
         }
         return bets;
-    }
-
-    private String getWinnerForScore(Integer a, Integer b) {
-        if(a > b) {
-            return "HOME_TEAM";
-        } else if (b > a) {
-            return "AWAY_TEAM";
-        } else {
-            return "DRAW";
-        }
     }
 
     /// -------- onClicker's and DatePickerDialog -----------

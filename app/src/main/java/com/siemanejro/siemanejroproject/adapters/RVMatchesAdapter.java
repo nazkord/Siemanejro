@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import model.Status;
 
 public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.ViewHolder> {
 
+    //TODO: don't use setters -> bets should be set in constructor
     public void setBets(ArrayList<Bet> bets) {
         this.bets = bets;
     }
@@ -74,15 +77,9 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
         // set default results view
         result1.setTextColor(Color.BLACK);
         result2.setTextColor(Color.BLACK);
-        if(currentBet.getUserScore() == null) {
-            result1.setText(null);
-            result2.setText(null);
-        } else {
-            result1.setText(currentBet.getUserScore().getFullTime().getHomeTeam());
-            result2.setText(currentBet.getUserScore().getFullTime().getAwayTeam());
-            result1.setTextColor(Color.GRAY);
-            result2.setTextColor(Color.GRAY);
-        }
+
+        result1.setText(bets.get(position).getUserScore().getFullTime().getHomeTeam());
+        result2.setText(bets.get(position).getUserScore().getFullTime().getAwayTeam());
 
         result1.setFocusableInTouchMode(true);
         result2.setFocusableInTouchMode(true);
@@ -169,11 +166,8 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
         return bets.get(position);
     }
 
-    public ArrayList<Bet> getBets() {
-        return bets;
-    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView date;
         TextView matchStatus;
         TextView team1;
@@ -181,14 +175,53 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
         EditText result1;
         EditText result2;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.dateTime);
             matchStatus = itemView.findViewById(R.id.matchStatus);
             team1 = itemView.findViewById(R.id.teamName1);
             team2 = itemView.findViewById(R.id.teamName2);
             result1 = itemView.findViewById(R.id.result1);
+
+            result1.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    Integer homeTeamResultBet = Integer.valueOf(result1.getText().toString());
+                    bets.get(getAdapterPosition()).getUserScore().getFullTime().setHomeTeam(homeTeamResultBet);
+                }
+            });
+
             result2 = itemView.findViewById(R.id.result2);
+
+            result2.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    Integer awayTeamResultBet = Integer.valueOf(result2.getText().toString());
+                    bets.get(getAdapterPosition()).getUserScore().getFullTime().setAwayTeam(awayTeamResultBet);
+                }
+            });
+
+
         }
     }
 
