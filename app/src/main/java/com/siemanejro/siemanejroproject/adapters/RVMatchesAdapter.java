@@ -25,19 +25,10 @@ import model.Status;
 
 public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.ViewHolder> {
 
-    //TODO: don't use setters -> bets should be set in constructor
-    public void setBets(ArrayList<Bet> bets) {
-        this.bets = bets;
-    }
-
-    private ArrayList<Bet> bets = new ArrayList<>();
+    private ArrayList<Bet> bets;
 
     public RVMatchesAdapter(ArrayList<Bet> bets) {
         this.bets = bets;
-    }
-
-    public RVMatchesAdapter() {
-
     }
 
     @NonNull
@@ -86,6 +77,8 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
         } else {
             result1.setText(bets.get(position).getUserScore().getFullTime().getHomeTeam());
             result2.setText(bets.get(position).getUserScore().getFullTime().getAwayTeam());
+
+
         }
 
         result1.setFocusableInTouchMode(true);
@@ -172,8 +165,7 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
     public Bet getItem(int position) {
         return bets.get(position);
     }
-
-
+    
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView date;
         TextView matchStatus;
@@ -234,8 +226,6 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
                     }
                 }
             });
-
-
         }
     }
 

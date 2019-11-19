@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertEquals;
 public class RVMatchesAdapterTest {
 
     private ArrayList<Bet> bets = new ArrayList<>();
-    private RVMatchesAdapter rv = new RVMatchesAdapter();
+    private RVMatchesAdapter rv = new RVMatchesAdapter(bets);
 //    rv.setBets(bets);
 
     @Test

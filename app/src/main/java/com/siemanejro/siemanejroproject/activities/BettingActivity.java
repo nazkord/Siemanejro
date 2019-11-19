@@ -49,8 +49,8 @@ public class BettingActivity extends AppCompatActivity {
 
     RVMatchesAdapter rvBetsAdapter;
     RecyclerView rvBets;
-    List<Match> allMatches = null;
-    List<Bet> betsInRV = new ArrayList<>();
+    List<Match> allMatches = new ArrayList<>();
+    ArrayList<Bet> betsInRV = new ArrayList<>();
     BetList betList = new BetList();
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
@@ -78,7 +78,7 @@ public class BettingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        rvBetsAdapter = new RVMatchesAdapter();
+        rvBetsAdapter = new RVMatchesAdapter(betsInRV);
 
         DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
         rvBets.addItemDecoration(itemDecor);
@@ -125,10 +125,6 @@ public class BettingActivity extends AppCompatActivity {
         rvBetsAdapter.notifyItemRangeRemoved(0, rvBetsAdapter.getItemCount());
         betsInRV.clear();
         betsInRV.addAll(expandMatchesToBets(getMatchesFromSelectedDate(dateInString)));
-
-        //TODO: is it a good approach?
-        rvBetsAdapter.setBets((ArrayList<Bet>) betsInRV);
-        //notify of new bets inserted
         rvBetsAdapter.notifyItemRangeInserted(0, betsInRV.size());
     }
 
