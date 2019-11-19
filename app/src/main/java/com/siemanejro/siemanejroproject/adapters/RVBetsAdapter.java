@@ -61,12 +61,15 @@ public class RVBetsAdapter extends RecyclerView.Adapter<RVBetsAdapter.ViewHolder
             resultOfTeam1.setText(String.valueOf(resultHomeTeam));
             betResult.setText(String.valueOf(currentBet.getResult()));
         } else {
+            resultOfTeam1.setText(null);
             colon.setVisibility(View.INVISIBLE);
         }
 
         Integer resultAwayTeam = currentBet.getMatch().getScore().getFullTime().getAwayTeam();
         if(resultAwayTeam != null) {
             resultOfTeam2.setText(String.valueOf(resultAwayTeam));
+        } else {
+            resultOfTeam2.setText(null);
         }
 
         userBet1.setText(String.valueOf(currentBet.getUserScore().getFullTime().getHomeTeam()));

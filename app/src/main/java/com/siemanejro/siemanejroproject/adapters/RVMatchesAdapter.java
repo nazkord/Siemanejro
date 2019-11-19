@@ -165,7 +165,7 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
     public Bet getItem(int position) {
         return bets.get(position);
     }
-    
+
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView date;
         TextView matchStatus;

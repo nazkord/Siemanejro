@@ -49,10 +49,10 @@ public class BettingActivity extends AppCompatActivity {
 
     RVMatchesAdapter rvBetsAdapter;
     RecyclerView rvBets;
-    List<Match> allMatches = new ArrayList<>();
-    ArrayList<Bet> betsInRV = new ArrayList<>();
-    BetList betList = new BetList();
-    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+    List<Match> allMatches;
+    ArrayList<Bet> betsInRV;
+    BetList betList;
+    LinearLayoutManager linearLayoutManager;
 
 
     @Override
@@ -87,8 +87,13 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private void init() {
+        linearLayoutManager = new LinearLayoutManager(this);
+        allMatches = new ArrayList<>();
+        betsInRV = new ArrayList<>();
+        betList = new BetList();
+
         rvBets = findViewById(R.id.matchesList);
-        saveButton = (Button) findViewById(R.id.saveButton);
+        saveButton = findViewById(R.id.saveButton);
         chooseDateButton = findViewById(R.id.choose_date_button);
         Intent intent = getIntent();
         leagueID = intent.getLongExtra("leagueID", 0);
@@ -131,9 +136,9 @@ public class BettingActivity extends AppCompatActivity {
     /// -------- Methods for saving bets -----------
 
     private void savedUserBets() {
-        List<Bet> bets = getNewUserBets();
+        List<Bet> newUserBets = getNewUserBets();
         betList.clear();
-        betList.addAll(bets);
+        betList.addAll(newUserBets);
         new PostBets().execute();
     }
 
@@ -146,14 +151,6 @@ public class BettingActivity extends AppCompatActivity {
         for (int i = 0; i < numberOfMatches; i++)
         {
             betItem = rvBetsAdapter.getItem(i);
-//            linearLayoutManager.scrollToPosition(i);
-//            betView = linearLayoutManager.findViewByPosition(i);
-//
-////            betView = rvBets.getChildAt(i);
-//
-//            //TODO: IMPORTANT: doesn't work every time
-//            userBet1 = betView.findViewById(R.id.result1);
-//            userBet2 = betView.findViewById(R.id.result2);
 
             Integer userBetResult1 = betItem.getUserScore().getFullTime().getHomeTeam();
             Integer userBetResult2 = betItem.getUserScore().getFullTime().getAwayTeam();
@@ -161,11 +158,9 @@ public class BettingActivity extends AppCompatActivity {
             if(userBetResult1 == null || userBetResult2 == null)
                 continue;
 
-            FullTimeResult fullTimeResult = new FullTimeResult(null, userBetResult1, userBetResult2);
-
-            Score userScore = new Score(null, null, fullTimeResult);
+            Score userScore = new Score(null, null,
+                new FullTimeResult(null, userBetResult1, userBetResult2));
             userScore.setWinner(userScore.getWinnerForScore());
-
             betItem.setUserScore(userScore);
 
             bets.add(betItem);
