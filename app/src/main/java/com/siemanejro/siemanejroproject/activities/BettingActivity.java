@@ -105,7 +105,7 @@ public class BettingActivity extends AppCompatActivity {
     }
 
 
-    /// -------- RecyclerView and Adapter methods -----------
+    /// -------- Adapter methods -----------
 
 
     private ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
@@ -142,10 +142,7 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private List<Bet> getNewUserBets() {
-        View betView;
         Bet betItem;
-        EditText userBet1;
-        EditText userBet2;
 
         int numberOfMatches = rvBetsAdapter.getItemCount();
         List<Bet> bets = new ArrayList<>();
@@ -153,18 +150,20 @@ public class BettingActivity extends AppCompatActivity {
         for (int i = 0; i < numberOfMatches; i++)
         {
             betItem = rvBetsAdapter.getItem(i);
-            linearLayoutManager.scrollToPosition(i);
-            betView = linearLayoutManager.findViewByPosition(i);
+//            linearLayoutManager.scrollToPosition(i);
+//            betView = linearLayoutManager.findViewByPosition(i);
+//
+////            betView = rvBets.getChildAt(i);
+//
+//            //TODO: IMPORTANT: doesn't work every time
+//            userBet1 = betView.findViewById(R.id.result1);
+//            userBet2 = betView.findViewById(R.id.result2);
 
-//            betView = rvBets.getChildAt(i);
+            Integer userBetResult1 = betItem.getUserScore().getFullTime().getHomeTeam();
+            Integer userBetResult2 = betItem.getUserScore().getFullTime().getAwayTeam();
 
-            //TODO: IMPORTANT: doesn't work every time
-            userBet1 = betView.findViewById(R.id.result1);
-            userBet2 = betView.findViewById(R.id.result2);
-            if(userBet1.getText().toString().isEmpty() || userBet2.getText().toString().isEmpty())
+            if(userBetResult1 == null || userBetResult2 == null)
                 continue;
-            Integer userBetResult1 = Integer.parseInt(userBet1.getText().toString());
-            Integer userBetResult2 = Integer.parseInt(userBet2.getText().toString());
 
             FullTimeResult fullTimeResult = new FullTimeResult(null, userBetResult1, userBetResult2);
 

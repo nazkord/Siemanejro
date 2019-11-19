@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 import model.Bet;
+import model.FullTimeResult;
 import model.Match;
 import model.Status;
 
@@ -78,8 +79,14 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
         result1.setTextColor(Color.BLACK);
         result2.setTextColor(Color.BLACK);
 
-        result1.setText(bets.get(position).getUserScore().getFullTime().getHomeTeam());
-        result2.setText(bets.get(position).getUserScore().getFullTime().getAwayTeam());
+        FullTimeResult fullTimeUserBet = bets.get(position).getUserScore().getFullTime();
+        if(fullTimeUserBet.getHomeTeam() == null || fullTimeUserBet.getAwayTeam() == null) {
+            result1.setText(null);
+            result2.setText(null);
+        } else {
+            result1.setText(bets.get(position).getUserScore().getFullTime().getHomeTeam());
+            result2.setText(bets.get(position).getUserScore().getFullTime().getAwayTeam());
+        }
 
         result1.setFocusableInTouchMode(true);
         result2.setFocusableInTouchMode(true);
@@ -196,8 +203,12 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    Integer homeTeamResultBet = Integer.valueOf(result1.getText().toString());
-                    bets.get(getAdapterPosition()).getUserScore().getFullTime().setHomeTeam(homeTeamResultBet);
+                    // result will be null, when we recycler the view and set the result views to null in onBindViewHolder
+                    String result = result1.getText().toString();
+                    if(!result.isEmpty()) {
+                        Integer homeTeamResultBet = Integer.valueOf(result);
+                        bets.get(getAdapterPosition()).getUserScore().getFullTime().setHomeTeam(homeTeamResultBet);
+                    }
                 }
             });
 
@@ -216,8 +227,11 @@ public class RVMatchesAdapter extends RecyclerView.Adapter<RVMatchesAdapter.View
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    Integer awayTeamResultBet = Integer.valueOf(result2.getText().toString());
-                    bets.get(getAdapterPosition()).getUserScore().getFullTime().setAwayTeam(awayTeamResultBet);
+                    String result = result2.getText().toString();
+                    if(!result.isEmpty()) {
+                        Integer awayTeamResultBet = Integer.valueOf(result);
+                        bets.get(getAdapterPosition()).getUserScore().getFullTime().setAwayTeam(awayTeamResultBet);
+                    }
                 }
             });
 
