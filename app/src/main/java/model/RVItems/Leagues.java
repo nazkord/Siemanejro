@@ -1,6 +1,7 @@
-package model;
+package model.RVItems;
 
 public enum Leagues {
+
     GERMANY("Bundesliga", 2002L),
     ENGLAND("Premier League", 2021L),
     SPAIN("La Liga", 2014L),
@@ -8,19 +9,19 @@ public enum Leagues {
     FRANCE("La Ligue", 2015L);
     // NETHERLAND("Eredivise", );
 
-    private final String uiLeagueName;
+    private final String leagueName;
     private final Long leagueId;
 
-    private Leagues(String uiLeagueName, Long leagueId) {
-        this.uiLeagueName = uiLeagueName;
+    Leagues(String leagueName, Long leagueId) {
+        this.leagueName = leagueName;
         this.leagueId = leagueId;
+    }
+
+    public String getLeagueName() {
+        return leagueName;
     }
 
     public Long getLeagueId() {
         return leagueId;
-    }
-
-    public String getUiLeagueName() {
-        return uiLeagueName;
     }
 }

@@ -80,8 +80,6 @@ public class BettingActivity extends AppCompatActivity {
 
         rvBetsAdapter = new RVMatchesAdapter(betsInRV);
 
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
-        rvBets.addItemDecoration(itemDecor);
         rvBets.setAdapter(rvBetsAdapter);
         rvBets.setLayoutManager(linearLayoutManager);
     }

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="60dp"
     android:layout_marginTop="20dp"
     android:padding="10dp">
 
@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:contentDescription="imageOfLeague"
-        android:layout_weight="0.3"/>
+        android:layout_weight="0.2"/>
 
     <TextView
         android:id="@+id/nameOfLeague"
@@ -20,7 +20,7 @@
         android:textAppearance="?android:textAppearanceMedium"
         android:textAlignment="viewStart"
         android:gravity="center_vertical"
-        android:layout_weight="0.7"
+        android:layout_weight="0.8"
         android:textStyle="bold"
         android:layout_marginStart="5dp" />
 
