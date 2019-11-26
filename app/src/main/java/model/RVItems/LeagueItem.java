@@ -1,17 +1,11 @@
 package model.RVItems;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+public class LeagueItem extends BetPageItem {
 
-import model.RVItems.RVBetPageItem;
+    private League league;
 
-public class LeagueItem extends RVBetPageItem {
-
-    private Leagues leagues;
-
-    public Leagues getLeagues() {
-        return leagues;
+    public League getLeagues() {
+        return league;
     }
 
     @Override

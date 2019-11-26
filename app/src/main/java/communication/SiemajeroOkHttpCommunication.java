@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -29,7 +30,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     private OkHttpClient client;
     private User loggedInUser;
     private ObjectMapper objectMapper;
-    private static String basicUrl = "http://192.168.0.103:8080";
+    private static String basicUrl = "http://192.168.1.119:8080";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     SiemajeroOkHttpCommunication() {
@@ -110,11 +111,12 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
                 return objectMapper.readValue(responseBody.string(), new TypeReference<List<Match>>() {
                 });
             } else {
-                return null;
+                return Collections.emptyList();
             }
         } catch (Exception e) {
             Log.e("Error getting matches from server",e.getMessage());
             //TODO: should return something that can be treated as error in activity
+            //TODO: create new (my own) runtime ex and throw it here
             return null;
         }
     }

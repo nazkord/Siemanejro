@@ -7,18 +7,17 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.siemanejro.siemanejroproject.adapters.RVMatchesAdapter;
 import com.siemanejro.siemanejroproject.R;
+import com.siemanejro.siemanejroproject.adapters.BetDataAdapter;
+import com.siemanejro.siemanejroproject.adapters.DataBinder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,16 +25,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import communication.Client;
 import model.Bet;
 import model.BetList;
 import model.FullTimeResult;
 import model.Match;
+import model.RVItems.League;
 import model.Score;
+import utils.BetItemsUtil;
 import utils.NetworkUtil;
-
-import static android.graphics.drawable.ClipDrawable.HORIZONTAL;
 
 public class BettingActivity extends AppCompatActivity {
 
@@ -47,13 +47,14 @@ public class BettingActivity extends AppCompatActivity {
     String leagueName;
     String selectedDate;
 
-    RVMatchesAdapter rvBetsAdapter;
+//    RVMatchesAdapter rvBetsAdapter;
+    List<DataBinder> dataBinders;
+    BetDataAdapter rvBetsAdapter;
     RecyclerView rvBets;
     List<Match> allMatches;
-    ArrayList<Bet> betsInRV;
+//    ArrayList<Bet> betsInRV;
     BetList betList;
     LinearLayoutManager linearLayoutManager;
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -73,12 +74,13 @@ public class BettingActivity extends AppCompatActivity {
 
         //get matches from API
         try {
+
             new LoadMatches().execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
-        rvBetsAdapter = new RVMatchesAdapter(betsInRV);
+        rvBetsAdapter = new BetDataAdapter(dataBinders); //betInRv
 
         rvBets.setAdapter(rvBetsAdapter);
         rvBets.setLayoutManager(linearLayoutManager);
@@ -87,7 +89,6 @@ public class BettingActivity extends AppCompatActivity {
     private void init() {
         linearLayoutManager = new LinearLayoutManager(this);
         allMatches = new ArrayList<>();
-        betsInRV = new ArrayList<>();
         betList = new BetList();
 
         rvBets = findViewById(R.id.matchesList);
@@ -107,7 +108,6 @@ public class BettingActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-
     /// -------- Adapter methods -----------
 
 
@@ -126,9 +126,9 @@ public class BettingActivity extends AppCompatActivity {
     private void modifyListOfMatchesByDate(String dateInString) {
         //clear bets in adapter
         rvBetsAdapter.notifyItemRangeRemoved(0, rvBetsAdapter.getItemCount());
-        betsInRV.clear();
-        betsInRV.addAll(expandMatchesToBets(getMatchesFromSelectedDate(dateInString)));
-        rvBetsAdapter.notifyItemRangeInserted(0, betsInRV.size());
+        dataBinders.clear();
+        dataBinders.addAll(BetItemsUtil.convertToDataBinders(expandMatchesToBets(getMatchesFromSelectedDate(dateInString))));
+        rvBetsAdapter.notifyItemRangeInserted(0, dataBinders.size());
     }
 
     /// -------- Methods for saving bets -----------
@@ -141,29 +141,31 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private List<Bet> getNewUserBets() {
-        Bet betItem;
+//        BetItem betItem;
+//        Bet bet;
+//
+//        int numberOfMatches = rvBetsAdapter.getItemCount();
+//        List<Bet> bets = new ArrayList<>();
 
-        int numberOfMatches = rvBetsAdapter.getItemCount();
-        List<Bet> bets = new ArrayList<>();
-
-        for (int i = 0; i < numberOfMatches; i++)
-        {
-            betItem = rvBetsAdapter.getItem(i);
-
-            Integer userBetResult1 = betItem.getUserScore().getFullTime().getHomeTeam();
-            Integer userBetResult2 = betItem.getUserScore().getFullTime().getAwayTeam();
-
-            if(userBetResult1 == null || userBetResult2 == null)
-                continue;
-
-            Score userScore = new Score(null, null,
-                new FullTimeResult(null, userBetResult1, userBetResult2));
-            userScore.setWinner(userScore.getWinnerForScore());
-            betItem.setUserScore(userScore);
-
-            bets.add(betItem);
-        }
-        return bets;
+//        for (int i = 0; i < numberOfMatches; i++)
+//        {
+//            betItem = (BetItem) rvBetsAdapter.getItem(i);
+//            bet = betItem.getBet();
+//
+//            Integer userBetResult1 = bet.getUserScore().getFullTime().getHomeTeam();
+//            Integer userBetResult2 = bet.getUserScore().getFullTime().getAwayTeam();
+//
+//            if(userBetResult1 == null || userBetResult2 == null)
+//                continue;
+//
+//            Score userScore = new Score(null, null,
+//                new FullTimeResult(null, userBetResult1, userBetResult2));
+//            userScore.setWinner(userScore.getWinnerForScore());
+//            bet.setUserScore(userScore);
+//
+//            bets.add(bet);
+//        }
+        return null;
     }
 
     /// -------- onClicker's and DatePickerDialog -----------
@@ -228,11 +230,19 @@ public class BettingActivity extends AppCompatActivity {
             if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
                 return 0;
             }
-            allMatches = Client.SIEMAJERO.get().getMatchesByCompetition(leagueID);
+
+            //TODO: get leagues only that are in Enum
+
+            Stream.of(League.values())
+                    .forEach(league -> {
+                        allMatches.addAll(Client.SIEMAJERO.get().getMatchesByCompetition(league.getLeagueId()));
+                    });
+
             if(allMatches == null) {
                 //TODO: it could be an error by server side or there are just no matches at all
                 return 1;
             } else {
+                dataBinders = BetItemsUtil.convertToDataBinders(expandMatchesToBets(allMatches));
                 return 2;
             }
         }

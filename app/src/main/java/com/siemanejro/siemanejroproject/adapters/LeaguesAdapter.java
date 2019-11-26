@@ -10,14 +10,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import model.RVItems.LeagueItem;
+import model.RVItems.League;
+
 import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
 
-public class LeaguesAdapter extends ArrayAdapter<LeagueItem> {
+public class LeaguesAdapter extends ArrayAdapter {
+
+
     private Context context;
-    private ArrayList<LeagueItem> leagues;
+    private ArrayList<League> leagues;
     private static final ArrayList<Integer> logos = new ArrayList<Integer>() {
         {
             add(R.drawable.ic_bundesliga);
@@ -28,7 +31,7 @@ public class LeaguesAdapter extends ArrayAdapter<LeagueItem> {
         }
     };
 
-    public LeaguesAdapter(Context context, ArrayList<LeagueItem> leagues) {
+    public LeaguesAdapter(Context context, ArrayList<League> leagues) {
         super(context, 0, leagues);
         this.leagues = leagues;
         this.context = context;
@@ -43,10 +46,10 @@ public class LeaguesAdapter extends ArrayAdapter<LeagueItem> {
             convertView = inflater.inflate(R.layout.league_item, parent, false);
         }
 
-        LeagueItem league = leagues.get(position);
+        League league = leagues.get(position);
 
         TextView nameOfLeague = convertView.findViewById(R.id.nameOfLeague);
-        nameOfLeague.setText(league.getUiLeagueName());
+        nameOfLeague.setText(league.getLeagueName());
 
         ImageView leagueLogo = convertView.findViewById(R.id.imageOfLeague);
         leagueLogo.setImageResource(logos.get(position));

@@ -317,7 +317,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             Optional<User> optionalUser = Client.SIEMAJERO.get().loginUser(mEmail, mPassword);
 
-            //TODO: IMPORTANT BAD APPROACH
+//            optionalUser
+//                    .map()
+//                    .orElse()
+            //TODO: IMPORTANT BAD APPROACH, use map method
             if(optionalUser.isPresent()) {
                 optionalUser.get().setPassword(mPassword);
                 SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.setLoggerUser(LoginActivity.this, optionalUser.get());
