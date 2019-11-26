@@ -1,11 +1,15 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Competition {
     private Long id;
     private String name;
+
+    public Competition() {
+    }
 
     public Long getId() {
         return id;

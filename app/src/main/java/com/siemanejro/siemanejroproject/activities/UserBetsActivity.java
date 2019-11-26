@@ -27,9 +27,6 @@ import static android.graphics.drawable.ClipDrawable.HORIZONTAL;
 
 public class UserBetsActivity extends AppCompatActivity {
 
-    //TODO: make choose button
-   // Button chooseDateButton;
-   // String selectedDate;
     RVBetsAdapter rvBetsAdapter;
     RecyclerView rvBets;
     ArrayList<Bet> listOfBets = null;

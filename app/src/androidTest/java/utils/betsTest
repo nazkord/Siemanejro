@@ -1,0 +1,646 @@
+[
+    {
+        "id": 689380,
+        "match": {
+            "id": 268016,
+            "competition": {
+                "id": 2015,
+                "name": "Ligue 1"
+            },
+            "utcDate": "2019-10-20T15:00:00Z",
+            "status": "FINISHED",
+            "score": {
+                "id": 82796,
+                "winner": "HOME_TEAM",
+                "fullTime": {
+                    "id": 82622,
+                    "homeTeam": 3,
+                    "awayTeam": 2
+                }
+            },
+            "matchday": 10,
+            "homeTeam": {
+                "id": 548,
+                "name": "AS Monaco FC"
+            },
+            "awayTeam": {
+                "id": 529,
+                "name": "Stade Rennais FC 1901"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 20825,
+            "winner": "HOME_TEAM",
+            "fullTime": {
+                "id": 1100,
+                "homeTeam": 2,
+                "awayTeam": 3
+            }
+        },
+        "result": 3
+    },
+    {
+        "id": 708820,
+        "match": {
+            "id": 273669,
+            "competition": {
+                "id": 2014,
+                "name": "Primera Division"
+            },
+            "utcDate": "2019-10-31T20:15:00Z",
+            "status": "PAUSED",
+            "score": {
+                "id": 799555,
+                "winner": "HOME_TEAM",
+                "fullTime": {
+                    "id": 799554,
+                    "homeTeam": 2,
+                    "awayTeam": 0
+                }
+            },
+            "matchday": 11,
+            "homeTeam": {
+                "id": 82,
+                "name": "Getafe CF"
+            },
+            "awayTeam": {
+                "id": 83,
+                "name": "Granada CF"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 708821,
+            "winner": "AWAY_TEAM",
+            "fullTime": {
+                "id": 708822,
+                "homeTeam": 2,
+                "awayTeam": 3
+            }
+        },
+        "result": 1
+    },
+    {
+        "id": 802865,
+        "match": {
+            "id": 279328,
+            "competition": {
+                "id": 2019,
+                "name": "Serie A"
+            },
+            "utcDate": "2019-11-02T14:00:00Z",
+            "status": "FINISHED",
+            "score": {
+                "id": 842081,
+                "winner": "HOME_TEAM",
+                "fullTime": {
+                    "id": 842080,
+                    "homeTeam": 2,
+                    "awayTeam": 1
+                }
+            },
+            "matchday": 11,
+            "homeTeam": {
+                "id": 100,
+                "name": "AS Roma"
+            },
+            "awayTeam": {
+                "id": 113,
+                "name": "SSC Napoli"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 802866,
+            "winner": "HOME_TEAM",
+            "fullTime": {
+                "id": 802867,
+                "homeTeam": 2,
+                "awayTeam": 1
+            }
+        },
+        "result": 1
+    },
+    {
+        "id": 802868,
+        "match": {
+            "id": 279332,
+            "competition": {
+                "id": 2019,
+                "name": "Serie A"
+            },
+            "utcDate": "2019-11-02T17:00:00Z",
+            "status": "FINISHED",
+            "score": {
+                "id": 842125,
+                "winner": "AWAY_TEAM",
+                "fullTime": {
+                    "id": 842124,
+                    "homeTeam": 1,
+                    "awayTeam": 2
+                }
+            },
+            "matchday": 11,
+            "homeTeam": {
+                "id": 103,
+                "name": "Bologna FC 1909"
+            },
+            "awayTeam": {
+                "id": 108,
+                "name": "FC Internazionale Milano"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 802869,
+            "winner": "AWAY_TEAM",
+            "fullTime": {
+                "id": 802870,
+                "homeTeam": 1,
+                "awayTeam": 2
+            }
+        },
+        "result": 1
+    },
+    {
+        "id": 802871,
+        "match": {
+            "id": 279331,
+            "competition": {
+                "id": 2019,
+                "name": "Serie A"
+            },
+            "utcDate": "2019-11-02T19:45:00Z",
+            "status": "IN_PLAY",
+            "score": {
+                "id": 842151,
+                "winner": "DRAW",
+                "fullTime": {
+                    "id": 842150,
+                    "homeTeam": 0,
+                    "awayTeam": 0
+                }
+            },
+            "matchday": 11,
+            "homeTeam": {
+                "id": 586,
+                "name": "Torino FC"
+            },
+            "awayTeam": {
+                "id": 109,
+                "name": "Juventus FC"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 802872,
+            "winner": "HOME_TEAM",
+            "fullTime": {
+                "id": 802873,
+                "homeTeam": 2,
+                "awayTeam": 1
+            }
+        },
+        "result": 1
+    },
+    {
+        "id": 883658,
+        "match": {
+            "id": 271496,
+            "competition": {
+                "id": 2002,
+                "name": "Bundesliga"
+            },
+            "utcDate": "2019-11-03T14:30:00Z",
+            "status": "SCHEDULED",
+            "score": {
+                "id": 888061,
+                "winner": null,
+                "fullTime": {
+                    "id": 888060,
+                    "homeTeam": null,
+                    "awayTeam": null
+                }
+            },
+            "matchday": 10,
+            "homeTeam": {
+                "id": 24,
+                "name": "TSV Fortuna 95 Düsseldorf"
+            },
+            "awayTeam": {
+                "id": 1,
+                "name": "1. FC Köln"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 883659,
+            "winner": "HOME_TEAM",
+            "fullTime": {
+                "id": 883660,
+                "homeTeam": 2,
+                "awayTeam": 1
+            }
+        },
+        "result": 0
+    },
+    {
+        "id": 910058,
+        "match": {
+            "id": 264457,
+            "competition": {
+                "id": 2021,
+                "name": "Premier League"
+            },
+            "utcDate": "2019-11-08T20:00:00Z",
+            "status": "SCHEDULED",
+            "score": {
+                "id": 973121,
+                "winner": null,
+                "fullTime": {
+                    "id": 973120,
+                    "homeTeam": null,
+                    "awayTeam": null
+                }
+            },
+            "matchday": 12,
+            "homeTeam": {
+                "id": 68,
+                "name": "Norwich City FC"
+            },
+            "awayTeam": {
+                "id": 346,
+                "name": "Watford FC"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 910059,
+            "winner": "HOME_TEAM",
+            "fullTime": {
+                "id": 910062,
+                "homeTeam": 3,
+                "awayTeam": 1
+            }
+        },
+        "result": 0
+    },
+    {
+        "id": 910175,
+        "match": {
+            "id": 264457,
+            "competition": {
+                "id": 2021,
+                "name": "Premier League"
+            },
+            "utcDate": "2019-11-08T20:00:00Z",
+            "status": "SCHEDULED",
+            "score": {
+                "id": 973121,
+                "winner": null,
+                "fullTime": {
+                    "id": 973120,
+                    "homeTeam": null,
+                    "awayTeam": null
+                }
+            },
+            "matchday": 12,
+            "homeTeam": {
+                "id": 68,
+                "name": "Norwich City FC"
+            },
+            "awayTeam": {
+                "id": 346,
+                "name": "Watford FC"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 910176,
+            "winner": "HOME_TEAM",
+            "fullTime": {
+                "id": 910177,
+                "homeTeam": 3,
+                "awayTeam": 1
+            }
+        },
+        "result": 0
+    },
+    {
+        "id": 1015237,
+        "match": {
+            "id": 271499,
+            "competition": {
+                "id": 2002,
+                "name": "Bundesliga"
+            },
+            "utcDate": "2019-11-03T17:00:00Z",
+            "status": "SCHEDULED",
+            "score": {
+                "id": 888073,
+                "winner": null,
+                "fullTime": {
+                    "id": 888072,
+                    "homeTeam": null,
+                    "awayTeam": null
+                }
+            },
+            "matchday": 10,
+            "homeTeam": {
+                "id": 16,
+                "name": "FC Augsburg"
+            },
+            "awayTeam": {
+                "id": 6,
+                "name": "FC Schalke 04"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 1015238,
+            "winner": "HOME_TEAM",
+            "fullTime": {
+                "id": 1015239,
+                "homeTeam": 3,
+                "awayTeam": 1
+            }
+        },
+        "result": 0
+    },
+    {
+        "id": 1021176,
+        "match": {
+            "id": 264444,
+            "competition": {
+                "id": 2021,
+                "name": "Premier League"
+            },
+            "utcDate": "2019-11-03T16:30:00Z",
+            "status": "SCHEDULED",
+            "score": {
+                "id": 888071,
+                "winner": null,
+                "fullTime": {
+                    "id": 888070,
+                    "homeTeam": null,
+                    "awayTeam": null
+                }
+            },
+            "matchday": 11,
+            "homeTeam": {
+                "id": 62,
+                "name": "Everton FC"
+            },
+            "awayTeam": {
+                "id": 73,
+                "name": "Tottenham Hotspur FC"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 1021177,
+            "winner": "HOME_TEAM",
+            "fullTime": {
+                "id": 1021178,
+                "homeTeam": 3,
+                "awayTeam": 1
+            }
+        },
+        "result": 0
+    },
+    {
+        "id": 1080636,
+        "match": {
+            "id": 279349,
+            "competition": {
+                "id": 2019,
+                "name": "Serie A"
+            },
+            "utcDate": "2019-11-23T14:00:00Z",
+            "status": "SCHEDULED",
+            "score": {
+                "id": 1247495,
+                "winner": null,
+                "fullTime": {
+                    "id": 1247494,
+                    "homeTeam": null,
+                    "awayTeam": null
+                }
+            },
+            "matchday": 13,
+            "homeTeam": {
+                "id": 102,
+                "name": "Atalanta BC"
+            },
+            "awayTeam": {
+                "id": 109,
+                "name": "Juventus FC"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 1080637,
+            "winner": "HOME_TEAM",
+            "fullTime": {
+                "id": 1080638,
+                "homeTeam": 2,
+                "awayTeam": 1
+            }
+        },
+        "result": 0
+    },
+    {
+        "id": 1094775,
+        "match": {
+            "id": 279348,
+            "competition": {
+                "id": 2019,
+                "name": "Serie A"
+            },
+            "utcDate": "2019-11-23T17:00:00Z",
+            "status": "SCHEDULED",
+            "score": {
+                "id": 1247541,
+                "winner": null,
+                "fullTime": {
+                    "id": 1247540,
+                    "homeTeam": null,
+                    "awayTeam": null
+                }
+            },
+            "matchday": 13,
+            "homeTeam": {
+                "id": 98,
+                "name": "AC Milan"
+            },
+            "awayTeam": {
+                "id": 113,
+                "name": "SSC Napoli"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 1094776,
+            "winner": "AWAY_TEAM",
+            "fullTime": {
+                "id": 1094777,
+                "homeTeam": 0,
+                "awayTeam": 1
+            }
+        },
+        "result": 0
+    },
+    {
+        "id": 1131730,
+        "match": {
+            "id": 264470,
+            "competition": {
+                "id": 2021,
+                "name": "Premier League"
+            },
+            "utcDate": "2019-11-23T15:00:00Z",
+            "status": "SCHEDULED",
+            "score": {
+                "id": 1247513,
+                "winner": null,
+                "fullTime": {
+                    "id": 1247512,
+                    "homeTeam": null,
+                    "awayTeam": null
+                }
+            },
+            "matchday": 13,
+            "homeTeam": {
+                "id": 1044,
+                "name": "AFC Bournemouth"
+            },
+            "awayTeam": {
+                "id": 76,
+                "name": "Wolverhampton Wanderers FC"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 1131731,
+            "winner": "HOME_TEAM",
+            "fullTime": {
+                "id": 1131732,
+                "homeTeam": 2,
+                "awayTeam": 1
+            }
+        },
+        "result": 0
+    },
+    {
+        "id": 1137437,
+        "match": {
+            "id": 264462,
+            "competition": {
+                "id": 2021,
+                "name": "Premier League"
+            },
+            "utcDate": "2019-11-23T17:30:00Z",
+            "status": "SCHEDULED",
+            "score": {
+                "id": 1247545,
+                "winner": null,
+                "fullTime": {
+                    "id": 1247544,
+                    "homeTeam": null,
+                    "awayTeam": null
+                }
+            },
+            "matchday": 13,
+            "homeTeam": {
+                "id": 65,
+                "name": "Manchester City FC"
+            },
+            "awayTeam": {
+                "id": 61,
+                "name": "Chelsea FC"
+            }
+        },
+        "user": {
+            "id": 17,
+            "name": "Mateusz",
+            "password": "$2a$10$VeR9EYwFuEpN2i9l/qv6.eR/oV0EPAHQadeSKjFXjet.63CttppYK",
+            "roleName": "ROLE_USER"
+        },
+        "userScore": {
+            "id": 1137438,
+            "winner": "DRAW",
+            "fullTime": {
+                "id": 1137439,
+                "homeTeam": 1,
+                "awayTeam": 1
+            }
+        },
+        "result": 0
+    }
+]

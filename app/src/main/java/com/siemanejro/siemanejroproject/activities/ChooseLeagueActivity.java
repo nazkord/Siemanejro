@@ -15,7 +15,7 @@ import com.siemanejro.siemanejroproject.adapters.LeaguesAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import model.Leagues;
+import model.RVItems.League;
 
 
 public class ChooseLeagueActivity extends AppCompatActivity  {
@@ -40,7 +40,7 @@ public class ChooseLeagueActivity extends AppCompatActivity  {
         setToolbarBackPressButton();
 
         listOfLeagues = (ListView) findViewById(R.id.leagues_list);
-        ArrayList<Leagues> arrayOfLeagues = new ArrayList<Leagues>(Arrays.asList(Leagues.values()));
+        ArrayList<League> arrayOfLeagues = new ArrayList<League>(Arrays.asList(League.values()));
         leaguesArrayAdapter = new LeaguesAdapter(this, arrayOfLeagues);
         listOfLeagues.setAdapter(leaguesArrayAdapter);
 
@@ -57,9 +57,9 @@ public class ChooseLeagueActivity extends AppCompatActivity  {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent  = new Intent(ChooseLeagueActivity.this, BettingActivity.class);
-                Leagues selectedLeague = (Leagues) adapterView.getAdapter().getItem(i);
+                League selectedLeague = (League) adapterView.getAdapter().getItem(i);
                 intent.putExtra("leagueID",selectedLeague.getLeagueId());
-                intent.putExtra("leagueName",selectedLeague.getUiLeagueName());
+                intent.putExtra("leagueName",selectedLeague.getLeagueName());
                 startActivity(intent);
             }
         });
