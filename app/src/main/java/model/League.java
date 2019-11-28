@@ -1,4 +1,4 @@
-package model.RVItems;
+package model;
 
 import com.siemanejro.siemanejroproject.R;
 

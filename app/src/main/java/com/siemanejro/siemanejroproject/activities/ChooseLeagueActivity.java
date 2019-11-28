@@ -15,7 +15,7 @@ import com.siemanejro.siemanejroproject.adapters.LeaguesAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import model.RVItems.League;
+import model.League;
 
 
 public class ChooseLeagueActivity extends AppCompatActivity  {

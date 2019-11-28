@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import com.siemanejro.siemanejroproject.R;
 
 import model.User;
-//TODO: this should be a normal class this static methods <- static
+//TODO: this should be a normal class with static methods <- static
 public enum SharedPrefUtil {
 
     LOGIN_SHARED_PREF_UTIL();

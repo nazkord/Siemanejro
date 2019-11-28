@@ -12,7 +12,7 @@ import okhttp3.Request;
 
 public interface SiemajeroCommunication {
     Optional<User> loginUser(String userName, String password);
-    List<Match> getMatchesByCompetition(Long competitionId);
+    List<Match> getMatchesByCompetitions(List<Long> competitionIds);
     User createUser(User newUser);
     //TODO: those method should retrieve response from API
     Request makeUserGetRequest(HttpUrl.Builder builder);

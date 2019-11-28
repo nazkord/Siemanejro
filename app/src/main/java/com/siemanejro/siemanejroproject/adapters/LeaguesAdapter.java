@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import model.RVItems.League;
+import model.League;
 
 import com.siemanejro.siemanejroproject.R;
 
