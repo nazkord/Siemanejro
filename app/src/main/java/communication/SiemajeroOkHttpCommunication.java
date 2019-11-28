@@ -58,7 +58,6 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     @Override
     public boolean postUsersBet(BetList betList) {
         String betListInJson = "";
-        ResponseBody responseBody = null;
 
         for(Bet bet: betList) {
             bet.setUser(loggedInUser);
@@ -82,13 +81,13 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
                 .build();
 
         try {
-            responseBody = client.newCall(request).execute().body();
+            //TODO: should I retrieve responseBody and get smth useful from there?
+            client.newCall(request).execute().body();
         } catch (IOException e) {
+            Log.e("Error while posting bets to Rest", e.getMessage());
             e.printStackTrace();
             return false;
         }
-
-        //TODO: check responseBody!!!;
         return true;
     }
 
@@ -149,10 +148,11 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
             } else {
                 return Collections.emptyList();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
+            //TODO: which way is better?
             Log.e("Error while getting bets", e.getMessage());
-            //TODO: return something, but not null
-            return null;
+//            throw new IOException("Error while getting bets");
+            return Collections.emptyList();
         }
     }
 

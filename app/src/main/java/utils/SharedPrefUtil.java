@@ -7,12 +7,10 @@ import android.content.SharedPreferences;
 import com.siemanejro.siemanejroproject.R;
 
 import model.User;
-//TODO: this should be a normal class with static methods <- static
-public enum SharedPrefUtil {
 
-    LOGIN_SHARED_PREF_UTIL();
+public class SharedPrefUtil {
 
-    public User getLoggerUser(Activity activity) {
+    public static User getLoggerUser(Activity activity) {
         Context context = activity.getApplicationContext();
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_preferences_key), Context.MODE_PRIVATE);
 
@@ -22,7 +20,7 @@ public enum SharedPrefUtil {
         return new User(id,userName,userPassword);
     }
 
-    public void setLoggerUser(Activity activity, User user) {
+    public static void setLoggerUser(Activity activity, User user) {
         Context context = activity.getApplicationContext();
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_preferences_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor prefEditor = sharedPref.edit();
@@ -32,7 +30,7 @@ public enum SharedPrefUtil {
         prefEditor.apply();
     }
 
-    public void deleteLoggedUser(Activity activity) {
+    public static void deleteLoggedUser(Activity activity) {
         Context context = activity.getApplicationContext();
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_preferences_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor prefEditor = sharedPref.edit();

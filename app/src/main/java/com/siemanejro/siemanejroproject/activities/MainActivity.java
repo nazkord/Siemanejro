@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         LogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.deleteLoggedUser(MainActivity.this);
+                SharedPrefUtil.deleteLoggedUser(MainActivity.this);
                 startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
             }
         });

@@ -23,7 +23,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         textView = findViewById(R.id.loadingTextView);
 
         Intent activityIntent;
-        User user = SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.getLoggerUser(SplashScreenActivity.this);
+        User user = SharedPrefUtil.getLoggerUser(SplashScreenActivity.this);
         Client.SIEMAJERO.get().setLoggedInUser(user);
 
         if(user.getName() != null) {
