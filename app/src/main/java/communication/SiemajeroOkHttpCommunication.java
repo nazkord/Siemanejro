@@ -30,7 +30,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     private OkHttpClient client;
     private User loggedInUser;
     private ObjectMapper objectMapper;
-    private static String basicUrl = "http://192.168.1.119:8080";
+    private static String basicUrl = "http://192.168.0.102:8080";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     SiemajeroOkHttpCommunication() {
@@ -58,7 +58,6 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     @Override
     public boolean postUsersBet(BetList betList) {
         String betListInJson = "";
-        ResponseBody responseBody = null;
 
         for(Bet bet: betList) {
             bet.setUser(loggedInUser);
@@ -82,24 +81,29 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
                 .build();
 
         try {
-            responseBody = client.newCall(request).execute().body();
+            //TODO: should I retrieve responseBody and get smth useful from there?
+            client.newCall(request).execute().body();
         } catch (IOException e) {
+            Log.e("Error while posting bets to Rest", e.getMessage());
             e.printStackTrace();
             return false;
         }
-
-        //TODO: check responseBody!!!;
         return true;
     }
 
-    //TODO: get all matches from db this competition, which is no-sense
-
     @Override
-    public List<Match> getMatchesByCompetition(Long competitionId) {
+    public List<Match> getMatchesByCompetitions(List<Long> competitionIds) {
+        StringBuilder idsBuilder = new StringBuilder();
+        competitionIds.forEach(id -> {
+            idsBuilder.append(id.toString());
+            idsBuilder.append(",");
+        });
+        idsBuilder.deleteCharAt(idsBuilder.length()-1);
+
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse
                 (basicUrl + "/matches"))
                 .newBuilder()
-                .addQueryParameter("competitionId", competitionId.toString());
+                .addQueryParameter("competitionIds", idsBuilder.toString());
 
         Request userRequest = makeUserGetRequest(urlBuilder);
 
@@ -142,11 +146,13 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
                 return objectMapper.readValue(responseBody.string(), new TypeReference<List<Bet>>() {
                 });
             } else {
-                return null;
+                return Collections.emptyList();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
+            //TODO: which way is better?
             Log.e("Error while getting bets", e.getMessage());
-            return null;
+//            throw new IOException("Error while getting bets");
+            return Collections.emptyList();
         }
     }
 
@@ -172,10 +178,9 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
             });
 
         } catch (Exception e) {
-            //TODO: add to log
+            Log.e("Error while getting user for logging", e.getMessage());
             return Optional.empty();
         }
-
         return Optional.ofNullable(loggedInUser);
     }
 

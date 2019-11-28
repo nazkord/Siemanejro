@@ -2,8 +2,8 @@ package com.siemanejro.siemanejroproject.adapters;
 
 import android.support.v7.widget.RecyclerView;
 
-import model.RVItems.BetPageItem;
-import model.RVItems.League;
+import model.BetPageItem;
+import model.League;
 
 public class LeagueDataBinder extends DataBinder {
 

@@ -1,4 +1,4 @@
-package model.RVItems;
+package model;
 
 public abstract class BetPageItem {
     public static final int TYPE_BET = 0;

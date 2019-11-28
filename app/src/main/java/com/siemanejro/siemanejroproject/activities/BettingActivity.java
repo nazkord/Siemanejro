@@ -2,7 +2,6 @@ package com.siemanejro.siemanejroproject.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,8 +30,8 @@ import communication.Client;
 import model.Bet;
 import model.BetList;
 import model.FullTimeResult;
+import model.League;
 import model.Match;
-import model.RVItems.League;
 import model.Score;
 import utils.BetItemsUtil;
 import utils.NetworkUtil;
@@ -43,16 +42,12 @@ public class BettingActivity extends AppCompatActivity {
 
     Button saveButton;
     Button chooseDateButton;
-    Long leagueID;
-    String leagueName;
     String selectedDate;
 
-//    RVMatchesAdapter rvBetsAdapter;
-    List<DataBinder> dataBinders;
+    List<DataBinder> dataBinders = new ArrayList<>();
     BetDataAdapter rvBetsAdapter;
     RecyclerView rvBets;
     List<Match> allMatches;
-//    ArrayList<Bet> betsInRV;
     BetList betList;
     LinearLayoutManager linearLayoutManager;
 
@@ -72,19 +67,36 @@ public class BettingActivity extends AppCompatActivity {
 
         init();
 
-        //get matches from API
+//        get matches from API
         try {
-
             new LoadMatches().execute().get();
+
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
-        rvBetsAdapter = new BetDataAdapter(dataBinders); //betInRv
+//        new CommunicationAsync<Long, ArrayList<Match>>(id -> (ArrayList<Match>) Client.SIEMAJERO.get().getMatchesByCompetition(leagueID))
+//                .onSuccess(this::displaySuccess)
+//                .onError(this::displayError)
+//                .execute(leagueID);
 
+        rvBetsAdapter = new BetDataAdapter(dataBinders); //betInRv
         rvBets.setAdapter(rvBetsAdapter);
         rvBets.setLayoutManager(linearLayoutManager);
+
+//        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        selectedDate = LocalDateTime.now().format(dateFormat);
+//        modifyListOfMatchesByDate(selectedDate);
     }
+
+//    private void displayError(Exception e) {
+//        System.out.println(e.getMessage());
+//        e.printStackTrace();
+//    }
+//
+//    private void displaySuccess(ArrayList<Match> matches) {
+//        dataBinders = BetItemsUtil.convertToDataBinders(expandMatchesToBets(matches));
+//    }
 
     private void init() {
         linearLayoutManager = new LinearLayoutManager(this);
@@ -94,10 +106,7 @@ public class BettingActivity extends AppCompatActivity {
         rvBets = findViewById(R.id.matchesList);
         saveButton = findViewById(R.id.saveButton);
         chooseDateButton = findViewById(R.id.choose_date_button);
-        Intent intent = getIntent();
-        leagueID = intent.getLongExtra("leagueID", 0);
-        leagueName = intent.getStringExtra("leagueName");
-        setToolbarTitleAndBackPressButton(leagueName);
+        setToolbarTitleAndBackPressButton("Matches");
         saveButtonClicked();
         chooseDateClicked();
     }
@@ -231,12 +240,12 @@ public class BettingActivity extends AppCompatActivity {
                 return 0;
             }
 
-            //TODO: get leagues only that are in Enum
-
+            //TODO: can I write [League.values()::getLeagueId()]
+            List<Long> leagueIds = new ArrayList<>();
             Stream.of(League.values())
-                    .forEach(league -> {
-                        allMatches.addAll(Client.SIEMAJERO.get().getMatchesByCompetition(league.getLeagueId()));
-                    });
+                    .forEach(league -> leagueIds.add(league.getLeagueId()));
+
+            allMatches = Client.SIEMAJERO.get().getMatchesByCompetitions(leagueIds);
 
             if(allMatches == null) {
                 //TODO: it could be an error by server side or there are just no matches at all

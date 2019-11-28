@@ -8,10 +8,9 @@ import android.view.ViewGroup;
 
 import com.siemanejro.siemanejroproject.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import model.RVItems.BetPageItem;
+import model.BetPageItem;
 
 public class BetDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

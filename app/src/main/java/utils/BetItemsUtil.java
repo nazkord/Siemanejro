@@ -1,7 +1,5 @@
 package utils;
 
-import android.widget.ArrayAdapter;
-
 import com.siemanejro.siemanejroproject.adapters.BetDataBinder;
 import com.siemanejro.siemanejroproject.adapters.DataBinder;
 import com.siemanejro.siemanejroproject.adapters.LeagueDataBinder;
@@ -10,10 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import model.Bet;
-import model.RVItems.League;
+import model.League;
 
 public class BetItemsUtil {
 

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import communication.Client;
+import communication.CommunicationAsync;
 import model.Bet;
 import model.Score;
 import utils.NetworkUtil;
@@ -29,7 +30,7 @@ public class UserBetsActivity extends AppCompatActivity {
 
     RVBetsAdapter rvBetsAdapter;
     RecyclerView rvBets;
-    ArrayList<Bet> listOfBets = null;
+    ArrayList<Bet> listOfBets = new ArrayList<>();
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
     @Override
@@ -50,16 +51,33 @@ public class UserBetsActivity extends AppCompatActivity {
         setToolbarTitle(getString(R.string.userBetsActivityName));
         rvBets = findViewById(R.id.rvUserBets);
 
+        putUserBetsToAdapter();
+
         try {
-            new getBets().execute().get();
-        } catch (ExecutionException | InterruptedException e) {
+            new CommunicationAsync<Void, ArrayList<Bet>>( b -> (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets())
+                    .onSuccess(this::displaySuccess)
+                    .onError(this::displayError)
+                    .execute().get();
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
 
+    private void displaySuccess(ArrayList<Bet> bets) {
+        Toast toast = Toast.makeText(UserBetsActivity.this,"OK", Toast.LENGTH_LONG);
+        toast.show();
+        listOfBets = bets;
+    }
+
+    private void displayError(Exception e) {
+        e.printStackTrace();
+        Toast toast = Toast.makeText(UserBetsActivity.this, "BAD", Toast.LENGTH_LONG);
+        toast.show();
+    }
+
     // TODO: show lastly upload user's bets
     private void putUserBetsToAdapter() {
-        checkoutBets();
+//        checkoutBets();
         rvBetsAdapter = new RVBetsAdapter(listOfBets);
 
         DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);

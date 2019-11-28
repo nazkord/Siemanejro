@@ -12,7 +12,7 @@ import java.time.LocalTime;
 import model.Bet;
 import model.FullTimeResult;
 import model.Match;
-import model.RVItems.BetPageItem;
+import model.BetPageItem;
 import model.Status;
 
 //TODO: each switch -> one method; make abstract class for those methods; create map (status -> method)

@@ -314,26 +314,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
 
-
             Optional<User> optionalUser = Client.SIEMAJERO.get().loginUser(mEmail, mPassword);
 
-//            optionalUser
-//                    .map()
-//                    .orElse()
-            //TODO: IMPORTANT BAD APPROACH, use map method
-            if(optionalUser.isPresent()) {
-                optionalUser.get().setPassword(mPassword);
-                SharedPrefUtil.LOGIN_SHARED_PREF_UTIL.setLoggerUser(LoginActivity.this, optionalUser.get());
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            } else {
-                return false;
-            }
+            optionalUser
+                    .map(user -> {
+                        user.setPassword(mPassword);
+                        SharedPrefUtil.setLoggerUser(LoginActivity.this, user);
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        return true;
+                    });
+            return false;
 
-
-            // TODO: register the new account here.
-
-
-            return true;
+            // TODO: register the new account here (instead of false)
         }
 
         @Override
