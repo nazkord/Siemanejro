@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         Matches.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ChooseLeagueActivity.class);
+                Intent intent = new Intent(MainActivity.this, BettingActivity.class);
                 startActivity(intent);
             }
         });

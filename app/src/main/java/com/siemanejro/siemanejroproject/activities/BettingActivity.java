@@ -44,16 +44,12 @@ public class BettingActivity extends AppCompatActivity {
 
     Button saveButton;
     Button chooseDateButton;
-    Long leagueID;
-    String leagueName;
     String selectedDate;
 
-//    RVMatchesAdapter rvBetsAdapter;
     List<DataBinder> dataBinders = new ArrayList<>();
     BetDataAdapter rvBetsAdapter;
     RecyclerView rvBets;
     List<Match> allMatches;
-//    ArrayList<Bet> betsInRV;
     BetList betList;
     LinearLayoutManager linearLayoutManager;
 
@@ -75,7 +71,6 @@ public class BettingActivity extends AppCompatActivity {
 
 //        get matches from API
         try {
-
             new LoadMatches().execute().get();
 
         } catch (ExecutionException | InterruptedException e) {
@@ -113,10 +108,7 @@ public class BettingActivity extends AppCompatActivity {
         rvBets = findViewById(R.id.matchesList);
         saveButton = findViewById(R.id.saveButton);
         chooseDateButton = findViewById(R.id.choose_date_button);
-        Intent intent = getIntent();
-        leagueID = intent.getLongExtra("leagueID", 0);
-        leagueName = intent.getStringExtra("leagueName");
-        setToolbarTitleAndBackPressButton(leagueName);
+        setToolbarTitleAndBackPressButton("Matches");
         saveButtonClicked();
         chooseDateClicked();
     }
@@ -249,7 +241,6 @@ public class BettingActivity extends AppCompatActivity {
             if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
                 return 0;
             }
-
 
             //TODO: can I write [League.values()::getLeagueId()]
             List<Long> leagueIds = new ArrayList<>();
