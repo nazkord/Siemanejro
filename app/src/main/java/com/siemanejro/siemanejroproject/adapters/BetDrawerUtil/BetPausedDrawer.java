@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject.adapters.BetUtil;
+package com.siemanejro.siemanejroproject.adapters.BetDrawerUtil;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -17,9 +17,9 @@ public class BetPausedDrawer extends BetDrawer {
         setMatchStatusViewColor(Color.RED);
 
         setHomeTeamResult();
-        setHomeTeamViewColor(Color.RED);
+        setHomeTeamViewColor();
 
         setAwayTeamResult();
-        setAwatTeamViewColor(Color.RED);
+        setAwayTeamViewColor();
     }
 }

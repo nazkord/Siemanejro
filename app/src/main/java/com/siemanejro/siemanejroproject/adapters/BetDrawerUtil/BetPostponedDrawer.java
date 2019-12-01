@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject.adapters.BetUtil;
+package com.siemanejro.siemanejroproject.adapters.BetDrawerUtil;
 
 import android.support.v7.widget.RecyclerView;
 

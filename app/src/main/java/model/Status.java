@@ -9,6 +9,4 @@ public enum Status {
     POSTPONED,
     SUSPENDED,
     CANCELED
-
-
 }
