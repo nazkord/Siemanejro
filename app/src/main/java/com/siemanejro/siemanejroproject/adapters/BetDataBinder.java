@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.adapters.BetUtil.BetFinishedDrawer;
+import com.siemanejro.siemanejroproject.adapters.BetUtil.BetPausedDrawer;
+import com.siemanejro.siemanejroproject.adapters.BetUtil.BetPostponedDrawer;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -83,7 +85,7 @@ public class BetDataBinder extends DataBinder {
 
         switch (Status.valueOf(currentMatch.getStatus())) {
             case POSTPONED: {
-                matchStatus.setText("POSTPONED");
+                new BetPostponedDrawer(viewHolder, currentMatch).drawBet();
             }
             case IN_PLAY : {
                 result1.setFocusable(false);
@@ -113,21 +115,12 @@ public class BetDataBinder extends DataBinder {
                 break;
             }
             case PAUSED: {
-                matchStatus.setText("HF");
-                matchStatus.setTextColor(Color.RED);
-
-                result1.setFocusable(false);
-                result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
-                result1.setTextColor(Color.RED);
-
-                result2.setFocusable(false);
-                result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
-                result2.setTextColor(Color.RED);
-
+                new BetPausedDrawer(viewHolder, currentMatch).drawBet();
                 break;
             }
             case FINISHED: {
                 new BetFinishedDrawer(viewHolder, currentMatch).drawBet();
+                break;
             }
         }
     }

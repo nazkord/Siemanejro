@@ -13,13 +13,9 @@ public class BetFinishedDrawer extends BetDrawer {
 
     @Override
     public void drawBet() {
-        result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
-        result1.setFocusable(false);
-
-        result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
-        result2.setFocusable(false);
-
-        matchStatus.setText("FT");
+        setHomeTeamResult();
+        setAwayTeamResult();
+        setMatchStatusText("FT");
 
         switch (currentMatch.getScore().getWinner()) {
             case "HOME_TEAM" : {

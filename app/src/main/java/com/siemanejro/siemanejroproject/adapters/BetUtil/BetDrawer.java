@@ -10,9 +10,9 @@ import model.Match;
 
 public abstract class BetDrawer {
     Match currentMatch;
-    TextView matchStatus;
-    EditText result1;
-    EditText result2;
+    private TextView matchStatus;
+    private EditText result1;
+    private EditText result2;
     TextView team1;
     TextView team2;
     TextView date;
@@ -26,6 +26,32 @@ public abstract class BetDrawer {
         this.team1 = betViewHolder.getTeam1();
         this.team2 = betViewHolder.getTeam2();
         this.date = betViewHolder.getDate();
+    }
+
+    void setHomeTeamViewColor(int color) {
+        result1.setTextColor(color);
+    }
+
+    void setAwatTeamViewColor(int color) {
+        result2.setTextColor(color);
+    }
+
+    void setHomeTeamResult() {
+        result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
+        result1.setFocusable(false);
+    }
+
+    void setAwayTeamResult() {
+        result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
+        result2.setFocusable(false);
+    }
+
+    void setMatchStatusText(String s) {
+        matchStatus.setText(s);
+    }
+
+    void setMatchStatusViewColor(int color) {
+        matchStatus.setTextColor(color);
     }
 
     public abstract void drawBet();
