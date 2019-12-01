@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.siemanejro.siemanejroproject.adapters.BetUtil.BetFinishedDrawer;
+
 import java.time.Duration;
 import java.time.LocalTime;
 
@@ -40,6 +42,7 @@ public class BetDataBinder extends DataBinder {
         EditText result2 = viewHolder.getResult2();
         TextView team1 = viewHolder.getTeam1();
         TextView team2 = viewHolder.getTeam2();
+        TextView date = viewHolder.getDate();
 
         //set status of match
         matchStatus.setText(null);
@@ -48,7 +51,7 @@ public class BetDataBinder extends DataBinder {
         //TODO: should be done this zonedDateTime
         String text = bet.getMatch().getUtcDate();
         String finalText = text.substring(0,10)+" "+text.substring(11,16);
-        viewHolder.getDate().setText(finalText);
+        date.setText(finalText);
 
         //set name of teams
         team1.setText(bet.getMatch().getHomeTeam().getName());
@@ -60,15 +63,17 @@ public class BetDataBinder extends DataBinder {
         result1.setTextColor(Color.BLACK);
         result2.setTextColor(Color.BLACK);
 
-        FullTimeResult fullTimeUserBet = bet.getUserScore().getFullTime();
-        if(fullTimeUserBet.getHomeTeam() == null || fullTimeUserBet.getAwayTeam() == null) {
-            result1.setText(null);
-            result2.setText(null);
-        } else {
-            result1.setText(bet.getUserScore().getFullTime().getHomeTeam());
-            result2.setText(bet.getUserScore().getFullTime().getAwayTeam());
-        }
+//        FullTimeResult fullTimeUserBet = bet.getUserScore().getFullTime();
+//        if(fullTimeUserBet.getHomeTeam() == null || fullTimeUserBet.getAwayTeam() == null) {
+//        result1.setText(null);
+//        result2.setText(null);
+//        } else {
+//            result1.setText(bet.getUserScore().getFullTime().getHomeTeam());
+//            result2.setText(bet.getUserScore().getFullTime().getAwayTeam());
+//        }
 
+        result1.setText(null);
+        result2.setText(null);
         result1.setFocusableInTouchMode(true);
         result2.setFocusableInTouchMode(true);
 
@@ -122,24 +127,7 @@ public class BetDataBinder extends DataBinder {
                 break;
             }
             case FINISHED: {
-                result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
-                result1.setFocusable(false);
-
-                result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
-                result2.setFocusable(false);
-
-                matchStatus.setText("FT");
-
-                switch (currentMatch.getScore().getWinner()) {
-                    case "HOME_TEAM" : {
-                        team1.setTypeface(null, Typeface.BOLD);
-                        break;
-                    }
-                    case "AWAY_TEAM" : {
-                        team2.setTypeface(null, Typeface.BOLD);
-                        break;
-                    }
-                }
+                new BetFinishedDrawer(viewHolder, currentMatch).drawBet();
             }
         }
     }
