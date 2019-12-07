@@ -1,37 +1,31 @@
 package com.siemanejro.siemanejroproject.adapters.BetDrawerUtil;
 
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 
+import com.siemanejro.siemanejroproject.adapters.BetViewHolder;
+
 import model.Bet;
-import model.Match;
 
 public class BetInPlayDrawer extends BetDrawer {
 
     @Override
-    public void drawBet(Bet bet) {
-        setCurrentMatch(bet.getMatch());
-        setHomeTeamResult();
-        setHomeTeamViewColor();
+    public void drawBet(RecyclerView.ViewHolder viewHolder, Bet bet) {
+        BetViewHolder betViewHolder = (BetViewHolder) viewHolder;
+        setHomeTeamResult(betViewHolder.getResult1(),
+                bet.getMatch().getScore().getFullTime().getHomeTeam());
+        setHomeTeamViewColor(betViewHolder.getResult1());
 
-        setAwayTeamResult();
-        setAwayTeamViewColor();
+        setAwayTeamResult(betViewHolder.getResult2(),
+                bet.getMatch().getScore().getFullTime().getAwayTeam());
+        setAwayTeamViewColor(betViewHolder.getResult2());
 
-        setMatchStatusText(getMinuteOfMatch() + "'");
-        setMatchStatusViewColor();
+        setMatchStatusTime(betViewHolder.getMatchStatus(), bet.getMatch());
+        setMatchStatusViewColor(betViewHolder.getMatchStatus());
 
-        switch (bet.getMatch().getScore().getWinner()) {
-            case "HOME_TEAM" : {
-                team1.setTypeface(null, Typeface.BOLD);
-                break;
-            }
-            case "AWAY_TEAM" : {
-                team2.setTypeface(null, Typeface.BOLD);
-                break;
-            }
-        }
+        setBoldFontToWinner(betViewHolder.getTeam1(), betViewHolder.getTeam2(),
+                bet.getMatch().getScore().getWinner());
 
-        setItemBackgroundColorPink();
+        setItemBackgroundColorPink(betViewHolder.itemView);
     }
 
 }

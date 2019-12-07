@@ -73,10 +73,7 @@ public class BetDataBinder extends DataBinder {
 
         //drawBet
         Optional.ofNullable(drawersMap.get(Status.valueOf(currentMatch.getStatus())))
-                .ifPresent(betDrawer1 -> {
-                    betDrawer1.setBetViewHolder(betViewHolder);
-                    betDrawer1.drawBet(bet);
-                });
+                .ifPresent(betDrawer1 -> betDrawer1.drawBet(betViewHolder, bet));
     }
 
     @Override

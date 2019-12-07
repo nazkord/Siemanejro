@@ -1,101 +1,73 @@
 package com.siemanejro.siemanejroproject.adapters.BetDrawerUtil;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.siemanejro.siemanejroproject.adapters.BetViewHolder;
-
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.Objects;
 
 import model.Bet;
 import model.Match;
 
 public abstract class BetDrawer {
-    private BetViewHolder betViewHolder;
-    private Match currentMatch;
-    private View itemView;
-    private TextView matchStatus;
-    private EditText result1;
-    private EditText result2;
-    TextView team1;
-    TextView team2;
-    TextView date;
 
-    public void setCurrentMatch(Match currentMatch) {
-        this.currentMatch = currentMatch;
+    void setHomeTeamViewColor(EditText homeTeam) {
+        homeTeam.setTextColor(android.graphics.Color.RED);
     }
 
-    public void setBetViewHolder(RecyclerView.ViewHolder viewHolder) {
-        betViewHolder = (BetViewHolder) viewHolder;
-        itemView = betViewHolder.itemView;
-        this.matchStatus = betViewHolder.getMatchStatus();
-        this.result1 = betViewHolder.getResult1();
-        this.result2 = betViewHolder.getResult2();
-        this.team1 = betViewHolder.getTeam1();
-        this.team2 = betViewHolder.getTeam2();
-        this.date = betViewHolder.getDate();
+    void setAwayTeamViewColor(EditText awayTeam) {
+        awayTeam.setTextColor(android.graphics.Color.RED);
     }
 
-    void setHomeTeamViewColor() {
-        result1.setTextColor(android.graphics.Color.RED);
+    void setHomeTeamResult(EditText homeTeam, Integer score) {
+        homeTeam.setText(String.valueOf(score));
+        homeTeam.setFocusable(false);
     }
 
-    void setAwayTeamViewColor() {
-        result2.setTextColor(android.graphics.Color.RED);
+    void setAwayTeamResult(EditText awayTeam, Integer score) {
+        awayTeam.setText(String.valueOf(score));
+        awayTeam.setFocusable(false);
     }
 
-    void setHomeTeamResult() {
-        result1.setText(String.valueOf(currentMatch.getScore().getFullTime().getHomeTeam()));
-        result1.setFocusable(false);
-    }
-
-    void setAwayTeamResult() {
-        result2.setText(String.valueOf(currentMatch.getScore().getFullTime().getAwayTeam()));
-        result2.setFocusable(false);
-    }
-
-    void setMatchStatusText(String s) {
+    void setMatchStatusText(TextView matchStatus, String s) {
         matchStatus.setText(s);
     }
 
-    void setMatchStatusViewColor() {
+    void setMatchStatusTime(TextView matchStatus, Match match) {
+        String s = getMinuteOfMatch(match) + "'";
+        matchStatus.setText(s);
+    }
+
+    void setMatchStatusViewColor(TextView matchStatus) {
         matchStatus.setTextColor(Color.RED);
     }
 
-    void setItemBackgroundColorPink() {
+    void setBoldFontToWinner(TextView team1, TextView team2, String winner) {
+        switch (winner) {
+            case "HOME_TEAM" : {
+                team1.setTypeface(null, Typeface.BOLD);
+                break;
+            }
+            case "AWAY_TEAM" : {
+                team2.setTypeface(null, Typeface.BOLD);
+                break;
+            }
+        }
+    }
+
+    void setItemBackgroundColorPink(View itemView) {
         itemView.setBackgroundColor(Color.rgb(255,230,238));
     }
 
-    Long getMinuteOfMatch() {
-        LocalTime matchTime = LocalTime.parse(currentMatch.getUtcDate().substring(11,16));
+    private Long getMinuteOfMatch(Match match) {
+        LocalTime matchTime = LocalTime.parse(match.getUtcDate().substring(11,16));
         return Duration.between(matchTime, LocalTime.now()).toMinutes();
     }
 
-    public abstract void drawBet(Bet bet);
+    public abstract void drawBet(RecyclerView.ViewHolder viewHolder, Bet bet);
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BetDrawer betDrawer = (BetDrawer) o;
-        return Objects.equals(betViewHolder, betDrawer.betViewHolder) &&
-                Objects.equals(currentMatch, betDrawer.currentMatch) &&
-                Objects.equals(itemView, betDrawer.itemView) &&
-                Objects.equals(matchStatus, betDrawer.matchStatus) &&
-                Objects.equals(result1, betDrawer.result1) &&
-                Objects.equals(result2, betDrawer.result2) &&
-                Objects.equals(team1, betDrawer.team1) &&
-                Objects.equals(team2, betDrawer.team2) &&
-                Objects.equals(date, betDrawer.date);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(betViewHolder, currentMatch, itemView, matchStatus, result1, result2, team1, team2, date);
-    }
 }
