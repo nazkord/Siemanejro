@@ -7,9 +7,9 @@ import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.R;
 
-import communication.Client;
-import utils.SharedPrefUtil;
-import model.User;
+import com.siemanejro.siemanejroproject.communication.Client;
+import com.siemanejro.siemanejroproject.utils.SharedPrefUtil;
+import com.siemanejro.siemanejroproject.model.User;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

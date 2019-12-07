@@ -11,7 +11,7 @@ import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
 
-import model.Bet;
+import com.siemanejro.siemanejroproject.model.Bet;
 
 public class RVBetsAdapter extends RecyclerView.Adapter<RVBetsAdapter.ViewHolder> {
 

@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.siemanejro.siemanejroproject.R;
 
-import utils.SharedPrefUtil;
+import com.siemanejro.siemanejroproject.utils.SharedPrefUtil;
 
 public class MainActivity extends AppCompatActivity {
 

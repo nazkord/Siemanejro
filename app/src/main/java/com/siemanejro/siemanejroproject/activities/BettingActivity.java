@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.siemanejro.siemanejroproject.R;
 import com.siemanejro.siemanejroproject.adapters.BetDataAdapter;
-import com.siemanejro.siemanejroproject.adapters.DataBinder;
+import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,15 +26,15 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import communication.Client;
-import model.Bet;
-import model.BetList;
-import model.FullTimeResult;
-import model.League;
-import model.Match;
-import model.Score;
-import utils.BetItemsUtil;
-import utils.NetworkUtil;
+import com.siemanejro.siemanejroproject.communication.Client;
+import com.siemanejro.siemanejroproject.model.Bet;
+import com.siemanejro.siemanejroproject.model.BetList;
+import com.siemanejro.siemanejroproject.model.FullTimeResult;
+import com.siemanejro.siemanejroproject.model.League;
+import com.siemanejro.siemanejroproject.model.Match;
+import com.siemanejro.siemanejroproject.model.Score;
+import com.siemanejro.siemanejroproject.utils.BetItemsUtil;
+import com.siemanejro.siemanejroproject.utils.NetworkUtil;
 
 public class BettingActivity extends AppCompatActivity {
 
@@ -122,7 +122,7 @@ public class BettingActivity extends AppCompatActivity {
 
     private ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
         return (ArrayList<Bet>) matches.stream()
-                .map(m -> new Bet(null, m, null, new Score(null, null, new FullTimeResult(null, null, null)), null))
+                .map(match-> new Bet(null, match, null, new Score(null, null, new FullTimeResult(null, null, null)), null))
                 .collect(Collectors.toList());
     }
 

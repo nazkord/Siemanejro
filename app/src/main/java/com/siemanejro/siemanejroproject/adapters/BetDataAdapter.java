@@ -2,18 +2,20 @@ package com.siemanejro.siemanejroproject.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.siemanejro.siemanejroproject.R;
-import com.siemanejro.siemanejroproject.adapters.BetDrawerUtil.BetDrawer;
-import com.siemanejro.siemanejroproject.adapters.BetDrawerUtil.BetFinishedDrawer;
-import com.siemanejro.siemanejroproject.adapters.BetDrawerUtil.BetInPlayDrawer;
-import com.siemanejro.siemanejroproject.adapters.BetDrawerUtil.BetPausedDrawer;
-import com.siemanejro.siemanejroproject.adapters.BetDrawerUtil.BetPostponedDrawer;
+
+import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
+import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetDrawer;
+import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetFinishedDrawer;
+import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetInPlayDrawer;
+import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetPausedDrawer;
+import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetPostponedDrawer;
+import com.siemanejro.siemanejroproject.viewHolders.BetViewHolder;
+import com.siemanejro.siemanejroproject.viewHolders.LeagueViewHolder;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,24 +23,20 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.Bet;
-import model.BetPageItem;
-import model.Status;
+import com.siemanejro.siemanejroproject.model.BetPageItem;
+import com.siemanejro.siemanejroproject.model.Status;
 
 public class BetDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<DataBinder> binderList;
 
-    private Map<Status, BetDrawer> drawersMap = new HashMap<Status, BetDrawer>(
-    ) {{
-        put(Status.POSTPONED, new BetPostponedDrawer());
-        put(Status.IN_PLAY, new BetInPlayDrawer());
-        put(Status.PAUSED, new BetPausedDrawer());
-        put(Status.FINISHED, new BetFinishedDrawer());
-    }};
-
     private Map<Status, BetDrawer> immutableDrawersMap = Collections.unmodifiableMap(
-            new LinkedHashMap<>(drawersMap)
+            new LinkedHashMap<>(new HashMap<Status, BetDrawer>() {{
+                put(Status.POSTPONED, new BetPostponedDrawer());
+                put(Status.IN_PLAY, new BetInPlayDrawer());
+                put(Status.PAUSED, new BetPausedDrawer());
+                put(Status.FINISHED, new BetFinishedDrawer());
+            }})
     );
 
     public BetDataAdapter(List<DataBinder> binderList) {

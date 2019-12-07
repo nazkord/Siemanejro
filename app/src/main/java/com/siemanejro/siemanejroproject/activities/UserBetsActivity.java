@@ -17,12 +17,12 @@ import com.siemanejro.siemanejroproject.R;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import communication.Client;
-import communication.CommunicationAsync;
-import model.Bet;
-import model.Score;
-import utils.NetworkUtil;
-import utils.ResultUtil;
+import com.siemanejro.siemanejroproject.communication.Client;
+import com.siemanejro.siemanejroproject.communication.CommunicationAsync;
+import com.siemanejro.siemanejroproject.model.Bet;
+import com.siemanejro.siemanejroproject.model.Score;
+import com.siemanejro.siemanejroproject.utils.NetworkUtil;
+import com.siemanejro.siemanejroproject.utils.ResultUtil;
 
 import static android.graphics.drawable.ClipDrawable.HORIZONTAL;
 

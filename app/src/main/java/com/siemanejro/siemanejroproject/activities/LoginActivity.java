@@ -36,9 +36,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import communication.Client;
-import utils.SharedPrefUtil;
-import model.User;
+import com.siemanejro.siemanejroproject.communication.Client;
+import com.siemanejro.siemanejroproject.utils.SharedPrefUtil;
+import com.siemanejro.siemanejroproject.model.User;
 
 import static android.Manifest.permission.READ_CONTACTS;
 

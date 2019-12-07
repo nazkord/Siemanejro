@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import model.Bet;
+import com.siemanejro.siemanejroproject.model.Bet;
 
 import static junit.framework.TestCase.assertEquals;
 
