@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.siemanejro.siemanejroproject.R;
 import com.siemanejro.siemanejroproject.adapters.BetDataAdapter;
+import com.siemanejro.siemanejroproject.dataBinders.BetDataBinder;
 import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ import java.util.stream.Stream;
 import com.siemanejro.siemanejroproject.communication.Client;
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.BetList;
+import com.siemanejro.siemanejroproject.model.BetPageItem;
 import com.siemanejro.siemanejroproject.model.FullTimeResult;
 import com.siemanejro.siemanejroproject.model.League;
 import com.siemanejro.siemanejroproject.model.Match;
@@ -150,31 +152,11 @@ public class BettingActivity extends AppCompatActivity {
     }
 
     private List<Bet> getNewUserBets() {
-//        BetItem betItem;
-//        Bet bet;
-//
-//        int numberOfMatches = rvBetsAdapter.getItemCount();
-//        List<Bet> bets = new ArrayList<>();
-
-//        for (int i = 0; i < numberOfMatches; i++)
-//        {
-//            betItem = (BetItem) rvBetsAdapter.getItem(i);
-//            bet = betItem.getBet();
-//
-//            Integer userBetResult1 = bet.getUserScore().getFullTime().getHomeTeam();
-//            Integer userBetResult2 = bet.getUserScore().getFullTime().getAwayTeam();
-//
-//            if(userBetResult1 == null || userBetResult2 == null)
-//                continue;
-//
-//            Score userScore = new Score(null, null,
-//                new FullTimeResult(null, userBetResult1, userBetResult2));
-//            userScore.setWinner(userScore.getWinnerForScore());
-//            bet.setUserScore(userScore);
-//
-//            bets.add(bet);
-//        }
-        return null;
+        return dataBinders.stream().filter(dataBinder -> dataBinder.getItemViewType() == BetPageItem.TYPE_BET)
+                .map(BetDataBinder.class::cast)
+                .filter(betDataBinder -> betDataBinder.getBet().getChanged())
+                .map(BetDataBinder::getBet)
+                .collect(Collectors.toList());
     }
 
     /// -------- onClicker's and DatePickerDialog -----------

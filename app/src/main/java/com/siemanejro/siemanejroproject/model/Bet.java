@@ -1,11 +1,16 @@
 package com.siemanejro.siemanejroproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Bet {
+
+    @JsonIgnore
+    private Boolean isChanged = false;
+
     private Long id;
     private Match match;
     private User user;
@@ -61,6 +66,17 @@ public class Bet {
 
     public void setResult(Integer result) {
         this.result = result;
+    }
+
+
+    @JsonIgnore
+    public Boolean getChanged() {
+        return isChanged;
+    }
+
+    @JsonIgnore
+    public void setChanged(Boolean changed) {
+        isChanged = changed;
     }
 
     @Override

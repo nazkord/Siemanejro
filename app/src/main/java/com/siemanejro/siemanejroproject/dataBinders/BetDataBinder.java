@@ -82,11 +82,17 @@ public class BetDataBinder extends DataBinder {
             result2.setText(String.valueOf(bet.getUserScore().getFullTime().getAwayTeam()));
         }
 
+        result1.addTextChangedListener(homeTeamResultListener);
+        result2.addTextChangedListener(awayTeamResultListener);
+
         result1.setFocusableInTouchMode(true);
         result2.setFocusableInTouchMode(true);
 
         ///setBackgroundColorToDefault
         betViewHolder.itemView.setBackgroundColor(Color.WHITE);
+
+        result1.removeTextChangedListener(homeTeamResultListener);
+        result2.removeTextChangedListener(awayTeamResultListener);
 
         //drawBet
         Optional.ofNullable(drawersMap.get(Status.valueOf(currentMatch.getStatus())))
@@ -100,7 +106,7 @@ public class BetDataBinder extends DataBinder {
     public int getItemViewType() {
         return BetPageItem.TYPE_BET;
     }
-    
+
     private class HomeTeamResultListener implements TextWatcher {
 
         @Override
@@ -119,6 +125,7 @@ public class BetDataBinder extends DataBinder {
             if (!result.isEmpty()) {
                 Integer homeTeamResultBet = Integer.valueOf(result);
                 bet.getUserScore().getFullTime().setHomeTeam(homeTeamResultBet);
+                bet.setChanged(true);
             }
         }
     }
@@ -141,6 +148,7 @@ public class BetDataBinder extends DataBinder {
             if (!result.isEmpty()) {
                 Integer awayTeamResultBet = Integer.valueOf(result);
                 bet.getUserScore().getFullTime().setAwayTeam(awayTeamResultBet);
+                bet.setChanged(true);
             }
         }
     }
