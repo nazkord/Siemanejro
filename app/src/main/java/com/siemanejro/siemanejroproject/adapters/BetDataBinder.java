@@ -7,12 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.adapters.BetDrawerUtil.BetDrawer;
-import com.siemanejro.siemanejroproject.adapters.BetDrawerUtil.BetFinishedDrawer;
-import com.siemanejro.siemanejroproject.adapters.BetDrawerUtil.BetInPlayDrawer;
-import com.siemanejro.siemanejroproject.adapters.BetDrawerUtil.BetPausedDrawer;
-import com.siemanejro.siemanejroproject.adapters.BetDrawerUtil.BetPostponedDrawer;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -36,17 +31,10 @@ public class BetDataBinder extends DataBinder {
     }
 
     @Override
-    public void displayData(RecyclerView.ViewHolder holder) {
+    public void displayData(RecyclerView.ViewHolder holder, Map<Status, BetDrawer> drawersMap) {
 
         BetViewHolder betViewHolder = (BetViewHolder) holder;
         Match currentMatch = bet.getMatch();
-
-        final Map<Status, BetDrawer> drawerMap = new HashMap<Status, BetDrawer>() {{
-            put(Status.POSTPONED, new BetPostponedDrawer(betViewHolder, currentMatch));
-            put(Status.IN_PLAY, new BetInPlayDrawer(betViewHolder, currentMatch));
-            put(Status.PAUSED, new BetPausedDrawer(betViewHolder, currentMatch));
-            put(Status.FINISHED, new BetFinishedDrawer(betViewHolder, currentMatch));
-        }};
 
         TextView matchStatus = betViewHolder.getMatchStatus();
         EditText result1 = betViewHolder.getResult1();
@@ -84,8 +72,11 @@ public class BetDataBinder extends DataBinder {
         betViewHolder.itemView.setBackgroundColor(Color.WHITE);
 
         //drawBet
-        Optional.ofNullable(drawerMap.get(Status.valueOf(currentMatch.getStatus())))
-                .ifPresent(BetDrawer::drawBet);
+        Optional.ofNullable(drawersMap.get(Status.valueOf(currentMatch.getStatus())))
+                .ifPresent(betDrawer1 -> {
+                    betDrawer1.setBetViewHolder(betViewHolder);
+                    betDrawer1.drawBet(bet);
+                });
     }
 
     @Override

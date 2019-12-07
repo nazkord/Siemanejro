@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.R;
 
-import model.Bet;
-
 public class BetViewHolder extends RecyclerView.ViewHolder {
     private TextView date;
     private TextView matchStatus;
@@ -18,7 +16,6 @@ public class BetViewHolder extends RecyclerView.ViewHolder {
     private TextView team2;
     private EditText result1;
     private EditText result2;
-
     public BetViewHolder(View itemView) {
         super(itemView);
         date = itemView.findViewById(R.id.dateTime);

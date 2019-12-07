@@ -10,11 +10,14 @@ import com.siemanejro.siemanejroproject.adapters.BetViewHolder;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Objects;
 
+import model.Bet;
 import model.Match;
 
 public abstract class BetDrawer {
-    Match currentMatch;
+    private BetViewHolder betViewHolder;
+    private Match currentMatch;
     private View itemView;
     private TextView matchStatus;
     private EditText result1;
@@ -23,10 +26,13 @@ public abstract class BetDrawer {
     TextView team2;
     TextView date;
 
-    BetDrawer(RecyclerView.ViewHolder holder, Match match) {
-        BetViewHolder betViewHolder = (BetViewHolder) holder;
+    public void setCurrentMatch(Match currentMatch) {
+        this.currentMatch = currentMatch;
+    }
+
+    public void setBetViewHolder(RecyclerView.ViewHolder viewHolder) {
+        betViewHolder = (BetViewHolder) viewHolder;
         itemView = betViewHolder.itemView;
-        this.currentMatch = match;
         this.matchStatus = betViewHolder.getMatchStatus();
         this.result1 = betViewHolder.getResult1();
         this.result2 = betViewHolder.getResult2();
@@ -57,8 +63,8 @@ public abstract class BetDrawer {
         matchStatus.setText(s);
     }
 
-    void setMatchStatusViewColor(int color) {
-        matchStatus.setTextColor(color);
+    void setMatchStatusViewColor() {
+        matchStatus.setTextColor(Color.RED);
     }
 
     void setItemBackgroundColorPink() {
@@ -70,5 +76,26 @@ public abstract class BetDrawer {
         return Duration.between(matchTime, LocalTime.now()).toMinutes();
     }
 
-    public abstract void drawBet();
+    public abstract void drawBet(Bet bet);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BetDrawer betDrawer = (BetDrawer) o;
+        return Objects.equals(betViewHolder, betDrawer.betViewHolder) &&
+                Objects.equals(currentMatch, betDrawer.currentMatch) &&
+                Objects.equals(itemView, betDrawer.itemView) &&
+                Objects.equals(matchStatus, betDrawer.matchStatus) &&
+                Objects.equals(result1, betDrawer.result1) &&
+                Objects.equals(result2, betDrawer.result2) &&
+                Objects.equals(team1, betDrawer.team1) &&
+                Objects.equals(team2, betDrawer.team2) &&
+                Objects.equals(date, betDrawer.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(betViewHolder, currentMatch, itemView, matchStatus, result1, result2, team1, team2, date);
+    }
 }

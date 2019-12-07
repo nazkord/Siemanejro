@@ -1,19 +1,16 @@
 package com.siemanejro.siemanejroproject.adapters.BetDrawerUtil;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 
+import model.Bet;
 import model.Match;
 
 public class BetInPlayDrawer extends BetDrawer {
 
-    public BetInPlayDrawer(RecyclerView.ViewHolder holder, Match match) {
-        super(holder, match);
-    }
-
     @Override
-    public void drawBet() {
+    public void drawBet(Bet bet) {
+        setCurrentMatch(bet.getMatch());
         setHomeTeamResult();
         setHomeTeamViewColor();
 
@@ -21,9 +18,9 @@ public class BetInPlayDrawer extends BetDrawer {
         setAwayTeamViewColor();
 
         setMatchStatusText(getMinuteOfMatch() + "'");
-        setMatchStatusViewColor(Color.RED);
+        setMatchStatusViewColor();
 
-        switch (currentMatch.getScore().getWinner()) {
+        switch (bet.getMatch().getScore().getWinner()) {
             case "HOME_TEAM" : {
                 team1.setTypeface(null, Typeface.BOLD);
                 break;
