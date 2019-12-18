@@ -121,7 +121,6 @@ public class BettingActivity extends AppCompatActivity {
 
     /// -------- Adapter methods -----------
 
-
     private ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
         return (ArrayList<Bet>) matches.stream()
                 .map(match-> new Bet(null, match, null, new Score(null, null, new FullTimeResult(null, null, null)), null))
@@ -233,7 +232,7 @@ public class BettingActivity extends AppCompatActivity {
                 //TODO: it could be an error by server side or there are just no matches at all
                 return 1;
             } else {
-                dataBinders = BetItemsUtil.convertToDataBinders(expandMatchesToBets(allMatches));
+//                dataBinders = BetItemsUtil.convertToDataBinders(expandMatchesToBets(allMatches));
                 return 2;
             }
         }

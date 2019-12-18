@@ -5,8 +5,11 @@ import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.BetPageItem;
@@ -27,8 +30,6 @@ public class BetDataBinder extends DataBinder {
 
     public BetDataBinder(Bet bet) {
         this.bet = bet;
-        homeTeamResultListener = new HomeTeamResultListener();
-        awayTeamResultListener = new AwayTeamResultListener();
     }
 
     public Bet getBet() {
@@ -67,9 +68,6 @@ public class BetDataBinder extends DataBinder {
         result1.setTextColor(Color.BLACK);
         result2.setTextColor(Color.BLACK);
 
-        result1.removeTextChangedListener(homeTeamResultListener);
-        result2.removeTextChangedListener(awayTeamResultListener);
-
         if(bet.getUserScore().getFullTime().getHomeTeam() == null) {
             result1.setText(null);
         } else {
@@ -82,24 +80,37 @@ public class BetDataBinder extends DataBinder {
             result2.setText(String.valueOf(bet.getUserScore().getFullTime().getAwayTeam()));
         }
 
-        result1.addTextChangedListener(homeTeamResultListener);
-        result2.addTextChangedListener(awayTeamResultListener);
-
         result1.setFocusableInTouchMode(true);
         result2.setFocusableInTouchMode(true);
 
         ///setBackgroundColorToDefault
         betViewHolder.itemView.setBackgroundColor(Color.WHITE);
 
-        result1.removeTextChangedListener(homeTeamResultListener);
-        result2.removeTextChangedListener(awayTeamResultListener);
-
         //drawBet
         Optional.ofNullable(drawersMap.get(Status.valueOf(currentMatch.getStatus())))
                 .ifPresent(betDrawer1 -> betDrawer1.drawBet(betViewHolder, bet));
 
-        result1.addTextChangedListener(homeTeamResultListener);
-        result2.addTextChangedListener(awayTeamResultListener);
+        result1.setOnFocusChangeListener((view, hasFocus) -> {
+            if (!hasFocus) {
+                String result = result1.getText().toString();
+                if (!result.isEmpty()) {
+                    Integer homeTeamResultBet = Integer.valueOf(result);
+                    bet.getUserScore().getFullTime().setHomeTeam(homeTeamResultBet);
+                    bet.setChanged(true);
+                }
+            }
+        });
+
+        result2.setOnFocusChangeListener((view, hasFocus) -> {
+            if (!hasFocus) {
+                String result = result1.getText().toString();
+                if (!result.isEmpty()) {
+                    Integer awayTeamResultBet = Integer.valueOf(result);
+                    bet.getUserScore().getFullTime().setAwayTeam(awayTeamResultBet);
+                    bet.setChanged(true);
+                }
+            }
+        });
     }
 
     @Override
