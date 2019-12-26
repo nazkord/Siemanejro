@@ -1,6 +1,5 @@
 package com.siemanejro.siemanejroproject.activities;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
@@ -8,30 +7,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.siemanejro.siemanejroproject.R;
 import com.siemanejro.siemanejroproject.adapters.BetDataAdapter;
+import com.siemanejro.siemanejroproject.communication.Client;
 import com.siemanejro.siemanejroproject.dataBinders.BetDataBinder;
 import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import com.siemanejro.siemanejroproject.communication.Client;
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.BetList;
 import com.siemanejro.siemanejroproject.model.BetPageItem;
@@ -41,6 +25,16 @@ import com.siemanejro.siemanejroproject.model.Match;
 import com.siemanejro.siemanejroproject.model.Score;
 import com.siemanejro.siemanejroproject.utils.BetItemsUtil;
 import com.siemanejro.siemanejroproject.utils.NetworkUtil;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
@@ -52,11 +46,9 @@ public class BettingActivity extends AppCompatActivity {
     private final String DATE_FORMAT = "yyyy-MM-dd";
 
     Button saveButton;
-    Button chooseDateButton;
     String selectedDate;
     HorizontalCalendar horizontalCalendar;
-
-    List<DataBinder> dataBinders = new ArrayList<>();
+    List<DataBinder> dataBinders;
     BetDataAdapter rvBetsAdapter;
     RecyclerView rvBets;
     List<Match> allMatches;
@@ -87,67 +79,46 @@ public class BettingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        new CommunicationAsync<Long, ArrayList<Match>>(id -> (ArrayList<Match>) Client.SIEMAJERO.get().getMatchesByCompetition(leagueID))
-//                .onSuccess(this::displaySuccess)
-//                .onError(this::displayError)
-//                .execute(leagueID);
-
-        rvBetsAdapter = new BetDataAdapter(dataBinders); //betInRv
+        //initialize recyclerView
+        dataBinders = new ArrayList<>();
+        rvBetsAdapter = new BetDataAdapter(dataBinders);
         rvBets.setAdapter(rvBetsAdapter);
         rvBets.setLayoutManager(linearLayoutManager);
 
-//        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        selectedDate = LocalDateTime.now().format(dateFormat);
-//        modifyListOfMatchesByDate(selectedDate);
     }
-
-//    private void displayError(Exception e) {
-//        System.out.println(e.getMessage());
-//        e.printStackTrace();
-//    }
-//
-//    private void displaySuccess(ArrayList<Match> matches) {
-//        dataBinders = BetItemsUtil.convertToDataBinders(expandMatchesToBets(matches));
-//    }
 
     private void init() {
         linearLayoutManager = new LinearLayoutManager(this);
         allMatches = new ArrayList<>();
         betList = new BetList();
+        dataBinders = new ArrayList<>();
 
         rvBets = findViewById(R.id.matchesList);
         saveButton = findViewById(R.id.saveButton);
-//        chooseDateButton = findViewById(R.id.choose_date_button);
+        saveButton.setOnClickListener(v -> savedUserBets());
         setToolbarTitleAndBackPressButton("Matches");
-        saveButtonClicked();
-//        chooseDateClicked();
-        setUpCalendar();
+        setUpCalendarView();
     }
 
-    private void setUpCalendar() {
-        /* starts before 1 month from now */
+    private void setUpCalendarView() {
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.DAY_OF_YEAR, -7);
 
-        /* ends after 1 month from now */
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.DAY_OF_YEAR, 7);
 
         horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
                 .range(startDate, endDate)
-                .datesNumberOnScreen(7)
+                .datesNumberOnScreen(5)
                 .build();
 
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 String dateInString = new SimpleDateFormat(DATE_FORMAT).format(date.getTime());
-//                Log.d("LOL", dateInString);
-
                 modifyListOfMatchesByDate(dateInString);
                 selectedDate = dateInString;
             }
-
         });
     }
 
@@ -196,59 +167,6 @@ public class BettingActivity extends AppCompatActivity {
                 .collect(Collectors.toList());
     }
 
-    /// -------- onClicker's and DatePickerDialog -----------
-
-    private void saveButtonClicked() {
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                savedUserBets();
-            }
-        });
-    }
-
-    private void chooseDateClicked() {
-        chooseDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDatePickerDialog();
-            }
-        });
-
-    }
-
-    private void openDatePickerDialog() {
-        int year = Integer.parseInt(selectedDate.substring(0, 4));
-        int monthOfYear = Integer.valueOf(selectedDate.substring(5,7)) - 1;
-        int dayOfMonth = Integer.parseInt(selectedDate.substring(8, 10));
-
-        // open dateDialogPicker
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                String monthString = ((Integer)(monthOfYear + 1)).toString();
-                String dayString = ((Integer)dayOfMonth).toString();
-
-                String dateInString = ((Integer)year).toString() + "-"
-                        + makeStringHaveTwoDigits(monthString) + "-"
-                        + makeStringHaveTwoDigits(dayString);
-
-                modifyListOfMatchesByDate(dateInString);
-                selectedDate = dateInString;
-            }
-        }, year, monthOfYear, dayOfMonth);
-        datePickerDialog.show();
-
-    }
-
-    private String makeStringHaveTwoDigits(String string) {
-        if(string.length() < 2) {
-            return "0" + string;
-        }
-        return string;
-    }
-
     /// -------- Background Threads -----------
 
     private class LoadMatches extends AsyncTask<Void, Void, Integer> {
@@ -270,7 +188,6 @@ public class BettingActivity extends AppCompatActivity {
                 //TODO: it could be an error by server side or there are just no matches at all
                 return 1;
             } else {
-//                dataBinders = BetItemsUtil.convertToDataBinders(expandMatchesToBets(allMatches));
                 return 2;
             }
         }
@@ -299,6 +216,7 @@ public class BettingActivity extends AppCompatActivity {
         }
     }
 
+    //TODO: pass betList as parameter
     private class PostBets extends AsyncTask<Void, Void, Integer> {
         @Override
         protected Integer doInBackground(Void... voids) {
