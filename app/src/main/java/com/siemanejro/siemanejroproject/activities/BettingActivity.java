@@ -1,6 +1,7 @@
 package com.siemanejro.siemanejroproject.activities;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,13 +38,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.model.CalendarItemStyle;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarPredicate;
 
 public class BettingActivity extends AppCompatActivity {
 
     /// Local variables ///
 
     private final String DATE_FORMAT = "yyyy-MM-dd";
+    private final SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
 
     Button saveButton;
     String selectedDate;
@@ -79,12 +83,13 @@ public class BettingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        setUpCalendarView();
+
         //initialize recyclerView
         dataBinders = new ArrayList<>();
         rvBetsAdapter = new BetDataAdapter(dataBinders);
         rvBets.setAdapter(rvBetsAdapter);
         rvBets.setLayoutManager(linearLayoutManager);
-
     }
 
     private void init() {
@@ -97,10 +102,14 @@ public class BettingActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(v -> savedUserBets());
         setToolbarTitleAndBackPressButton("Matches");
-        setUpCalendarView();
     }
 
     private void setUpCalendarView() {
+        List<String> datesWithMatches = allMatches.stream()
+                .map(match -> match.getUtcDate().substring(0,10))
+                .distinct()
+                .collect(Collectors.toList());
+
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.DAY_OF_YEAR, -7);
 
@@ -110,12 +119,24 @@ public class BettingActivity extends AppCompatActivity {
         horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
                 .range(startDate, endDate)
                 .datesNumberOnScreen(5)
+                .disableDates(new HorizontalCalendarPredicate() {
+                    @Override
+                    public boolean test(Calendar date) {
+                        return !datesWithMatches.contains(formatter.format(date.getTime()));
+                    }
+
+                    @Override
+                    public CalendarItemStyle style() {
+                        //TODO: delete item. Now just set color the same as background
+                        return new CalendarItemStyle();
+                    }
+                })
                 .build();
 
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
-                String dateInString = new SimpleDateFormat(DATE_FORMAT).format(date.getTime());
+                String dateInString = formatter.format(date.getTime());
                 modifyListOfMatchesByDate(dateInString);
                 selectedDate = dateInString;
             }
