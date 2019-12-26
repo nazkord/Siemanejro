@@ -15,13 +15,13 @@
         android:layout_height="0dp"
         android:background="@color/colorPrimary"
         app:textColorSelected="#FFFF"
-        android:layout_weight="1"/>
+        android:layout_weight="1.5"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/matchesList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"/>
+        android:layout_weight="7.5"/>
 
     <Button
         android:id="@+id/saveButton"

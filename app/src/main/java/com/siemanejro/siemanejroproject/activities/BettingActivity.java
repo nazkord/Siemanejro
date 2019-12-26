@@ -25,6 +25,7 @@ import com.siemanejro.siemanejroproject.model.League;
 import com.siemanejro.siemanejroproject.model.Match;
 import com.siemanejro.siemanejroproject.model.Score;
 import com.siemanejro.siemanejroproject.utils.BetItemsUtil;
+import com.siemanejro.siemanejroproject.utils.MatchItemsUtil;
 import com.siemanejro.siemanejroproject.utils.NetworkUtil;
 
 import java.text.SimpleDateFormat;
@@ -151,32 +152,20 @@ public class BettingActivity extends AppCompatActivity {
 
     /// -------- Adapter methods -----------
 
-    private ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
-        return (ArrayList<Bet>) matches.stream()
-                .map(match-> new Bet(null, match, null, new Score(null, null, new FullTimeResult(null, null, null)), null))
-                .collect(Collectors.toList());
-    }
-
-    public List<Match> getMatchesFromSelectedDate(String date) {
-        return allMatches.stream()
-                .filter(Match -> Match.getUtcDate().substring(0,10).equals(date))
-                .collect(Collectors.toList());
-    }
-
     private void modifyListOfMatchesByDate(String dateInString) {
         //clear bets in adapter
         rvBetsAdapter.notifyItemRangeRemoved(0, rvBetsAdapter.getItemCount());
         dataBinders.clear();
-        dataBinders.addAll(BetItemsUtil.convertToDataBinders(expandMatchesToBets(getMatchesFromSelectedDate(dateInString))));
+        List<Match> matches = MatchItemsUtil.filterByDate(allMatches, dateInString);
+        dataBinders.addAll(BetItemsUtil.convertToDataBinders(matches));
         rvBetsAdapter.notifyItemRangeInserted(0, dataBinders.size());
     }
 
     /// -------- Methods for saving bets -----------
 
     private void savedUserBets() {
-        List<Bet> newUserBets = getNewUserBets();
         betList.clear();
-        betList.addAll(newUserBets);
+        betList.addAll(getNewUserBets());
         new PostBets().execute();
     }
 
