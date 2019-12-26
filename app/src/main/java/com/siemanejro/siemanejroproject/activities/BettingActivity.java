@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,9 +20,12 @@ import com.siemanejro.siemanejroproject.adapters.BetDataAdapter;
 import com.siemanejro.siemanejroproject.dataBinders.BetDataBinder;
 import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -38,13 +42,19 @@ import com.siemanejro.siemanejroproject.model.Score;
 import com.siemanejro.siemanejroproject.utils.BetItemsUtil;
 import com.siemanejro.siemanejroproject.utils.NetworkUtil;
 
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+
 public class BettingActivity extends AppCompatActivity {
 
     /// Local variables ///
 
+    private final String DATE_FORMAT = "yyyy-MM-dd";
+
     Button saveButton;
     Button chooseDateButton;
     String selectedDate;
+    HorizontalCalendar horizontalCalendar;
 
     List<DataBinder> dataBinders = new ArrayList<>();
     BetDataAdapter rvBetsAdapter;
@@ -107,10 +117,38 @@ public class BettingActivity extends AppCompatActivity {
 
         rvBets = findViewById(R.id.matchesList);
         saveButton = findViewById(R.id.saveButton);
-        chooseDateButton = findViewById(R.id.choose_date_button);
+//        chooseDateButton = findViewById(R.id.choose_date_button);
         setToolbarTitleAndBackPressButton("Matches");
         saveButtonClicked();
-        chooseDateClicked();
+//        chooseDateClicked();
+        setUpCalendar();
+    }
+
+    private void setUpCalendar() {
+        /* starts before 1 month from now */
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.DAY_OF_YEAR, -7);
+
+        /* ends after 1 month from now */
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.DAY_OF_YEAR, 7);
+
+        horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
+                .range(startDate, endDate)
+                .datesNumberOnScreen(7)
+                .build();
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+            @Override
+            public void onDateSelected(Calendar date, int position) {
+                String dateInString = new SimpleDateFormat(DATE_FORMAT).format(date.getTime());
+//                Log.d("LOL", dateInString);
+
+                modifyListOfMatchesByDate(dateInString);
+                selectedDate = dateInString;
+            }
+
+        });
     }
 
     private void setToolbarTitleAndBackPressButton(String title) {

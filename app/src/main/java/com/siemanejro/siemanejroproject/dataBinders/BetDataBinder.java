@@ -3,13 +3,9 @@ package com.siemanejro.siemanejroproject.dataBinders;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.BetPageItem;
@@ -25,11 +21,13 @@ import java.util.Optional;
 public class BetDataBinder extends DataBinder {
 
     private final Bet bet;
-    HomeTeamResultListener homeTeamResultListener;
-    AwayTeamResultListener awayTeamResultListener;
+    private HomeTeamFocusListener homeTeamFocusListener;
+    private AwayTeamFocusListener awayTeamFocusListener;
 
     public BetDataBinder(Bet bet) {
         this.bet = bet;
+        this.homeTeamFocusListener = new HomeTeamFocusListener();
+        this.awayTeamFocusListener = new AwayTeamFocusListener();
     }
 
     public Bet getBet() {
@@ -90,27 +88,8 @@ public class BetDataBinder extends DataBinder {
         Optional.ofNullable(drawersMap.get(Status.valueOf(currentMatch.getStatus())))
                 .ifPresent(betDrawer1 -> betDrawer1.drawBet(betViewHolder, bet));
 
-        result1.setOnFocusChangeListener((view, hasFocus) -> {
-            if (!hasFocus) {
-                String result = result1.getText().toString();
-                if (!result.isEmpty()) {
-                    Integer homeTeamResultBet = Integer.valueOf(result);
-                    bet.getUserScore().getFullTime().setHomeTeam(homeTeamResultBet);
-                    bet.setChanged(true);
-                }
-            }
-        });
-
-        result2.setOnFocusChangeListener((view, hasFocus) -> {
-            if (!hasFocus) {
-                String result = result1.getText().toString();
-                if (!result.isEmpty()) {
-                    Integer awayTeamResultBet = Integer.valueOf(result);
-                    bet.getUserScore().getFullTime().setAwayTeam(awayTeamResultBet);
-                    bet.setChanged(true);
-                }
-            }
-        });
+        result1.setOnFocusChangeListener(homeTeamFocusListener);
+        result2.setOnFocusChangeListener(awayTeamFocusListener);
     }
 
     @Override
@@ -118,48 +97,32 @@ public class BetDataBinder extends DataBinder {
         return BetPageItem.TYPE_BET;
     }
 
-    private class HomeTeamResultListener implements TextWatcher {
-
+    private class HomeTeamFocusListener implements View.OnFocusChangeListener {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String result = s.toString();
-            if (!result.isEmpty()) {
-                Integer homeTeamResultBet = Integer.valueOf(result);
-                bet.getUserScore().getFullTime().setHomeTeam(homeTeamResultBet);
-                bet.setChanged(true);
+        public void onFocusChange(View v, boolean hasFocus) {
+            EditText resultView = (EditText) v;
+            if (!hasFocus) {
+                String result = resultView.getText().toString();
+                if (!result.isEmpty()) {
+                    Integer homeTeamResultBet = Integer.valueOf(result);
+                    bet.getUserScore().getFullTime().setHomeTeam(homeTeamResultBet);
+                    bet.setChanged(true);
+                }
             }
         }
     }
 
-    private class AwayTeamResultListener implements TextWatcher {
-
+    private class AwayTeamFocusListener implements View.OnFocusChangeListener {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String result = s.toString();
-            if (!result.isEmpty()) {
-                Integer awayTeamResultBet = Integer.valueOf(result);
-                bet.getUserScore().getFullTime().setAwayTeam(awayTeamResultBet);
-                bet.setChanged(true);
+        public void onFocusChange(View v, boolean hasFocus) {
+            EditText resultView = (EditText) v;
+            if (!hasFocus) {
+                String result = resultView.getText().toString();
+                if (!result.isEmpty()) {
+                    Integer awayTeamResultBet = Integer.valueOf(result);
+                    bet.getUserScore().getFullTime().setAwayTeam(awayTeamResultBet);
+                    bet.setChanged(true);
+                }
             }
         }
     }
