@@ -173,9 +173,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
             //TODO: do sth with null responseBody (string???)
             List<User> users = objectMapper.readValue(responseBody.string(), new TypeReference<List<User>>() {});
 
-            Optional.ofNullable(users).ifPresent(u -> {
-                loggedInUser = u.get(0);
-            });
+            Optional.ofNullable(users).ifPresent(u -> loggedInUser = u.get(0));
 
         } catch (Exception e) {
             Log.e("Error while getting user for logging", e.getMessage());

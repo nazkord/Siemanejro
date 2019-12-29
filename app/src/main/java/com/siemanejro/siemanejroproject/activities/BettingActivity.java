@@ -39,6 +39,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.model.CalendarEvent;
 import devs.mulham.horizontalcalendar.model.CalendarItemStyle;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarPredicate;
@@ -76,7 +77,7 @@ public class BettingActivity extends AppCompatActivity {
 
         init();
 
-//        get matches from API
+        //get matches from API
         try {
             new LoadMatches().execute().get();
 
@@ -105,6 +106,12 @@ public class BettingActivity extends AppCompatActivity {
         setToolbarTitleAndBackPressButton("Matches");
     }
 
+    private void setToolbarTitleAndBackPressButton(String title) {
+        getSupportActionBar().setTitle(title); // set title for toolbar
+        getSupportActionBar().setDisplayShowHomeEnabled(true); //enable back press button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     private void setUpCalendarView() {
         List<String> datesWithMatches = allMatches.stream()
                 .map(match -> match.getUtcDate().substring(0,10))
@@ -128,26 +135,22 @@ public class BettingActivity extends AppCompatActivity {
 
                     @Override
                     public CalendarItemStyle style() {
-                        //TODO: delete item. Now just set color the same as background
-                        return new CalendarItemStyle();
+                        return new CalendarItemStyle(Color.GRAY, null);
                     }
                 })
                 .build();
 
+        setListenerToCalendar();
+    }
+
+    private void setListenerToCalendar() {
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
-                String dateInString = formatter.format(date.getTime());
-                modifyListOfMatchesByDate(dateInString);
-                selectedDate = dateInString;
+                selectedDate = formatter.format(date.getTime());
+                modifyListOfMatchesByDate(selectedDate);
             }
         });
-    }
-
-    private void setToolbarTitleAndBackPressButton(String title) {
-        getSupportActionBar().setTitle(title); // set title for toolbar
-        getSupportActionBar().setDisplayShowHomeEnabled(true); //enable back press button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /// -------- Adapter methods -----------
@@ -156,8 +159,10 @@ public class BettingActivity extends AppCompatActivity {
         //clear bets in adapter
         rvBetsAdapter.notifyItemRangeRemoved(0, rvBetsAdapter.getItemCount());
         dataBinders.clear();
-        List<Match> matches = MatchItemsUtil.filterByDate(allMatches, dateInString);
-        dataBinders.addAll(BetItemsUtil.convertToDataBinders(matches));
+        dataBinders.addAll(
+                BetItemsUtil.convertToDataBinders(
+                        MatchItemsUtil.filterByDate(allMatches, dateInString)
+                ));
         rvBetsAdapter.notifyItemRangeInserted(0, dataBinders.size());
     }
 

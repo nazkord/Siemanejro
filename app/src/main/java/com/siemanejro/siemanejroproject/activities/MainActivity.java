@@ -31,31 +31,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logoutButtonClicked() {
-        LogoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPrefUtil.deleteLoggedUser(MainActivity.this);
-                startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
-            }
+        LogoutButton.setOnClickListener(v -> {
+            SharedPrefUtil.deleteLoggedUser(MainActivity.this);
+            startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
         });
     }
 
     private void getUserBetsButtonClicked() {
-        GetUserBets.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, UserBetsActivity.class));
-            }
-        });
+        GetUserBets.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, UserBetsActivity.class)));
     }
 
     private void addBettingButtonClicked() {
-        Matches.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BettingActivity.class);
-                startActivity(intent);
-            }
+        Matches.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, BettingActivity.class);
+            startActivity(intent);
         });
     }
 
