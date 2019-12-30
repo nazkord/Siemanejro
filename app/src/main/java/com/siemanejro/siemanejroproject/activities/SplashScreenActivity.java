@@ -11,15 +11,20 @@ import android.widget.Toast;
 
 import com.siemanejro.siemanejroproject.R;
 
+import com.siemanejro.siemanejroproject.SiemanejroApp;
 import com.siemanejro.siemanejroproject.communication.Client;
 import com.siemanejro.siemanejroproject.model.Bet;
+import com.siemanejro.siemanejroproject.utils.roomUtil.BetDao;
 import com.siemanejro.siemanejroproject.utils.roomUtil.BetDatabase;
 import com.siemanejro.siemanejroproject.utils.roomUtil.RoomBet;
 import com.siemanejro.siemanejroproject.utils.NetworkUtil;
 import com.siemanejro.siemanejroproject.utils.SharedPrefUtil;
 import com.siemanejro.siemanejroproject.model.User;
+import com.siemanejro.siemanejroproject.utils.roomUtil.RoomService;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -41,6 +46,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         } else {
             activityIntent = new Intent(this, LoginActivity.class);
         }
+
+        new LoadBet().execute();
 
         startActivity(activityIntent);
         finish();
@@ -65,12 +72,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 return;
             }
             List<RoomBet> betsForDB = RoomBet.transformTo(bets);
-            insertBet(betsForDB);
-        }
-
-        private void insertBet(List<RoomBet> betsForDB) {
-            BetDatabase betDB = BetDatabase.getInstance(getApplicationContext());
-            betDB.getBetDao().insertAll(betsForDB);
+            RoomService.insertBets(betsForDB, SiemanejroApp.getContext());
         }
     }
 }

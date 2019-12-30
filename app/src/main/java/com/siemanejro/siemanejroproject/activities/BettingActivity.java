@@ -161,7 +161,8 @@ public class BettingActivity extends AppCompatActivity {
         dataBinders.clear();
         dataBinders.addAll(
                 BetItemsUtil.convertToDataBinders(
-                        MatchItemsUtil.filterByDate(allMatches, dateInString)
+                        MatchItemsUtil.filterByDate(allMatches, dateInString),
+                        getApplicationContext()
                 ));
         rvBetsAdapter.notifyItemRangeInserted(0, dataBinders.size());
     }

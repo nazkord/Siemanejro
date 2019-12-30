@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import androidx.room.Embedded;
+import androidx.room.Ignore;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Score implements Serializable {
@@ -19,6 +20,10 @@ public class Score implements Serializable {
         this.id = id;
         this.winner = winner;
         this.fullTime = fullTime;
+    }
+
+    @Ignore
+    public Score() {
     }
 
     public String getWinner() {

@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Ignore;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FullTimeResult implements Serializable {
@@ -18,6 +19,10 @@ public class FullTimeResult implements Serializable {
         this.id = id;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
+    }
+
+    @Ignore
+    public FullTimeResult() {
     }
 
     public Long getId() {

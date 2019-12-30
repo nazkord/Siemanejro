@@ -17,8 +17,14 @@ public interface BetDao {
     void delete(RoomBet roomBet);
 
     @Update
-    void updateUsers(RoomBet... bets);
+    void updateBets(List<RoomBet> bets);
 
     @Query("SELECT * FROM bet WHERE utcDate == :date")
     List<RoomBet> getBetsByDate(String date);
+
+    @Query("SELECT * FROM bet WHERE betId == :id")
+    RoomBet getBetById(Long id);
+
+//    @Query("SELECT")
+    RoomBet getBetByMatchId(Long matchId);
 }

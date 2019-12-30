@@ -1,5 +1,9 @@
 package com.siemanejro.siemanejroproject.utils;
 
+import android.content.Context;
+import android.view.View;
+
+import com.siemanejro.siemanejroproject.SiemanejroApp;
 import com.siemanejro.siemanejroproject.dataBinders.BetDataBinder;
 import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
 import com.siemanejro.siemanejroproject.dataBinders.LeagueDataBinder;
@@ -15,11 +19,14 @@ import com.siemanejro.siemanejroproject.model.FullTimeResult;
 import com.siemanejro.siemanejroproject.model.League;
 import com.siemanejro.siemanejroproject.model.Match;
 import com.siemanejro.siemanejroproject.model.Score;
+import com.siemanejro.siemanejroproject.utils.roomUtil.BetDao;
+import com.siemanejro.siemanejroproject.utils.roomUtil.BetDatabase;
+import com.siemanejro.siemanejroproject.utils.roomUtil.RoomBet;
 
 public class BetItemsUtil {
 
-    private static Map<League, ArrayList<Bet>> createMapItems(ArrayList<Bet> bets) {
-        Map<League, ArrayList<Bet>> rvItems = new HashMap<>();
+    private static Map<League, List<Bet>> createMapItems(List<Bet> bets) {
+        Map<League, List<Bet>> rvItems = new HashMap<>();
         for (Bet bet :
                 bets) {
             League league = League.getLeagueById(bet.getMatch().getCompetition().getId());
@@ -29,11 +36,11 @@ public class BetItemsUtil {
         return rvItems;
     }
 
-    public static List<DataBinder> convertToDataBinders(List<Match> matches) {
-        List<Bet> bets = expandMatchesToBets(matches);
+    public static List<DataBinder> convertToDataBinders(List<Match> matches, Context context) {
+        List<Bet> bets = expandMatchesToBets(matches, context);
         List<DataBinder> dataBinders = new ArrayList<>();
 
-        Map<League, ArrayList<Bet>> rvItems = createMapItems((ArrayList<Bet>) bets);
+        Map<League, List<Bet>> rvItems = createMapItems(bets);
         rvItems.keySet()
                 .forEach(l -> {
                     dataBinders.add(new LeagueDataBinder(l));
@@ -45,8 +52,9 @@ public class BetItemsUtil {
         return dataBinders;
     }
 
-    private static ArrayList<Bet> expandMatchesToBets(List<Match> matches) {
-        //TODO: download userScores from sqlLite
+    private static ArrayList<Bet> expandMatchesToBets(List<Match> matches, Context context) {
+        BetDao betDao = BetDatabase.getInstance(context).getBetDao();
+        List<RoomBet> dbBets = betDao.getBetsByDate(matches.get(0).getUtcDate());
         return (ArrayList<Bet>) matches.stream()
                 .map(match-> new Bet(null, match, null, new Score(null, null, new FullTimeResult(null, null, null)), null))
                 .collect(Collectors.toList());
