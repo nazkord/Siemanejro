@@ -5,8 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Objects;
 
+import androidx.room.ColumnInfo;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FullTimeResult implements Serializable {
+    @ColumnInfo(name = "fullTimeId")
     private Long id;
     private Integer homeTeam;
     private Integer awayTeam;
@@ -15,9 +18,6 @@ public class FullTimeResult implements Serializable {
         this.id = id;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-    }
-
-    public FullTimeResult() {
     }
 
     public Long getId() {

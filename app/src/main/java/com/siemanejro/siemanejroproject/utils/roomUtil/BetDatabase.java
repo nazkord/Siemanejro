@@ -1,4 +1,4 @@
-package com.siemanejro.siemanejroproject.roomService;
+package com.siemanejro.siemanejroproject.utils.roomUtil;
 
 import android.content.Context;
 
@@ -12,15 +12,14 @@ public abstract class BetDatabase extends RoomDatabase {
     private static BetDatabase instance;
     private static final String DATABASE_NAME = "bet_db";
 
-    public static BetDatabase getInstance(Context context) {
+    public static synchronized BetDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                         BetDatabase.class, BetDatabase.DATABASE_NAME)
                         .build();
-
         }
         return instance;
     }
 
-    public abstract BetDao BetDao();
+    public abstract BetDao getBetDao();
 }

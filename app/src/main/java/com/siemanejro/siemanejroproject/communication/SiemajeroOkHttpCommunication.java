@@ -152,7 +152,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
             //TODO: which way is better?
             Log.e("Error while getting bets", e.getMessage());
 //            throw new IOException("Error while getting bets");
-            return Collections.emptyList();
+            return null;
         }
     }
 
