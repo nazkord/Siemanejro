@@ -2,6 +2,8 @@ package com.siemanejro.siemanejroproject.utils.roomUtil;
 
 import android.content.Context;
 
+import com.siemanejro.siemanejroproject.model.RoomBet;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;

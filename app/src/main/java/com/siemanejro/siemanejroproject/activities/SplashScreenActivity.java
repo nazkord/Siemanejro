@@ -14,17 +14,13 @@ import com.siemanejro.siemanejroproject.R;
 import com.siemanejro.siemanejroproject.SiemanejroApp;
 import com.siemanejro.siemanejroproject.communication.Client;
 import com.siemanejro.siemanejroproject.model.Bet;
-import com.siemanejro.siemanejroproject.utils.roomUtil.BetDao;
-import com.siemanejro.siemanejroproject.utils.roomUtil.BetDatabase;
-import com.siemanejro.siemanejroproject.utils.roomUtil.RoomBet;
+import com.siemanejro.siemanejroproject.model.RoomBet;
 import com.siemanejro.siemanejroproject.utils.NetworkUtil;
 import com.siemanejro.siemanejroproject.utils.SharedPrefUtil;
 import com.siemanejro.siemanejroproject.model.User;
 import com.siemanejro.siemanejroproject.utils.roomUtil.RoomService;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -71,7 +67,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 toast.show();
                 return;
             }
-            List<RoomBet> betsForDB = RoomBet.transformTo(bets);
+            List<RoomBet> betsForDB = RoomBet.transformListFrom(bets);
             RoomService.insertBets(betsForDB, SiemanejroApp.getContext());
         }
     }

@@ -1,5 +1,7 @@
 package com.siemanejro.siemanejroproject.utils.roomUtil;
 
+import com.siemanejro.siemanejroproject.model.RoomBet;
+
 import java.util.List;
 
 import androidx.room.Dao;
@@ -11,7 +13,7 @@ import androidx.room.Update;
 @Dao
 public interface BetDao {
     @Insert
-    void insertAll(List<RoomBet> bets);
+    List<Long> insertAll(List<RoomBet> bets);
 
     @Delete
     void delete(RoomBet roomBet);
@@ -25,6 +27,6 @@ public interface BetDao {
     @Query("SELECT * FROM bet WHERE betId == :id")
     RoomBet getBetById(Long id);
 
-//    @Query("SELECT")
+    @Query("SELECT * FROM bet WHERE  matchId == :matchId")
     RoomBet getBetByMatchId(Long matchId);
 }

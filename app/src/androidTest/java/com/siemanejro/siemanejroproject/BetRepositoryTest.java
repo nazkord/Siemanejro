@@ -1,6 +1,6 @@
 package com.siemanejro.siemanejroproject;
 
-import com.siemanejro.siemanejroproject.utils.roomUtil.RoomBet;
+import com.siemanejro.siemanejroproject.model.RoomBet;
 
 import java.util.Calendar;
 

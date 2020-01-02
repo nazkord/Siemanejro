@@ -1,9 +1,7 @@
 package com.siemanejro.siemanejroproject.utils;
 
 import android.content.Context;
-import android.view.View;
 
-import com.siemanejro.siemanejroproject.SiemanejroApp;
 import com.siemanejro.siemanejroproject.dataBinders.BetDataBinder;
 import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
 import com.siemanejro.siemanejroproject.dataBinders.LeagueDataBinder;
@@ -15,13 +13,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.siemanejro.siemanejroproject.model.Bet;
-import com.siemanejro.siemanejroproject.model.FullTimeResult;
 import com.siemanejro.siemanejroproject.model.League;
 import com.siemanejro.siemanejroproject.model.Match;
-import com.siemanejro.siemanejroproject.model.Score;
-import com.siemanejro.siemanejroproject.utils.roomUtil.BetDao;
-import com.siemanejro.siemanejroproject.utils.roomUtil.BetDatabase;
-import com.siemanejro.siemanejroproject.utils.roomUtil.RoomBet;
+import com.siemanejro.siemanejroproject.model.RoomBet;
+import com.siemanejro.siemanejroproject.utils.roomUtil.RoomService;
 
 public class BetItemsUtil {
 
@@ -53,10 +48,11 @@ public class BetItemsUtil {
     }
 
     private static ArrayList<Bet> expandMatchesToBets(List<Match> matches, Context context) {
-        BetDao betDao = BetDatabase.getInstance(context).getBetDao();
-        List<RoomBet> dbBets = betDao.getBetsByDate(matches.get(0).getUtcDate());
         return (ArrayList<Bet>) matches.stream()
-                .map(match-> new Bet(null, match, null, new Score(null, null, new FullTimeResult(null, null, null)), null))
+                .map(match-> {
+                    RoomBet bet = RoomService.getBetByMatchId(match.getId(), context);
+                    return new Bet(false, null, match, null, bet.getUserScore(), bet.getResult());
+                })
                 .collect(Collectors.toList());
     }
 }

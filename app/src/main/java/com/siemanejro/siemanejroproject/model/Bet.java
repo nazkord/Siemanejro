@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Objects;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Bet {
 
     @JsonIgnore
@@ -22,58 +24,6 @@ public class Bet {
     private Score userScore;
     private Integer result;
 
-    public Bet() {
-    }
-
-    public Bet(Long id, Match match, User user, Score userScore, Integer result) {
-        this.id = id;
-        this.match = match;
-        this.user = user;
-        this.userScore = userScore;
-        this.result = result;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Match getMatch() {
-        return match;
-    }
-
-    public void setMatch(Match match) {
-        this.match = match;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Score getUserScore() {
-        return userScore;
-    }
-
-    public void setUserScore(Score userScore) {
-        this.userScore = userScore;
-    }
-
-    public Integer getResult() {
-        return result;
-    }
-
-    public void setResult(Integer result) {
-        this.result = result;
-    }
-
-
     @JsonIgnore
     public Boolean getChanged() {
         return isChanged;
@@ -83,32 +33,4 @@ public class Bet {
     public void setChanged(Boolean changed) {
         isChanged = changed;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Bet bet = (Bet) o;
-        return Objects.equals(id, bet.id) &&
-                Objects.equals(match, bet.match) &&
-                Objects.equals(user, bet.user) &&
-                Objects.equals(userScore, bet.userScore) &&
-                Objects.equals(result, bet.result);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, match, user, userScore, result);
-    }
-
-    //    @Override
-//    public String toString() {
-//        return "Bet{" +
-//                "id=" + id +
-//                ", match=" + match +
-//                ", user=" + user +
-//                ", userScore=" + userScore +
-//                ", result=" + result +
-//                '}';
-//    }
 }

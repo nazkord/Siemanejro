@@ -6,7 +6,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.siemanejro.siemanejroproject.utils.roomUtil.BetDao;
 import com.siemanejro.siemanejroproject.utils.roomUtil.BetDatabase;
-import com.siemanejro.siemanejroproject.utils.roomUtil.RoomBet;
+import com.siemanejro.siemanejroproject.model.RoomBet;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +20,6 @@ import java.util.List;
 import androidx.room.Room;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class BetDatabaseTest {
