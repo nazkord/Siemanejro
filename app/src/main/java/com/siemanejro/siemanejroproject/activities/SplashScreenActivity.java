@@ -39,11 +39,10 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         if(user.getName() != null) {
             activityIntent = new Intent(this, MainActivity.class);
+            new LoadBet().execute();
         } else {
             activityIntent = new Intent(this, LoginActivity.class);
         }
-
-        new LoadBet().execute();
 
         startActivity(activityIntent);
         finish();
@@ -67,8 +66,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                 toast.show();
                 return;
             }
-            List<RoomBet> betsForDB = RoomBet.transformListFrom(bets);
-            RoomService.insertBets(betsForDB, SiemanejroApp.getContext());
+            List<RoomBet> betsForDB = RoomBet.transformToListFrom(bets);
+            RoomService.insertBets(betsForDB, getApplicationContext());
         }
     }
 }

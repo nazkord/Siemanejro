@@ -70,6 +70,10 @@ public class BetDataBinder extends DataBinder {
             result1.setText(null);
         } else {
             result1.setText(String.valueOf(bet.getUserScore().getFullTime().getHomeTeam()));
+            if(!bet.getIsChanged()) {
+                result1.setTextColor(Color.GRAY);
+                result2.setTextColor(Color.GRAY);
+            }
         }
 
         if(bet.getUserScore().getFullTime().getAwayTeam() == null) {

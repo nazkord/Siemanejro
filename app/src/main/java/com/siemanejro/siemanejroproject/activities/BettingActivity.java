@@ -20,29 +20,23 @@ import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.BetList;
 import com.siemanejro.siemanejroproject.model.BetPageItem;
-import com.siemanejro.siemanejroproject.model.FullTimeResult;
 import com.siemanejro.siemanejroproject.model.League;
 import com.siemanejro.siemanejroproject.model.Match;
-import com.siemanejro.siemanejroproject.model.Score;
 import com.siemanejro.siemanejroproject.utils.BetItemsUtil;
 import com.siemanejro.siemanejroproject.utils.MatchItemsUtil;
 import com.siemanejro.siemanejroproject.utils.NetworkUtil;
-import com.siemanejro.siemanejroproject.utils.roomUtil.BetDatabase;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
-import devs.mulham.horizontalcalendar.model.CalendarEvent;
 import devs.mulham.horizontalcalendar.model.CalendarItemStyle;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarPredicate;
@@ -151,20 +145,21 @@ public class BettingActivity extends AppCompatActivity {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 selectedDate = formatter.format(date.getTime());
-                modifyListOfMatchesByDate(selectedDate);
+                modifyListOfMatchesBySelectedDate();
             }
         });
     }
 
     /// -------- Adapter methods -----------
 
-    private void modifyListOfMatchesByDate(String dateInString) {
+    private void modifyListOfMatchesBySelectedDate() {
         //clear bets in adapter
         rvBetsAdapter.notifyItemRangeRemoved(0, rvBetsAdapter.getItemCount());
         dataBinders.clear();
         dataBinders.addAll(
-                BetItemsUtil.convertToDataBinders(
-                        MatchItemsUtil.filterByDate(allMatches, dateInString),
+                BetItemsUtil.convertToDataBindersByDate(
+                        MatchItemsUtil.filterByDate(allMatches, selectedDate),
+                        selectedDate,
                         getApplicationContext()
                 ));
         rvBetsAdapter.notifyItemRangeInserted(0, dataBinders.size());
@@ -228,7 +223,7 @@ public class BettingActivity extends AppCompatActivity {
                 case 2: {
                     DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     selectedDate = LocalDateTime.now().format(dateFormat);
-                    modifyListOfMatchesByDate(selectedDate);
+                    modifyListOfMatchesBySelectedDate();
                     break;
                 }
             }

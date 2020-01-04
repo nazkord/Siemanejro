@@ -42,8 +42,19 @@ public class BetDatabaseTest {
     @Test
     public void writeUserAndReadInList() throws Exception {
         RoomBet bet = BetRepositoryTest.createBet();
-        betDao.insertAll(Collections.singletonList(bet));
+        betDao.insert(Collections.singletonList(bet));
         List<RoomBet> betsByDate = betDao.getBetsByDate(bet.getUtcDate());
         assertEquals(betsByDate.get(0), bet);
+    }
+
+    @Test
+    public void insertingConflictTest() throws Exception {
+        RoomBet bet = BetRepositoryTest.createBet();
+        betDao.insert(Collections.singletonList(bet));
+        RoomBet bet2 = BetRepositoryTest.createBet();
+        bet2.setResult(5); //different than in bet
+        betDao.insert(Collections.singletonList(bet2));
+        List<RoomBet> betsByDate = betDao.getBetsByDate(bet.getUtcDate());
+        assertEquals(betsByDate.get(0), bet2);
     }
 }

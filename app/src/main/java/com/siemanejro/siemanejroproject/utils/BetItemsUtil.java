@@ -7,16 +7,23 @@ import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
 import com.siemanejro.siemanejroproject.dataBinders.LeagueDataBinder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.siemanejro.siemanejroproject.model.Bet;
+import com.siemanejro.siemanejroproject.model.FullTimeResult;
 import com.siemanejro.siemanejroproject.model.League;
 import com.siemanejro.siemanejroproject.model.Match;
 import com.siemanejro.siemanejroproject.model.RoomBet;
+import com.siemanejro.siemanejroproject.model.Score;
 import com.siemanejro.siemanejroproject.utils.roomUtil.RoomService;
+
+import androidx.room.Room;
 
 public class BetItemsUtil {
 
@@ -31,8 +38,8 @@ public class BetItemsUtil {
         return rvItems;
     }
 
-    public static List<DataBinder> convertToDataBinders(List<Match> matches, Context context) {
-        List<Bet> bets = expandMatchesToBets(matches, context);
+    public static List<DataBinder> convertToDataBindersByDate(List<Match> matches, String date, Context context) {
+        List<Bet> bets = expandMatchesToBetsByDate(matches, date, context);
         List<DataBinder> dataBinders = new ArrayList<>();
 
         Map<League, List<Bet>> rvItems = createMapItems(bets);
@@ -47,12 +54,23 @@ public class BetItemsUtil {
         return dataBinders;
     }
 
-    private static ArrayList<Bet> expandMatchesToBets(List<Match> matches, Context context) {
+    private static ArrayList<Bet> expandMatchesToBetsByDate(List<Match> matches, String date, Context context) {
+        Optional<List<RoomBet>> roomBets = Optional.ofNullable(RoomService.getBetsByDate(date, context));
+        Map<Long, RoomBet> roomBetMap = createMapOfRoomBets(
+                roomBets.orElse(Collections.emptyList())
+        );
         return (ArrayList<Bet>) matches.stream()
-                .map(match-> {
-                    RoomBet bet = RoomService.getBetByMatchId(match.getId(), context);
-                    return new Bet(false, null, match, null, bet.getUserScore(), bet.getResult());
+                .map(match -> {
+                    Optional<RoomBet> roomBet = Optional.ofNullable(roomBetMap.get(match.getId()));
+                    return new Bet(false, null, match, null,
+                            roomBet.map(RoomBet::getUserScore).orElse(new Score(null, null, new FullTimeResult(null, null, null))),
+                            roomBet.map(RoomBet::getResult).orElse(null));
                 })
                 .collect(Collectors.toList());
+    }
+
+    private static Map<Long, RoomBet> createMapOfRoomBets(List<RoomBet> roomBets) {
+        return roomBets.stream().collect(
+                Collectors.toMap(RoomBet::getMatchId, Function.identity()));
     }
 }

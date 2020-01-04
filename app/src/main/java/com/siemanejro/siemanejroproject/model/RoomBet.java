@@ -6,21 +6,20 @@ import java.util.stream.Collectors;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Entity(tableName = "bet")
+@Entity(tableName = "bet", indices = {@Index(value = {"matchId"},
+        unique = true)})
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class RoomBet {
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "betId")
-    private Long localId;
+//    @PrimaryKey(autoGenerate = true)
+//    @ColumnInfo(name = "betId")
+//    private Long localId;
 
+    @PrimaryKey
     @ColumnInfo(name = "serverBetId")
     private Long id;
     private Long matchId;
@@ -30,12 +29,21 @@ public class RoomBet {
     private Score userScore;
     private Integer result;
 
+    public RoomBet(Long id, Long matchId, String utcDate, Long userId, Score userScore, Integer result) {
+        this.id = id;
+        this.matchId = matchId;
+        this.utcDate = utcDate;
+        this.userId = userId;
+        this.userScore = userScore;
+        this.result = result;
+    }
+
     private static RoomBet transformFrom(Bet bet) {
-        return new RoomBet(null, bet.getId(), bet.getMatch().getId(), bet.getMatch().getUtcDate(),
+        return new RoomBet(bet.getId(), bet.getMatch().getId(), bet.getMatch().getUtcDate().substring(0,10),
                         bet.getUser().getId(), bet.getUserScore(), bet.getResult());
     }
 
-    public static List<RoomBet> transformListFrom(List<Bet> bets) {
+    public static List<RoomBet> transformToListFrom(List<Bet> bets) {
         return bets.stream()
                 .map(RoomBet::transformFrom)
                 .collect(Collectors.toList());

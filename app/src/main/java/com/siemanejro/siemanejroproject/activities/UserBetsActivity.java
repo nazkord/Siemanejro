@@ -53,31 +53,31 @@ public class UserBetsActivity extends AppCompatActivity {
 
         putUserBetsToAdapter();
 
-        try {
-            new CommunicationAsync<Void, ArrayList<Bet>>( b -> (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets())
-                    .onSuccess(this::displaySuccess)
-                    .onError(this::displayError)
-                    .execute().get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            new CommunicationAsync<Void, ArrayList<Bet>>( b -> (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets())
+//                    .onSuccess(this::displaySuccess)
+//                    .onError(this::displayError)
+//                    .execute().get();
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
     }
 
-    private void displaySuccess(ArrayList<Bet> bets) {
-        Toast toast = Toast.makeText(UserBetsActivity.this,"OK", Toast.LENGTH_LONG);
-        toast.show();
-        listOfBets = bets;
-    }
-
-    private void displayError(Exception e) {
-        e.printStackTrace();
-        Toast toast = Toast.makeText(UserBetsActivity.this, "BAD", Toast.LENGTH_LONG);
-        toast.show();
-    }
+//    private void displaySuccess(ArrayList<Bet> bets) {
+//        Toast toast = Toast.makeText(UserBetsActivity.this,"OK", Toast.LENGTH_LONG);
+//        toast.show();
+//        listOfBets = bets;
+//    }
+//
+//    private void displayError(Exception e) {
+//        e.printStackTrace();
+//        Toast toast = Toast.makeText(UserBetsActivity.this, "BAD", Toast.LENGTH_LONG);
+//        toast.show();
+//    }
 
     // TODO: show lastly upload user's bets
     private void putUserBetsToAdapter() {
-//        checkoutBets();
+        checkoutBets();
         rvBetsAdapter = new RVBetsAdapter(listOfBets);
 
         DividerItemDecoration itemDecor = new DividerItemDecoration(getApplicationContext(), HORIZONTAL);
@@ -101,7 +101,7 @@ public class UserBetsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private class getBets extends AsyncTask<Void, Void, Integer> {
+    private class GetBets extends AsyncTask<Void, Void, Integer> {
 
         @Override
         protected Integer doInBackground(Void... voids) {

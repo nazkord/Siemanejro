@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 public class BetRepositoryTest {
     public static RoomBet createBet() {
-        return new RoomBet(1L, 2L, Calendar.getInstance().getTime().toString(), 3L, null, 3);
+        return new RoomBet(109L, 2L, Calendar.getInstance().getTime().toString(), 3L, null, 3);
     }
 
 }
