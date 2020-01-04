@@ -84,7 +84,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
             //TODO: should I retrieve responseBody and get smth useful from there?
             client.newCall(request).execute().body();
         } catch (IOException e) {
-            Log.e("Error while posting bets to Rest", e.getMessage());
+            Log.e("Error while posting bets to Rest: ", e.getMessage());
             e.printStackTrace();
             return false;
         }

@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.siemanejro.siemanejroproject.R;
 
-import com.siemanejro.siemanejroproject.SiemanejroApp;
 import com.siemanejro.siemanejroproject.communication.Client;
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.RoomBet;
@@ -67,7 +66,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 return;
             }
             List<RoomBet> betsForDB = RoomBet.transformToListFrom(bets);
-            RoomService.insertBets(betsForDB, getApplicationContext());
+            RoomService.insertBetsFromServer(betsForDB, getApplicationContext());
         }
     }
 }

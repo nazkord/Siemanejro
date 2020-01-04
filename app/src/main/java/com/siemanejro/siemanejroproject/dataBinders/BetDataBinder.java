@@ -71,8 +71,8 @@ public class BetDataBinder extends DataBinder {
         } else {
             result1.setText(String.valueOf(bet.getUserScore().getFullTime().getHomeTeam()));
             if(!bet.getIsChanged()) {
-                result1.setTextColor(Color.GRAY);
-                result2.setTextColor(Color.GRAY);
+                result1.setTextColor(Color.rgb(105,105,105));
+                result2.setTextColor(Color.rgb(105,105,105));
             }
         }
 
@@ -80,6 +80,10 @@ public class BetDataBinder extends DataBinder {
             result2.setText(null);
         } else {
             result2.setText(String.valueOf(bet.getUserScore().getFullTime().getAwayTeam()));
+            if(!bet.getIsChanged()) {
+                result1.setTextColor(Color.rgb(105,105,105));
+                result2.setTextColor(Color.rgb(105,105,105));
+            }
         }
 
         result1.setFocusableInTouchMode(true);

@@ -22,9 +22,11 @@ import com.siemanejro.siemanejroproject.model.BetList;
 import com.siemanejro.siemanejroproject.model.BetPageItem;
 import com.siemanejro.siemanejroproject.model.League;
 import com.siemanejro.siemanejroproject.model.Match;
+import com.siemanejro.siemanejroproject.model.RoomBet;
 import com.siemanejro.siemanejroproject.utils.BetItemsUtil;
 import com.siemanejro.siemanejroproject.utils.MatchItemsUtil;
 import com.siemanejro.siemanejroproject.utils.NetworkUtil;
+import com.siemanejro.siemanejroproject.utils.roomUtil.RoomService;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -168,8 +170,10 @@ public class BettingActivity extends AppCompatActivity {
     /// -------- Methods for saving bets -----------
 
     private void savedUserBets() {
+        List<Bet> bets = getNewUserBets();
         betList.clear();
-        betList.addAll(getNewUserBets());
+        betList.addAll(bets);
+        RoomService.insertBetsFromUI(RoomBet.transformToListFrom(bets), getApplicationContext());
         new PostBets().execute();
     }
 

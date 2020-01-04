@@ -5,7 +5,6 @@ import com.siemanejro.siemanejroproject.model.RoomBet;
 import java.util.List;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -17,8 +16,8 @@ public interface BetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<RoomBet> bets);
 
-    @Delete
-    void delete(RoomBet roomBet);
+    @Query("DELETE FROM bet")
+    void deleteAll();
 
     @Update
     void update(List<RoomBet> roomBets);

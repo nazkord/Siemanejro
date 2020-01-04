@@ -16,7 +16,13 @@ public class RoomService {
 
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    public static void insertBets(List<RoomBet> bets, Context context) {
+    public static void insertBetsFromServer(List<RoomBet> bets, Context context) {
+        BetDao betDao = BetDatabase.getInstance(context).getBetDao();
+        executorService.submit(betDao::deleteAll);
+        executorService.submit(() -> betDao.insert(bets));
+    }
+
+    public static void insertBetsFromUI(List<RoomBet> bets, Context context) {
         BetDao betDao = BetDatabase.getInstance(context).getBetDao();
         executorService.submit(() -> betDao.insert(bets));
     }

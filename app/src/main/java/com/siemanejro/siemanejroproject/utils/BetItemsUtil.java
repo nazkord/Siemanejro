@@ -5,6 +5,13 @@ import android.content.Context;
 import com.siemanejro.siemanejroproject.dataBinders.BetDataBinder;
 import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
 import com.siemanejro.siemanejroproject.dataBinders.LeagueDataBinder;
+import com.siemanejro.siemanejroproject.model.Bet;
+import com.siemanejro.siemanejroproject.model.FullTimeResult;
+import com.siemanejro.siemanejroproject.model.League;
+import com.siemanejro.siemanejroproject.model.Match;
+import com.siemanejro.siemanejroproject.model.RoomBet;
+import com.siemanejro.siemanejroproject.model.Score;
+import com.siemanejro.siemanejroproject.utils.roomUtil.RoomService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,16 +21,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import com.siemanejro.siemanejroproject.model.Bet;
-import com.siemanejro.siemanejroproject.model.FullTimeResult;
-import com.siemanejro.siemanejroproject.model.League;
-import com.siemanejro.siemanejroproject.model.Match;
-import com.siemanejro.siemanejroproject.model.RoomBet;
-import com.siemanejro.siemanejroproject.model.Score;
-import com.siemanejro.siemanejroproject.utils.roomUtil.RoomService;
-
-import androidx.room.Room;
 
 public class BetItemsUtil {
 

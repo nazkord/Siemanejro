@@ -1,6 +1,7 @@
 package com.siemanejro.siemanejroproject.model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import androidx.room.ColumnInfo;
@@ -40,7 +41,7 @@ public class RoomBet {
 
     private static RoomBet transformFrom(Bet bet) {
         return new RoomBet(bet.getId(), bet.getMatch().getId(), bet.getMatch().getUtcDate().substring(0,10),
-                        bet.getUser().getId(), bet.getUserScore(), bet.getResult());
+                Optional.ofNullable(bet.getUser()).map(User::getId).orElse(null), bet.getUserScore(), bet.getResult());
     }
 
     public static List<RoomBet> transformToListFrom(List<Bet> bets) {
