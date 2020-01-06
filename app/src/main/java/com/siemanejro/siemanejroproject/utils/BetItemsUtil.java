@@ -36,7 +36,7 @@ public class BetItemsUtil {
     }
 
     public static List<DataBinder> convertToDataBindersByDate(List<Match> matches, String date, Context context) {
-        List<Bet> bets = expandMatchesToBetsByDate(matches, date, context);
+        List<Bet> bets = expandMatchesToBetsWithRoomBet(matches, date, context);
         List<DataBinder> dataBinders = new ArrayList<>();
 
         Map<League, List<Bet>> rvItems = createMapItems(bets);
@@ -51,19 +51,21 @@ public class BetItemsUtil {
         return dataBinders;
     }
 
-    private static ArrayList<Bet> expandMatchesToBetsByDate(List<Match> matches, String date, Context context) {
+    private static ArrayList<Bet> expandMatchesToBetsWithRoomBet(List<Match> matches, String date, Context context) {
         Optional<List<RoomBet>> roomBets = Optional.ofNullable(RoomService.getBetsByDate(date, context));
         Map<Long, RoomBet> roomBetMap = createMapOfRoomBets(
                 roomBets.orElse(Collections.emptyList())
         );
         return (ArrayList<Bet>) matches.stream()
-                .map(match -> {
-                    Optional<RoomBet> roomBet = Optional.ofNullable(roomBetMap.get(match.getId()));
-                    return new Bet(false, null, match, null,
-                            roomBet.map(RoomBet::getUserScore).orElse(new Score(null, null, new FullTimeResult(null, null, null))),
-                            roomBet.map(RoomBet::getResult).orElse(null));
-                })
+                .map(match -> expandMatchAndRoomBetToBet(
+                        match, Optional.ofNullable(roomBetMap.get(match.getId()))))
                 .collect(Collectors.toList());
+    }
+
+    private static Bet expandMatchAndRoomBetToBet(Match match, Optional<RoomBet> roomBet) {
+        return new Bet(false, null, match, null,
+                roomBet.map(RoomBet::getUserScore).orElse(new Score(null, null, new FullTimeResult(null, null, null))),
+                roomBet.map(RoomBet::getResult).orElse(null));
     }
 
     private static Map<Long, RoomBet> createMapOfRoomBets(List<RoomBet> roomBets) {

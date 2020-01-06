@@ -9,28 +9,48 @@ import android.widget.TextView;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.Match;
+import com.siemanejro.siemanejroproject.model.Status;
 
 public abstract class BetDrawer {
 
-    void setHomeTeamViewColor(EditText homeTeam) {
-        homeTeam.setTextColor(android.graphics.Color.RED);
+    public static Map<Status, BetDrawer> immutableDrawersMap = Collections.unmodifiableMap(
+            new LinkedHashMap<>(new HashMap<Status, BetDrawer>() {{
+                put(Status.POSTPONED, new BetPostponedDrawer());
+                put(Status.IN_PLAY, new BetInPlayDrawer());
+                put(Status.PAUSED, new BetPausedDrawer());
+                put(Status.FINISHED, new BetFinishedDrawer());
+            }})
+    );
+
+    void setMatchDate(TextView date, String dateInString) {
+        String finalText = dateInString.substring(0, 10) + " " + dateInString.substring(11, 16);
+        date.setText(finalText);
     }
 
-    void setAwayTeamViewColor(EditText awayTeam) {
-        awayTeam.setTextColor(android.graphics.Color.RED);
+    void setTeamName(TextView team, String teamName) {
+        team.setText(teamName);
+        team.setTypeface(null, Typeface.NORMAL);
     }
 
-    void setHomeTeamResult(EditText homeTeam, Integer score) {
-        homeTeam.setText(String.valueOf(score));
-        homeTeam.setFocusable(false);
+    void setResultViewColor(EditText awayTeam, int color) {
+        awayTeam.setTextColor(color);
     }
 
-    void setAwayTeamResult(EditText awayTeam, Integer score) {
-        awayTeam.setText(String.valueOf(score));
-        awayTeam.setFocusable(false);
+    void setResult(EditText team, Integer score) {
+        team.setText(String.valueOf(score));
+        team.setFocusable(false);
+    }
+
+    void setDefaultMatchStatusLayout(TextView matchStatusLayout) {
+        matchStatusLayout.setText(null);
+        matchStatusLayout.setTextColor(Color.GRAY);
     }
 
     void setMatchStatusText(TextView matchStatus, String s) {
@@ -61,6 +81,10 @@ public abstract class BetDrawer {
 
     void setItemBackgroundColorPink(View itemView) {
         itemView.setBackgroundColor(Color.rgb(255,230,238));
+    }
+
+    void setDefaultItemBackgroundColor(View itemView) {
+        itemView.setBackgroundColor(Color.WHITE);
     }
 
     private Long getMinuteOfMatch(Match match) {

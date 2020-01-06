@@ -1,20 +1,17 @@
 package com.siemanejro.siemanejroproject.dataBinders;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.BetPageItem;
 import com.siemanejro.siemanejroproject.model.Match;
 import com.siemanejro.siemanejroproject.model.Status;
 import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetDrawer;
+import com.siemanejro.siemanejroproject.utils.betDrawerUtil.DefaultBetDrawer;
 import com.siemanejro.siemanejroproject.viewHolders.BetViewHolder;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -35,65 +32,17 @@ public class BetDataBinder extends DataBinder {
     }
 
     @Override
-    public void displayData(RecyclerView.ViewHolder holder, Map<Status, BetDrawer> drawersMap) {
+    public void displayData(RecyclerView.ViewHolder holder) {
 
         BetViewHolder betViewHolder = (BetViewHolder) holder;
-        Match currentMatch = bet.getMatch();
-        TextView matchStatus = betViewHolder.getMatchStatus();
         EditText result1 = betViewHolder.getResult1();
         EditText result2 = betViewHolder.getResult2();
-        TextView team1 = betViewHolder.getTeam1();
-        TextView team2 = betViewHolder.getTeam2();
-        TextView date = betViewHolder.getDate();
 
-        //set status of match
-        matchStatus.setText(null);
-        matchStatus.setTextColor(Color.GRAY);
-
-        //set date of match
-        //TODO: should be done this zonedDateTime
-        String text = bet.getMatch().getUtcDate();
-        String finalText = text.substring(0, 10) + " " + text.substring(11, 16);
-        date.setText(finalText);
-
-        //set name of teams
-        team1.setText(bet.getMatch().getHomeTeam().getName());
-        team1.setTypeface(null, Typeface.NORMAL);
-        team2.setText(bet.getMatch().getAwayTeam().getName());
-        team2.setTypeface(null, Typeface.NORMAL);
-
-        // set default results view
-        result1.setTextColor(Color.BLACK);
-        result2.setTextColor(Color.BLACK);
-
-        if(bet.getUserScore().getFullTime().getHomeTeam() == null) {
-            result1.setText(null);
-        } else {
-            result1.setText(String.valueOf(bet.getUserScore().getFullTime().getHomeTeam()));
-            if(!bet.getIsChanged()) {
-                result1.setTextColor(Color.rgb(105,105,105));
-                result2.setTextColor(Color.rgb(105,105,105));
-            }
-        }
-
-        if(bet.getUserScore().getFullTime().getAwayTeam() == null) {
-            result2.setText(null);
-        } else {
-            result2.setText(String.valueOf(bet.getUserScore().getFullTime().getAwayTeam()));
-            if(!bet.getIsChanged()) {
-                result1.setTextColor(Color.rgb(105,105,105));
-                result2.setTextColor(Color.rgb(105,105,105));
-            }
-        }
-
-        result1.setFocusableInTouchMode(true);
-        result2.setFocusableInTouchMode(true);
-
-        ///setBackgroundColorToDefault
-        betViewHolder.itemView.setBackgroundColor(Color.WHITE);
+        //defaultDrawingOfBet
+        new DefaultBetDrawer().drawBet(betViewHolder, bet);
 
         //drawBet
-        Optional.ofNullable(drawersMap.get(Status.valueOf(currentMatch.getStatus())))
+        Optional.ofNullable(BetDrawer.immutableDrawersMap.get(Status.valueOf(bet.getMatch().getStatus())))
                 .ifPresent(betDrawer1 -> betDrawer1.drawBet(betViewHolder, bet));
 
         result1.setOnFocusChangeListener(homeTeamFocusListener);

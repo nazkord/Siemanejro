@@ -10,7 +10,7 @@ import com.siemanejro.siemanejroproject.model.Status;
 
 public abstract class DataBinder {
 
-        public abstract void displayData(RecyclerView.ViewHolder viewHolder, Map<Status, BetDrawer> immutableDrawersMap);
+        public abstract void displayData(RecyclerView.ViewHolder viewHolder);
 
         public abstract int getItemViewType();
 }

@@ -1,5 +1,6 @@
 package com.siemanejro.siemanejroproject.utils.betDrawerUtil;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 
 import com.siemanejro.siemanejroproject.viewHolders.BetViewHolder;
@@ -11,13 +12,13 @@ public class BetInPlayDrawer extends BetDrawer {
     @Override
     public void drawBet(RecyclerView.ViewHolder viewHolder, Bet bet) {
         BetViewHolder betViewHolder = (BetViewHolder) viewHolder;
-        setHomeTeamResult(betViewHolder.getResult1(),
+        setResult(betViewHolder.getResult1(),
                 bet.getMatch().getScore().getFullTime().getHomeTeam());
-        setHomeTeamViewColor(betViewHolder.getResult1());
+        setResultViewColor(betViewHolder.getResult1(), Color.RED);
 
-        setAwayTeamResult(betViewHolder.getResult2(),
+        setResult(betViewHolder.getResult2(),
                 bet.getMatch().getScore().getFullTime().getAwayTeam());
-        setAwayTeamViewColor(betViewHolder.getResult2());
+        setResultViewColor(betViewHolder.getResult2(), Color.RED);
 
         setMatchStatusTime(betViewHolder.getMatchStatus(), bet.getMatch());
         setMatchStatusViewColor(betViewHolder.getMatchStatus());

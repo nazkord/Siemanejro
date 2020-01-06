@@ -14,6 +14,7 @@ import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetFinishedDrawer;
 import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetInPlayDrawer;
 import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetPausedDrawer;
 import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetPostponedDrawer;
+import com.siemanejro.siemanejroproject.utils.betDrawerUtil.DefaultBetDrawer;
 import com.siemanejro.siemanejroproject.viewHolders.BetViewHolder;
 import com.siemanejro.siemanejroproject.viewHolders.LeagueViewHolder;
 
@@ -29,15 +30,6 @@ import com.siemanejro.siemanejroproject.model.Status;
 public class BetDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<DataBinder> binderList;
-
-    private Map<Status, BetDrawer> immutableDrawersMap = Collections.unmodifiableMap(
-            new LinkedHashMap<>(new HashMap<Status, BetDrawer>() {{
-                put(Status.POSTPONED, new BetPostponedDrawer());
-                put(Status.IN_PLAY, new BetInPlayDrawer());
-                put(Status.PAUSED, new BetPausedDrawer());
-                put(Status.FINISHED, new BetFinishedDrawer());
-            }})
-    );
 
     public BetDataAdapter(List<DataBinder> binderList) {
         this.binderList = binderList;
@@ -65,7 +57,7 @@ public class BetDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         DataBinder binder = binderList.get(position);
-        binder.displayData(viewHolder, immutableDrawersMap);
+        binder.displayData(viewHolder);
     }
 
     @Override

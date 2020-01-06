@@ -26,7 +26,7 @@ public class LeagueDataBinder extends DataBinder {
     }
 
     @Override
-    public void displayData(RecyclerView.ViewHolder holder, Map<Status, BetDrawer> immutableDrawersMap) {
+    public void displayData(RecyclerView.ViewHolder holder) {
         LeagueViewHolder viewHolder = (LeagueViewHolder) holder;
 
         viewHolder.getLeagueLogo().setImageResource(league.getLeagueIcon());
