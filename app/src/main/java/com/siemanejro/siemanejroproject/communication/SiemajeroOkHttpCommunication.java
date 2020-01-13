@@ -13,6 +13,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import com.siemanejro.siemanejroproject.R;
+import com.siemanejro.siemanejroproject.SiemanejroApp;
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.BetList;
 import com.siemanejro.siemanejroproject.model.Match;
@@ -30,7 +32,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     private OkHttpClient client;
     private User loggedInUser;
     private ObjectMapper objectMapper;
-    private static String basicUrl = "http://192.168.1.119:8080";
+    private static String basicUrl = "http://" + SiemanejroApp.getContext().getString(R.string.computerIP) + ":8080";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     SiemajeroOkHttpCommunication() {

@@ -6,7 +6,6 @@ import android.widget.EditText;
 
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.BetPageItem;
-import com.siemanejro.siemanejroproject.model.Match;
 import com.siemanejro.siemanejroproject.model.Status;
 import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetDrawer;
 import com.siemanejro.siemanejroproject.utils.betDrawerUtil.DefaultBetDrawer;

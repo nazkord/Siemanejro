@@ -24,8 +24,10 @@ import com.siemanejro.siemanejroproject.model.League;
 import com.siemanejro.siemanejroproject.model.Match;
 import com.siemanejro.siemanejroproject.model.RoomBet;
 import com.siemanejro.siemanejroproject.utils.BetItemsUtil;
+import com.siemanejro.siemanejroproject.utils.CalendarViewUtil;
 import com.siemanejro.siemanejroproject.utils.MatchItemsUtil;
 import com.siemanejro.siemanejroproject.utils.NetworkUtil;
+import com.siemanejro.siemanejroproject.utils.SwipeDetector;
 import com.siemanejro.siemanejroproject.utils.roomUtil.RoomService;
 
 import java.text.SimpleDateFormat;
@@ -51,7 +53,6 @@ public class BettingActivity extends AppCompatActivity {
     private final SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
 
     Button saveButton;
-    String selectedDate;
     HorizontalCalendar horizontalCalendar;
     List<DataBinder> dataBinders;
     BetDataAdapter rvBetsAdapter;
@@ -91,6 +92,9 @@ public class BettingActivity extends AppCompatActivity {
         rvBetsAdapter = new BetDataAdapter(dataBinders);
         rvBets.setAdapter(rvBetsAdapter);
         rvBets.setLayoutManager(linearLayoutManager);
+
+        //TODO: make this as abstract class
+        rvBets.setOnTouchListener(makeInstanceOfSwipeDetector());
     }
 
     private void init() {
@@ -102,16 +106,19 @@ public class BettingActivity extends AppCompatActivity {
         rvBets = findViewById(R.id.matchesList);
         saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(v -> savedUserBets());
-        setToolbarTitleAndBackPressButton("Matches");
+        setToolbarTitleAndBackPressButton();
     }
 
-    private void setToolbarTitleAndBackPressButton(String title) {
-        getSupportActionBar().setTitle(title); // set title for toolbar
+    private void setToolbarTitleAndBackPressButton() {
+        getSupportActionBar().setTitle("Matches"); // set title for toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true); //enable back press button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /// -------- CalendarView setup ----------
+
     private void setUpCalendarView() {
+        //TODO: add those matches to CalendarViewUtil and jump over them while swipes
         List<String> datesWithMatches = allMatches.stream()
                 .map(match -> match.getUtcDate().substring(0,10))
                 .distinct()
@@ -146,15 +153,15 @@ public class BettingActivity extends AppCompatActivity {
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
-                selectedDate = formatter.format(date.getTime());
-                modifyListOfMatchesBySelectedDate();
+                modifyListOfMatchesBySelectedDate(formatter.format(date.getTime()));
+                CalendarViewUtil.setSelectedDate(date);
             }
         });
     }
 
     /// -------- Adapter methods -----------
 
-    private void modifyListOfMatchesBySelectedDate() {
+    private void modifyListOfMatchesBySelectedDate(String selectedDate) {
         //clear bets in adapter
         rvBetsAdapter.notifyItemRangeRemoved(0, rvBetsAdapter.getItemCount());
         dataBinders.clear();
@@ -225,9 +232,7 @@ public class BettingActivity extends AppCompatActivity {
                     break;
                 }
                 case 2: {
-                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    selectedDate = LocalDateTime.now().format(dateFormat);
-                    modifyListOfMatchesBySelectedDate();
+                    modifyListOfMatchesBySelectedDate(formatter.format(Calendar.getInstance().getTime()));
                     break;
                 }
             }
@@ -271,4 +276,29 @@ public class BettingActivity extends AppCompatActivity {
 
         }
     }
+
+    private SwipeDetector makeInstanceOfSwipeDetector() {
+        return new SwipeDetector(getApplicationContext()) {
+            @Override
+            public void onLeftSwipe() {
+                doOnLeftSwipe();
+            }
+
+            @Override
+            public void onRightSwipe() {
+                doOnRightSwipe();
+            }
+        };
+    }
+
+    private void doOnLeftSwipe() {
+        CalendarViewUtil.substractOneDayFromCurrentDay();
+        horizontalCalendar.selectDate(CalendarViewUtil.getSelectedDate(), false);
+    }
+
+    private void doOnRightSwipe() {
+        CalendarViewUtil.addOneDayToCurrentDate();
+        horizontalCalendar.selectDate(CalendarViewUtil.getSelectedDate(), false);
+    }
+
 }
