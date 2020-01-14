@@ -31,8 +31,6 @@ import com.siemanejro.siemanejroproject.utils.SwipeDetector;
 import com.siemanejro.siemanejroproject.utils.roomUtil.RoomService;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -118,11 +116,7 @@ public class BettingActivity extends AppCompatActivity {
     /// -------- CalendarView setup ----------
 
     private void setUpCalendarView() {
-        //TODO: add those matches to CalendarViewUtil and jump over them while swipes
-        List<String> datesWithMatches = allMatches.stream()
-                .map(match -> match.getUtcDate().substring(0,10))
-                .distinct()
-                .collect(Collectors.toList());
+        CalendarViewUtil.setDatesWithMatches(allMatches);
 
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.DAY_OF_YEAR, -7);
@@ -136,7 +130,7 @@ public class BettingActivity extends AppCompatActivity {
                 .disableDates(new HorizontalCalendarPredicate() {
                     @Override
                     public boolean test(Calendar date) {
-                        return !datesWithMatches.contains(formatter.format(date.getTime()));
+                        return CalendarViewUtil.notContainsInDatesWithMatches(date);
                     }
 
                     @Override
@@ -281,24 +275,21 @@ public class BettingActivity extends AppCompatActivity {
         return new SwipeDetector(getApplicationContext()) {
             @Override
             public void onLeftSwipe() {
-                doOnLeftSwipe();
+                movementToTheRight();
             }
 
             @Override
             public void onRightSwipe() {
-                doOnRightSwipe();
+                movementToTheLeft();
             }
         };
     }
 
-    private void doOnLeftSwipe() {
-        CalendarViewUtil.substractOneDayFromCurrentDay();
-        horizontalCalendar.selectDate(CalendarViewUtil.getSelectedDate(), false);
+    private void movementToTheRight() {
+        horizontalCalendar.selectDate(CalendarViewUtil.getNextClosestAvailableDate(), false);
     }
 
-    private void doOnRightSwipe() {
-        CalendarViewUtil.addOneDayToCurrentDate();
-        horizontalCalendar.selectDate(CalendarViewUtil.getSelectedDate(), false);
+    private void movementToTheLeft() {
+        horizontalCalendar.selectDate(CalendarViewUtil.getPreviousClosestAvailableDate(), false);
     }
-
 }
