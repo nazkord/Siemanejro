@@ -10,33 +10,68 @@ import com.siemanejro.siemanejroproject.model.User;
 
 public class SharedPrefUtil {
 
-    public static User getLoggerUser(Activity activity) {
-        Context context = activity.getApplicationContext();
-        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_preferences_key), Context.MODE_PRIVATE);
+    private SharedPreferences sharedPreferences;
 
-        Long id = sharedPref.getLong(context.getString(R.string.shPref_id_key), 0);
-        String userName = sharedPref.getString(context.getString(R.string.shPref_login_key), null);
-        String userPassword = sharedPref.getString(context.getString(R.string.shPref_password_key), null);
+    private String KEY_ID;
+    private String KEY_LOGIN;
+    private String KEY_PASSWORD;
+    private String KEY_TOKEN;
+
+    public SharedPrefUtil(Context context) {
+
+        KEY_ID = context.getString(R.string.shPref_id_key);
+        KEY_LOGIN = context.getString(R.string.shPref_login_key);
+        KEY_PASSWORD = context.getString(R.string.shPref_password_key);
+        KEY_TOKEN = context.getString(R.string.shPref_token_key);
+
+
+        String KEY_LOGIN = context.getString(R.string.login_preferences_key);
+        this.sharedPreferences = context.getSharedPreferences(KEY_LOGIN, Context.MODE_PRIVATE);
+    }
+
+    public User getLoggerUser() {
+        Long id = sharedPreferences.getLong(KEY_ID, 0);
+        String userName = sharedPreferences.getString(KEY_LOGIN, null);
+        String userPassword = sharedPreferences.getString(KEY_PASSWORD, null);
         return new User(id,userName,userPassword);
     }
 
-    public static void setLoggerUser(Activity activity, User user) {
-        Context context = activity.getApplicationContext();
-        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_preferences_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor prefEditor = sharedPref.edit();
-        prefEditor.putString(context.getString(R.string.shPref_login_key), user.getName());
-        prefEditor.putString(context.getString(R.string.shPref_password_key), user.getPassword());
-        prefEditor.putLong(context.getString(R.string.shPref_id_key), user.getId());
+    public void setLoggerUser(User user) {
+        SharedPreferences.Editor prefEditor = sharedPreferences.edit();
+        prefEditor.putString(KEY_LOGIN, user.getName());
+        prefEditor.putString(KEY_PASSWORD, user.getPassword());
+        prefEditor.putLong(KEY_ID, user.getId());
         prefEditor.apply();
     }
 
-    public static void deleteLoggedUser(Activity activity) {
-        Context context = activity.getApplicationContext();
-        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.login_preferences_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor prefEditor = sharedPref.edit();
-        prefEditor.remove(context.getString(R.string.shPref_login_key));
-        prefEditor.remove(context.getString(R.string.shPref_password_key));
-        prefEditor.remove(context.getString(R.string.shPref_id_key));
+    public void deleteLoggedUser() {
+        SharedPreferences.Editor prefEditor = sharedPreferences.edit();
+        prefEditor.remove(KEY_LOGIN);
+        prefEditor.remove(KEY_PASSWORD);
+        prefEditor.remove(KEY_ID);
+        prefEditor.apply();
+    }
+
+    public String getToken() {
+        return sharedPreferences.getString(KEY_TOKEN, null);
+    }
+
+    public void setToken(String token) {
+        SharedPreferences.Editor prefEditor = sharedPreferences.edit();
+        prefEditor.putString(KEY_TOKEN, token);
         prefEditor.apply();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
