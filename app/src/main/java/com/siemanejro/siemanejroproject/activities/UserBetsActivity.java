@@ -4,10 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -15,10 +15,8 @@ import com.siemanejro.siemanejroproject.adapters.RVBetsAdapter;
 import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import com.siemanejro.siemanejroproject.communication.Client;
-import com.siemanejro.siemanejroproject.communication.CommunicationAsync;
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.Score;
 import com.siemanejro.siemanejroproject.utils.NetworkUtil;

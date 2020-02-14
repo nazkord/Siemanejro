@@ -1,12 +1,6 @@
 package com.siemanejro.siemanejroproject.dataBinders;
 
-import android.support.v7.widget.RecyclerView;
-
-import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetDrawer;
-
-import java.util.Map;
-
-import com.siemanejro.siemanejroproject.model.Status;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class DataBinder {
 

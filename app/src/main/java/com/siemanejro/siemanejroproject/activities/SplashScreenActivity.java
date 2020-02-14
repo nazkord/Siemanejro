@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         textView = findViewById(R.id.loadingTextView);
 
         Intent activityIntent;
-        User user = SharedPrefUtil.getLoggerUser(SplashScreenActivity.this);
+        User user = new SharedPrefUtil(this).getLoggerUser();
         Client.SIEMAJERO.get().setLoggedInUser(user);
 
         if(user.getName() != null) {

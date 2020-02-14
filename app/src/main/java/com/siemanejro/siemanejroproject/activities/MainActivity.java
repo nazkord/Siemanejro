@@ -2,8 +2,8 @@ package com.siemanejro.siemanejroproject.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.widget.Button;
 
 import com.siemanejro.siemanejroproject.R;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void logoutButtonClicked() {
         LogoutButton.setOnClickListener(v -> {
-            SharedPrefUtil.deleteLoggedUser(MainActivity.this);
+            new SharedPrefUtil(this).deleteLoggedUser();
             startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
         });
     }
