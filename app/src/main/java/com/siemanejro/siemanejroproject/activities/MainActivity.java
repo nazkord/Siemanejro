@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.widget.Button;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.siemanejro.siemanejroproject.R;
 
 import com.siemanejro.siemanejroproject.utils.SharedPrefUtil;
@@ -33,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
     private void logoutButtonClicked() {
         LogoutButton.setOnClickListener(v -> {
             new SharedPrefUtil(this).deleteLoggedUser();
-            startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
+            if(GoogleSignIn.getLastSignedInAccount(this) == null) {
+                startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
+            } else {
+                startActivity(new Intent(MainActivity.this, GoogleSingInActivity.class));
+            }
         });
     }
 

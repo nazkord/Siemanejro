@@ -2,7 +2,7 @@ package com.siemanejro.siemanejroproject.communication;
 
 public enum Client {
 
-    SIEMAJERO(new SiemajeroOkHttpCommunication());
+    SIEMAJERO(new SiemanejroOkHttpCommunication());
 
     Client(SiemajeroCommunication siemajeroComm) {
         this.siemajeroComm = siemajeroComm;

@@ -30,10 +30,14 @@ public class SharedPrefUtil {
     }
 
     public User getLoggerUser() {
-        Long id = sharedPreferences.getLong(KEY_ID, 0);
+        long id = sharedPreferences.getLong(KEY_ID, 0);
         String userName = sharedPreferences.getString(KEY_LOGIN, null);
         String userPassword = sharedPreferences.getString(KEY_PASSWORD, null);
-        return new User(id,userName,userPassword);
+        if(id == 0 && userName == null && userPassword == null) {
+            return null;
+        } else {
+            return new User(id, userName, userPassword);
+        }
     }
 
     public void setLoggerUser(User user) {

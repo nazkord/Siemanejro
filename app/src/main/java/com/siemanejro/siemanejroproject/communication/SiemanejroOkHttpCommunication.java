@@ -27,7 +27,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
-public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
+public class SiemanejroOkHttpCommunication implements SiemajeroCommunication {
 
     private OkHttpClient client;
     private User loggedInUser;
@@ -35,7 +35,7 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
     private static String basicUrl = "http://" + SiemanejroApp.getContext().getString(R.string.computerIP) + ":8080";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    SiemajeroOkHttpCommunication() {
+    SiemanejroOkHttpCommunication() {
         init();
     }
 
@@ -182,10 +182,5 @@ public class SiemajeroOkHttpCommunication implements SiemajeroCommunication {
             return Optional.empty();
         }
         return Optional.ofNullable(loggedInUser);
-    }
-
-    @Override
-    public User createUser(User newUser) {
-        return null;
     }
 }

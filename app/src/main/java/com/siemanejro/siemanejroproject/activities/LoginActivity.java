@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         googleButton = findViewById(R.id.google_sign_in_button);
         populateAutoComplete();
 
-        googleButton.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, AuthActivity.class)));
+        googleButton.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, GoogleSingInActivity.class)));
 
         mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return false;
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(view -> attemptLogin());
 
         mLoginFormView = findViewById(R.id.login_form);

@@ -34,9 +34,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         Intent activityIntent;
         User user = new SharedPrefUtil(this).getLoggerUser();
-        Client.SIEMAJERO.get().setLoggedInUser(user);
 
-        if(user.getName() != null) {
+        if(user != null) {
+            Client.SIEMAJERO.get().setLoggedInUser(user);
             activityIntent = new Intent(this, MainActivity.class);
             new LoadBet().execute();
         } else {
