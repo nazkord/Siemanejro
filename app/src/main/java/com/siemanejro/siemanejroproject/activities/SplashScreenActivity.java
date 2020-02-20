@@ -36,7 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         User user = new SharedPrefUtil(this).getLoggerUser();
 
         if(user != null) {
-            Client.SIEMAJERO.get().setLoggedInUser(user);
+            Client.SIEMANEJRO.get().setLoggedInUser(user);
             activityIntent = new Intent(this, MainActivity.class);
             new LoadBet().execute();
         } else {
@@ -54,7 +54,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
                 return null;
             }
-            return Client.SIEMAJERO.get().getLoggedInUserBets();
+            return Client.SIEMANEJRO.get().getLoggedInUserBets();
         }
 
         @Override

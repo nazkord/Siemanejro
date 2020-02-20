@@ -10,7 +10,7 @@ import com.siemanejro.siemanejroproject.model.User;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 
-public interface SiemajeroCommunication {
+public interface SiemanejroCommunication {
     Optional<User> loginUser(String userName, String password);
     List<Match> getMatchesByCompetitions(List<Long> competitionIds);
     //TODO: those method should retrieve response from API

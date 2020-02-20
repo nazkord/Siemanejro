@@ -52,7 +52,7 @@ public class UserBetsActivity extends AppCompatActivity {
         putUserBetsToAdapter();
 
 //        try {
-//            new CommunicationAsync<Void, ArrayList<Bet>>( b -> (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets())
+//            new CommunicationAsync<Void, ArrayList<Bet>>( b -> (ArrayList<Bet>) Client.SIEMANEJRO.get().getLoggedInUserBets())
 //                    .onSuccess(this::displaySuccess)
 //                    .onError(this::displayError)
 //                    .execute().get();
@@ -106,7 +106,7 @@ public class UserBetsActivity extends AppCompatActivity {
             if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
                 return 0;
             }
-            listOfBets = (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets();
+            listOfBets = (ArrayList<Bet>) Client.SIEMANEJRO.get().getLoggedInUserBets();
             if(listOfBets == null) {
                 //TODO: user can has none of bets
                 return 1;

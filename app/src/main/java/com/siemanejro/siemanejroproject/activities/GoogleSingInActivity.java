@@ -14,6 +14,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.siemanejro.siemanejroproject.R;
+import com.siemanejro.siemanejroproject.model.User;
 import com.siemanejro.siemanejroproject.utils.SharedPrefUtil;
 
 import java.util.Objects;
@@ -25,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class GoogleSingInActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 0;
-    private  GoogleSignInClient googleSignInClient;
+    private GoogleSignInClient googleSignInClient;
     private SignInButton googleSingInButton;
 
     @Override
@@ -56,14 +57,19 @@ public class GoogleSingInActivity extends AppCompatActivity {
     }
 
     private void updateUI(GoogleSignInAccount account) {
-        //TODO: testing
-        if(account != null) { //there is no logged google account
-            startActivity(new Intent(GoogleSingInActivity.this, MainActivity.class));
-        } else if(new SharedPrefUtil(this).getLoggerUser() == null) {
-            
+        //TODO: testing with appearing button on condition
+        User user = new SharedPrefUtil(this).getLoggerUser();
+
+        //provide normal sign in
+        if(account == null) {
+            return;
         }
 
-            Toast.makeText(GoogleSingInActivity.this,"Please try again", Toast.LENGTH_SHORT).show();
+        if(user == null) {
+            singOut();
+        } else {
+            startActivity(new Intent(GoogleSingInActivity.this, MainActivity.class));
+        }
     }
 
     private void signIn() {
@@ -86,7 +92,8 @@ public class GoogleSingInActivity extends AppCompatActivity {
             GoogleSignInAccount account = (GoogleSignInAccount) completedTask.getResult(ApiException.class);
             String idToken = Objects.requireNonNull(account).getIdToken();
 
-            Log.i("Googin token", idToken);
+            Log.i("Googin token", idToken); //TODO: validate on server
+            new SharedPrefUtil(this).setLoggerUser(new User(Long.valueOf(account.getId().substring(0,5)), account.getEmail(), null));
 
             updateUI(account);
 

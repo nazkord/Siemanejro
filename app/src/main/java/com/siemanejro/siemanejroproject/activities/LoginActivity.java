@@ -302,7 +302,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            Optional<User> optionalUser = Client.SIEMAJERO.get().loginUser(mEmail, mPassword);
+            Optional<User> optionalUser = Client.SIEMANEJRO.get().loginUser(mEmail, mPassword);
 
             optionalUser
                     .map(user -> {

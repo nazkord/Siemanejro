@@ -201,7 +201,7 @@ public class BettingActivity extends AppCompatActivity {
             Stream.of(League.values())
                     .forEach(league -> leagueIds.add(league.getLeagueId()));
 
-            allMatches = Client.SIEMAJERO.get().getMatchesByCompetitions(leagueIds);
+            allMatches = Client.SIEMANEJRO.get().getMatchesByCompetitions(leagueIds);
 
             if(allMatches == null) {
                 //TODO: it could be an error by server side or there are just no matches at all
@@ -240,7 +240,7 @@ public class BettingActivity extends AppCompatActivity {
             if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
                 return 0;
             }
-            if(Client.SIEMAJERO.get().postUsersBet(betList)) {
+            if(Client.SIEMANEJRO.get().postUsersBet(betList)) {
                 return 1;
             } else {
                 return 2;
