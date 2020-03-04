@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             if(GoogleSignIn.getLastSignedInAccount(this) == null) {
                 startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
             } else {
-                startActivity(new Intent(MainActivity.this, GoogleSingInActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
     }

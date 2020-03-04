@@ -12,6 +12,7 @@ import okhttp3.Request;
 
 public interface SiemanejroCommunication {
     Optional<User> loginUser(String userName, String password);
+    void postUserToken(String idToken);
     List<Match> getMatchesByCompetitions(List<Long> competitionIds);
     //TODO: those method should retrieve response from API
     Request makeUserGetRequest(HttpUrl.Builder builder);

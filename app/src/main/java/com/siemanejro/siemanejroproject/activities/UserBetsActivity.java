@@ -40,7 +40,6 @@ public class UserBetsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,29 +48,10 @@ public class UserBetsActivity extends AppCompatActivity {
         setToolbarTitle(getString(R.string.userBetsActivityName));
         rvBets = findViewById(R.id.rvUserBets);
 
+        new GetBets().execute();
+
         putUserBetsToAdapter();
-
-//        try {
-//            new CommunicationAsync<Void, ArrayList<Bet>>( b -> (ArrayList<Bet>) Client.SIEMANEJRO.get().getLoggedInUserBets())
-//                    .onSuccess(this::displaySuccess)
-//                    .onError(this::displayError)
-//                    .execute().get();
-//        } catch (InterruptedException | ExecutionException e) {
-//            e.printStackTrace();
-//        }
     }
-
-//    private void displaySuccess(ArrayList<Bet> bets) {
-//        Toast toast = Toast.makeText(UserBetsActivity.this,"OK", Toast.LENGTH_LONG);
-//        toast.show();
-//        listOfBets = bets;
-//    }
-//
-//    private void displayError(Exception e) {
-//        e.printStackTrace();
-//        Toast toast = Toast.makeText(UserBetsActivity.this, "BAD", Toast.LENGTH_LONG);
-//        toast.show();
-//    }
 
     // TODO: show lastly upload user's bets
     private void putUserBetsToAdapter() {

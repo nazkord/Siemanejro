@@ -6,7 +6,17 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -20,6 +30,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
@@ -31,6 +42,7 @@ import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.siemanejro.siemanejroproject.SiemanejroApp;
@@ -45,10 +57,8 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
     private static final int REQUEST_READ_CONTACTS = 0;
+    private static final int RC_SIGN_IN = 1;
 
     /**
      * Keep track of the name task to ensure we can cancel it if requested.
@@ -60,19 +70,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private Button googleButton;
+    private SignInButton googleSignInButton;
+    private GoogleSignInClient googleSignInClient;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        updateUI(account);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Create Google Client
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.serverClientID))
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        googleSignInButton = findViewById(R.id.google_sign_in_button_2);
+        googleSignInButton.setOnClickListener(v -> signIn());
+
         // Set up the name form.
         mEmailView = findViewById(R.id.email);
-        googleButton = findViewById(R.id.google_sign_in_button);
         populateAutoComplete();
-
-        googleButton.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, GoogleSingInActivity.class)));
 
         mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
@@ -334,6 +364,65 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    //FOR Google Auth
+    private void updateUI(GoogleSignInAccount account) {
+        //TODO: testing with appearing button on condition
+        User user = new SharedPrefUtil(this).getLoggerUser();
+
+        //provide normal sign in
+        if(account == null) {
+            return;
+        }
+
+        if(user == null) {
+            singOut();
+        } else {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
+    }
+
+    private void signIn() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task completedTask) {
+        try {
+            GoogleSignInAccount account = (GoogleSignInAccount) completedTask.getResult(ApiException.class);
+            String idToken = Objects.requireNonNull(account).getIdToken();
+
+            Log.i("Googin token", idToken); //TODO: validate on server
+            User user = new User(6L, "BLABLA", "blabla");
+            new SharedPrefUtil(this).setLoggerUser(user);
+            Client.SIEMANEJRO.get().setLoggedInUser(user);
+//            Client.SIEMANEJRO.get().postUserToken(idToken);
+
+            updateUI(account);
+
+        } catch (Throwable throwable) {
+            Log.e("Google Sign In Error", "signInResult:failed code= " + throwable.getMessage());
+            throwable.printStackTrace();
+            updateUI(null);
+        }
+    }
+
+    private void singOut() {
+        googleSignInClient.signOut()
+                .addOnCompleteListener(this, task -> {
+                    //TODO: revokeAccess
+                });
     }
 }
 

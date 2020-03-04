@@ -97,5 +97,6 @@
     <string name="login_preferences_key">login1234</string>
     <string name="shPref_id_key">ID</string>
     <string name="shPref_token_key">TOKEN</string>
-    <string name="computerIP">192.168.1.119</string>
+    <string name="networkIP">192.168.0.104</string>
+    <string name="serverClientID">34988913978-89r70k220bpvh5hcect8738akekmkevp.apps.googleusercontent.com</string>
 </resources>

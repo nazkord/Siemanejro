@@ -32,7 +32,11 @@ public class SiemanejroOkHttpCommunication implements SiemanejroCommunication {
     private OkHttpClient client;
     private User loggedInUser;
     private ObjectMapper objectMapper;
-    private static String basicUrl = "http://" + SiemanejroApp.getContext().getString(R.string.computerIP) + ":8080";
+    private static String basicUrl = "http://" + SiemanejroApp.getContext().getString(R.string.networkIP) + ":8080";
+    private static final String MATCHES = "/matches";
+    private static final String USERS = "/users";
+    private static final String BETS = "/bets";
+    private static final String TOKENLOGIN = "/tokenSignIn";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     SiemanejroOkHttpCommunication() {
@@ -66,7 +70,7 @@ public class SiemanejroOkHttpCommunication implements SiemanejroCommunication {
         }
 
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse
-                (basicUrl + "/bets"))
+                (basicUrl + BETS))
                 .newBuilder();
 
         try {
@@ -103,7 +107,7 @@ public class SiemanejroOkHttpCommunication implements SiemanejroCommunication {
         idsBuilder.deleteCharAt(idsBuilder.length()-1);
 
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse
-                (basicUrl + "/matches"))
+                (basicUrl + MATCHES))
                 .newBuilder()
                 .addQueryParameter("competitionIds", idsBuilder.toString());
 
@@ -135,9 +139,7 @@ public class SiemanejroOkHttpCommunication implements SiemanejroCommunication {
     @Override
     public List<Bet> getLoggedInUserBets() {
 
-        //TODO: save bets from server for better user experience (latest bets can show even without network)
-
-        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(basicUrl + "/bets"))
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(basicUrl + BETS))
                 .newBuilder();
 
         Request userRequest = makeUserGetRequest(urlBuilder);
@@ -161,7 +163,7 @@ public class SiemanejroOkHttpCommunication implements SiemanejroCommunication {
     @Override
     public Optional<User> loginUser(String userName, String password) {
 
-        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(basicUrl + "/users"))
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(basicUrl + USERS))
                 .newBuilder()
                 .addQueryParameter("userName", userName);
 
@@ -182,5 +184,26 @@ public class SiemanejroOkHttpCommunication implements SiemanejroCommunication {
             return Optional.empty();
         }
         return Optional.ofNullable(loggedInUser);
+    }
+
+    @Override
+    public void postUserToken(String idToken) {
+
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(basicUrl + TOKENLOGIN))
+                .newBuilder()
+                .addQueryParameter("idToken", idToken);
+
+        Request tokenLoginRequest = new Request.Builder()
+                .url(urlBuilder.build().toString())
+                .build();
+
+        try {
+            ResponseBody responseBody = client.newCall(tokenLoginRequest).execute().body();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
