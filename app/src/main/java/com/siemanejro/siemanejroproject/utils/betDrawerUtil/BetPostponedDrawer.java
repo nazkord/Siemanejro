@@ -1,6 +1,6 @@
 package com.siemanejro.siemanejroproject.utils.betDrawerUtil;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.siemanejro.siemanejroproject.viewHolders.BetViewHolder;
 

@@ -1,17 +1,13 @@
 package com.siemanejro.siemanejroproject.dataBinders;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.siemanejro.siemanejroproject.dataBinders.DataBinder;
-import com.siemanejro.siemanejroproject.utils.betDrawerUtil.BetDrawer;
 import com.siemanejro.siemanejroproject.viewHolders.LeagueViewHolder;
 
-import java.util.Map;
 import java.util.Objects;
 
 import com.siemanejro.siemanejroproject.model.BetPageItem;
 import com.siemanejro.siemanejroproject.model.League;
-import com.siemanejro.siemanejroproject.model.Status;
 
 public class LeagueDataBinder extends DataBinder {
 

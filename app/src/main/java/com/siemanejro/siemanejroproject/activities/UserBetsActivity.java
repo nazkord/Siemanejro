@@ -4,10 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -15,10 +15,8 @@ import com.siemanejro.siemanejroproject.adapters.RVBetsAdapter;
 import com.siemanejro.siemanejroproject.R;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import com.siemanejro.siemanejroproject.communication.Client;
-import com.siemanejro.siemanejroproject.communication.CommunicationAsync;
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.model.Score;
 import com.siemanejro.siemanejroproject.utils.NetworkUtil;
@@ -42,7 +40,6 @@ public class UserBetsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,29 +48,10 @@ public class UserBetsActivity extends AppCompatActivity {
         setToolbarTitle(getString(R.string.userBetsActivityName));
         rvBets = findViewById(R.id.rvUserBets);
 
+        new GetBets().execute();
+
         putUserBetsToAdapter();
-
-//        try {
-//            new CommunicationAsync<Void, ArrayList<Bet>>( b -> (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets())
-//                    .onSuccess(this::displaySuccess)
-//                    .onError(this::displayError)
-//                    .execute().get();
-//        } catch (InterruptedException | ExecutionException e) {
-//            e.printStackTrace();
-//        }
     }
-
-//    private void displaySuccess(ArrayList<Bet> bets) {
-//        Toast toast = Toast.makeText(UserBetsActivity.this,"OK", Toast.LENGTH_LONG);
-//        toast.show();
-//        listOfBets = bets;
-//    }
-//
-//    private void displayError(Exception e) {
-//        e.printStackTrace();
-//        Toast toast = Toast.makeText(UserBetsActivity.this, "BAD", Toast.LENGTH_LONG);
-//        toast.show();
-//    }
 
     // TODO: show lastly upload user's bets
     private void putUserBetsToAdapter() {
@@ -108,7 +86,7 @@ public class UserBetsActivity extends AppCompatActivity {
             if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
                 return 0;
             }
-            listOfBets = (ArrayList<Bet>) Client.SIEMAJERO.get().getLoggedInUserBets();
+            listOfBets = (ArrayList<Bet>) Client.SIEMANEJRO.get().getLoggedInUserBets();
             if(listOfBets == null) {
                 //TODO: user can has none of bets
                 return 1;

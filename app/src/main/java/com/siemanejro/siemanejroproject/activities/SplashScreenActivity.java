@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,10 +33,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         textView = findViewById(R.id.loadingTextView);
 
         Intent activityIntent;
-        User user = SharedPrefUtil.getLoggerUser(SplashScreenActivity.this);
-        Client.SIEMAJERO.get().setLoggedInUser(user);
+//        User user = new SharedPrefUtil(this).getLoggerUser();
+        User user = null;
 
-        if(user.getName() != null) {
+        if(user != null) {
+            Client.SIEMANEJRO.get().setLoggedInUser(user);
             activityIntent = new Intent(this, MainActivity.class);
             new LoadBet().execute();
         } else {
@@ -54,7 +55,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
                 return null;
             }
-            return Client.SIEMAJERO.get().getLoggedInUserBets();
+            return Client.SIEMANEJRO.get().getLoggedInUserBets();
         }
 
         @Override

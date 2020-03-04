@@ -7,7 +7,7 @@ import java.util.Objects;
 public class User {
 
     private Long id;
-    public String name;
+    private String name;
     private String password;
 
     public User(Long id, String name, String password) {

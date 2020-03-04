@@ -17,7 +17,7 @@
         app:textColorSelected="#FFFF"
         android:layout_weight="1.5"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/matchesList"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -5,9 +5,9 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
@@ -201,7 +201,7 @@ public class BettingActivity extends AppCompatActivity {
             Stream.of(League.values())
                     .forEach(league -> leagueIds.add(league.getLeagueId()));
 
-            allMatches = Client.SIEMAJERO.get().getMatchesByCompetitions(leagueIds);
+            allMatches = Client.SIEMANEJRO.get().getMatchesByCompetitions(leagueIds);
 
             if(allMatches == null) {
                 //TODO: it could be an error by server side or there are just no matches at all
@@ -240,7 +240,7 @@ public class BettingActivity extends AppCompatActivity {
             if(!NetworkUtil.isNetworkConnectionAvailable((ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE))) {
                 return 0;
             }
-            if(Client.SIEMAJERO.get().postUsersBet(betList)) {
+            if(Client.SIEMANEJRO.get().postUsersBet(betList)) {
                 return 1;
             } else {
                 return 2;

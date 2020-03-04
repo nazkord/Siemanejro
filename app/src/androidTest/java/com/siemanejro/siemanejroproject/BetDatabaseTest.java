@@ -1,8 +1,10 @@
 package com.siemanejro.siemanejroproject;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.siemanejro.siemanejroproject.utils.roomUtil.BetDao;
 import com.siemanejro.siemanejroproject.utils.roomUtil.BetDatabase;
@@ -21,7 +23,7 @@ import androidx.room.Room;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4ClassRunner.class)
 public class BetDatabaseTest {
 
     private BetDao betDao;
@@ -29,7 +31,7 @@ public class BetDatabaseTest {
 
     @Before
     public void createDb() {
-        Context context = InstrumentationRegistry.getContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getContext();
         db = Room.inMemoryDatabaseBuilder(context, BetDatabase.class).build();
         betDao = db.getBetDao();
     }

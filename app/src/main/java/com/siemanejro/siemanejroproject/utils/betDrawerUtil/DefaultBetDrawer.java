@@ -1,7 +1,7 @@
 package com.siemanejro.siemanejroproject.utils.betDrawerUtil;
 
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.siemanejro.siemanejroproject.model.Bet;
 import com.siemanejro.siemanejroproject.viewHolders.BetViewHolder;
